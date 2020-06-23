@@ -1,0 +1,89 @@
+---
+title: "Enriching LU in mounds"
+author: "Adela Sobotkova"
+date: "23 June 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## LANDUSE (remember only Bara's data have Landuse)
+
+# REQUIRES A NEW MERGE: HERE WE NEED TO COMPARE BARA DATA WITH RS DATA!
+```{r}
+topo_rs <- left_join(topo_mounds, mounds_RS, 
+                         by = "TopoID", copy = FALSE, suffix = c(".topo", ".rs")) # 
+```
+
+And lets subset from the 46 columns to 16, picking only those columns of interest.
+
+```{r}
+topors <- topo_rs %>% 
+  select(TopoID, Trap, TRAPCode, SomethingPresentOntheGround, Type, LandUseAround, LanduseOn, LU_Around, LU_top, Length.topo, `Length (max, m)`, Length.rs, RS_Status, RS_feature_type, Condition, Principal)
+
+```
+
+How many of the original 850 RS features have a counterpart in the Verified Mound data?
+
+```{r}
+topors %>%
+  filter
+  filter(!is.na(RS_Status))
+```
+
+It seems that only 24 mounds out of 850 features have a counterpart TopoID in the Verified mounds! That seems awfully low for 2010 season, although not impossible. (Maybe the filtering was too drastic previously? Or maybe the remote sensig was doe on the features we did not visit adequately!? Or we need to add 2017-2018 data before rushing to conclusions..:)
+
+Lets see how many LU problems can we solve or if the missingLU needs to be done in GoogleEarthPro. 
+
+
+
+```{r}
+topors %>% 
+  filter(TopoID %in% missingLU$TopoID) %>% 
+  select(TopoID, Trap, LU_Around, LU_top, Length.topo, `Length (max, m)`, Length.rs) %>% 
+  filter(!is.na(LU_Around))
+```
+
+So the current data merge helps us solve 4 out of 34 missing LU (missing in Adela's dataset). That's not great.
+
+## Merging fully
+# just to verify I did not miss anything let's try to merge the other way around.
+```{r}
+rs_topo <- left_join(mounds_RS, topo_mounds, 
+                         by = "TopoID", copy = FALSE, suffix = c(".rs", ".topo")) 
+```
+
+Now lets reduce the column number
+```{r}
+rstopo <- rs_topo %>% 
+  select(TopoID, Trap, TRAPCode, SomethingPresentOntheGround, Type, LandUseAround, LanduseOn, LU_Around, LU_top, Length.topo, `Length (max, m)`, Length.rs, RS_Status, RS_feature_type, Condition, Principal)
+```
+
+And check RS status and number of attached mounds
+```{r}
+rstopo %>%
+  filter(!is.na(RS_Status)) %>% 
+  filter(grepl("Burial Mound", Type) | SomethingPresentOntheGround == "mound")
+```
+
+Still only 24 have some sort of moundlike status
+Are the 34 mounds needing landuse in the rs dataset?
+
+```{r}
+which(missingLU$TopoID %in% rstopo$TopoID)
+```
+
+
+```{r}
+missingLU %>% 
+  filter(TopoID %in% rstopo$TopoID)
+```
+
+Compare this table with line 47. It checks out. So 4 Lu is all I get automatically from previous RS. Need to sense some 30 more mounds. Not a big deal and good to know. Maybe we can now bring in 2017 and 2018 data.
+
+
+### Bring in clean data
+
+glimpse(mnd2017)
