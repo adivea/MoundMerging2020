@@ -1,0 +1,44 @@
+---
+title: "Merging 2017-2018 data with RS"
+author: "Adela Sobotkova"
+date: "24 June 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## LANDUSE
+
+To explain this script: 
+inputs:
+1) 2017 and 2018 dataset from FAIMS , streamlined in OR
+2) mounds_RS which is the product of remote sensing in GoogleEarth Pro of map features digitized in 2010. It contains landuse cateories,which might help with topo_mounds
+
+
+The main aim here is to: 
+
+merge the two inputs and look at the consistency of landuse between the two datasets. The FAIMS data on landuse 2017-2018 was collected with the help fo picture dictionaries so should be consistent and good, but I did discover that some colleagues did not undersstand the term 'perennial'and so we best check.
+
+# MERGE by Trap (Is there TopoID in 2017-2018 mnds?)
+```{r}
+topo_rs <- left_join(mnd2017, mounds_RS, 
+                         by = c("identifier"=""), copy = FALSE, suffix = c(".topo", ".rs")) # 
+```
+
+CONTINUE...
+
+```{r}
+topors <- topo_rs %>% 
+  select(TopoID, Trap, TRAPCode, SomethingPresentOntheGround, Type, LandUseAround, LanduseOn, LU_Around, LU_top, Length.topo, `Length (max, m)`, Length.rs, RS_Status, RS_feature_type, Condition, Principal)
+
+```
+
+How many of the original 850 RS features have a counterpart in the Verified Mound data?
+
+```{r}
+topors %>%
+  filter
+  filter(!is.na(RS_Status))
+```

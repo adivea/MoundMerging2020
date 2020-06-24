@@ -97,7 +97,8 @@ Compare this table with line 47. It checks out. So 4 Lu is all I get automatical
 
 ### Conclusion
 
-RS data is not very helpful for 2010 datasets, perhaps because the RS spatial data was intended to complement the 2010 season not duplicate it. RS data should be helpful with 2017 -2018 seasons though, so merging with them is the next step.
+RS data is not very helpful for 2010 datasets, perhaps because the RS spatial data was intended to complement the 2010 season not duplicate it. RS data should be helpful with 2017 -2018 seasons though - if they share a Topo id -  so merging with them is the next step. If TopoIDs don't exist, spatial join in ArcGIS will be a requisite.
+
 Landuse in 2010 data (bara version) needs to be verified in GoogleEarth by exporting the kmx from ArcGIS > import to GEpro > review and then repeating the steps above. 
 
 
