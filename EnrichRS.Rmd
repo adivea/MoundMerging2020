@@ -86,4 +86,4 @@ Compare this table with line 47. It checks out. So 4 Lu is all I get automatical
 
 ### Bring in clean data
 
-glimpse(mnd2017)
+

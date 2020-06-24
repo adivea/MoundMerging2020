@@ -33,4 +33,6 @@ which(mnd2018$identifier%in%mounds_bara)
 length(which(mounds_adela$TopoID%in%mounds_RS$TopoID))
 revLU_b <-  mounds_bara$TopoID[which(mounds_bara$TopoID%in%mounds_RS$TopoID)]
 revLU_a <- mounds_adela$TopoID[which(mounds_adela$TopoID%in%mounds_RS$TopoID)]
-revLU       
+revLU <- c(revLU_a, revLU_b)     
+length(revLU)
+length(unique(revLU))
