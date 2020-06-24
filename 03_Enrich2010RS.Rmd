@@ -9,7 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## LANDUSE (remember only Bara's data have Landuse)
+## LANDUSE
+
+To explain this script: 
+inputs:
+1) topo_mounds which is a (full_join) merged product of adela and bara versions of 2010 data, counting some 289 individual records. Only bara's records contain landuse, transcribed from the forms (which casts doubt on their quality, but theoretically has been verified in extant images as per LU_Source)
+2) mounds_RS which is the product of remote sensing in GoogleEarth Pro of map features from 2010. It contains landuse cateories,which might help with topo_mounds
+
+
+The main aim here is to: 
+
+merge the two inputs and gauge how much landuse can we verify with RS data and what needs to be further verified with remote sensing.
+
 
 # REQUIRES A NEW MERGE: HERE WE NEED TO COMPARE BARA DATA WITH RS DATA!
 ```{r}
@@ -84,6 +95,9 @@ missingLU %>%
 Compare this table with line 47. It checks out. So 4 Lu is all I get automatically from previous RS. Need to sense some 30 more mounds. Not a big deal and good to know. Maybe we can now bring in 2017 and 2018 data.
 
 
-### Bring in clean data
+### Conclusion
+
+RS data is not very helpful for 2010 datasets, perhaps because the RS spatial data was intended to complement the 2010 season not duplicate it. RS data should be helpful with 2017 -2018 seasons though, so merging with them is the next step.
+Landuse in 2010 data (bara version) needs to be verified in GoogleEarth by exporting the kmx from ArcGIS > import to GEpro > review and then repeating the steps above. 
 
 

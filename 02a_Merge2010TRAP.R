@@ -1,9 +1,9 @@
 # Purpose
 # This script helps me create cleanish data on burial mounds in Yambol based on legacy data from field surveys 2009-2018. 
 # The cleaning happens in 2 stages: 
-# 1) merge and compare two legacy datasets, address discrepancies, and extract ground truthing information. 
-# 2) enrich the landuse and status categories with remotely sensed data where it was missing on discrepant.
-
+# 1) it takes 2010 version adela and bara as two inputs. 
+# 2) It merges via left join to adelas and compare two legacy datasets, address discrepancies, and extracts ground truthing information. 
+# 3) it outputs a cleanish verified mound dataset called abmounds
 
 # Libraries
 library(tidyverse)
@@ -66,32 +66,45 @@ ableftj %>%
 # now try an inner join (both match) and left join (adela data)
 
 
-#### REVIEW OF MEANINGFUL MOUNDS
+#### KNOWN PROBLEMS WITH MEANINGFUL MOUNDS
 
+# Check what hides in bara's dataset where it says 'mound' in adela's
+abmounds %>% 
+  select(Trap, TopoID.x, TopoID.y, SomethingPresentOntheGround, Type, Height.x, Height.y, Length,`Length (max, m)`) %>% 
+  group_by(Type, SomethingPresentOntheGround) %>% 
+  tally()
+abmounds %>% 
+ # select(Trap, TopoID.x, Type) %>% 
+  filter(Type == "Surface Scatter") # mound 9042 might need an extra check
 
 ## TopoIDs first    
 checktopo <- if_else(abmounds$TopoID.x == abmounds$TopoID.y, "equal", "nonequal")
 (checktopo[checktopo=="nonequal"])
 mismatchTopo <- which(checktopo=="nonequal") # indeces of 8 problematic TopoId
-problemTopo <- abmounds[mismatchTopo,] # 8 records with discrepant TopoIDs, mostly 0 in Bara have TopoID in Adela
+problemTopo <- abmounds[mismatchTopo,] 
+
+# ABmounds have 8 records with discrepant TopoIDs, where there is 0 in Bara there is a TopoID in Adela
 
 
 ## Length 
 checklength <- if_else(abmounds$Length == abmounds$`Length (max, m)`, "equal", "nonequal")
 checklength[checkwidth=="nonequal"] 
-problemLength <- abmounds[which(checkwidth=="nonequal"),] # 8 records have non-matching width
+problemLength <- abmounds[which(checkwidth=="nonequal"),] 
 problemLength %>% 
-  select(Trap, TopoID.x, TopoID.y,Length,`Length (max, m)`, Width.x,Width.y, Height.x, Height.y)
+  select(Trap, TopoID.x, TopoID.y, Width.x,Width.y, Height.x, Height.y, Length,`Length (max, m)`,) %>% 
+  mutate(diff= as.numeric(`Length (max, m)`) - as.numeric(Length))
 
+# 8 records in abmounds have non-matching width, which ranges from 5 to 50 m
 
 ## Width 
 checkwidth <- if_else(abmounds$Width.x == abmounds$Width.y, "equal", "nonequal")
 checkwidth[checkwidth=="nonequal"] 
 problemWidth <- abmounds[which(checkwidth=="nonequal"),] # 14 records have non-matching width
 problemWidth %>% 
-  select(Trap, TopoID.x, TopoID.y, Width.x,Width.y, Height.x, Height.y)
-
-# not needed mm_check <- abmounds[-mismatchTopo,]
+  select(Trap, TopoID.x, TopoID.y, Height.x, Height.y, Width.x,Width.y ) %>% 
+  mutate(diff= as.numeric(Width.y) - as.numeric(Width.x))
+# 8 records in abmounds have non-matching width, which ranges from 5 to 50 m
+# this is same as length as most mounds are round
 
 
 ## Heights 
@@ -104,7 +117,7 @@ problemHeight %>%
   filter(as.numeric(Height.y) > 0) %>% 
   mutate(HeightDiff = as.numeric(Height.x) - as.numeric(Height.y)) #%>% 
  # tally(HeightDiff < 0)
- # 26 show discrepancy (4 don't have values in Adela, 2 lack values in bara) > remaining 20 values are split evenly between higher and smaller heights
+ # 26 records in merged dataset show discrepancy (4 don't have values in Adela, 2 lack values in bara) > remaining 20 values are split evenly between higher and smaller heights
 
 
 # SUMMARY
