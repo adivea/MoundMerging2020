@@ -54,16 +54,46 @@ ableftj %>%
 # 7 transmitter                                  1
 # 8 waterhouse                                   3
 
+# Some of these could be extinct mounds. For example, bunkers are best built in former mound locations to confuse enemy (and locals too),
+# waterhouses and tank emplacements also soemtimes utilize existing mounds, so we cannot guarantee moundlessness here in the past. 
+# So to try the other way around, we can guarantee that a tell, or a 'nothing' is not amound. 
+# A liberal conception of a potential mound would be anything except these two elements
+# and keep the others. A conservative measure would be to grab explicit 'mounds' only.
+
+#Conservative mounds 2010
+
 abmounds <- ableftj %>% 
   filter(SomethingPresentOntheGround == "mound") 
+# 406 results
 
-# potential mounds ("could have been a mound in the past") >> 417 results
+# Potential mounds 2020 ("could have been a mound in the past") 
 ableftj %>%
   filter(SomethingPresentOntheGround != "nothing") %>% 
   filter(SomethingPresentOntheGround != "tell")
+# >> 417 results
 
+# now try a full join (both match) 
+ab2010 <- full_join(mounds_adela, mounds_bara, 
+                     by = c("Trap" = 'TRAPCode'))
 
-# now try an inner join (both match) and left join (adela data)
+ab2010%>% 
+  filter(SomethingPresentOntheGround == "mound") # same 406 records 
+
+ab2010 %>% 
+  select(Trap, TopoID.x, TopoID.y, SomethingPresentOntheGround, Type, Height.x, Height.y, Length,`Length (max, m)`) %>% 
+  group_by(Type, SomethingPresentOntheGround) %>% 
+  tally()
+# 50 additional features in Bara's record are mostly GC failed, nothing and other features. There are only 10 moundlike records. 
+# Lets' look at them more closely.
+
+ab2010 %>% 
+  select(Trap, TopoID.x, TopoID.y, SomethingPresentOntheGround, Type, Height.x, Height.y, Length,`Length (max, m)`) %>% 
+  filter(is.na(SomethingPresentOntheGround)) %>% 
+  filter(grepl("Mound",Type)) #  
+
+# 11 records here range from Burial Mound(?) to Extinct Burial Mound, 6/11 lack dimensions and show inconsistencies
+# such as Extinct status but 5 m height. Topo ID of 1936 (not a range used in Yambol, )
+# not worth it to use ab2010 grab these 10-11 remainders from bara. Continue with Adela 
 
 
 #### KNOWN PROBLEMS WITH MEANINGFUL MOUNDS
