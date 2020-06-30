@@ -2,10 +2,12 @@
 
 This project aims to build a master dataset of verified burial mounds with coordinates, TRAP and TopoID, dimensions, landuse and conservation attributes. We have 4 datasets from 4 campaigns of fieldwalking:
 
-- 2009 field survey and remote sensing verification, initial season, data model not complete hence some missing attributes, 
-- 2010 legacy data verification on the basis of historical topographic maps, data model also not fully sorted,plus robbery of office leads to the loss of image data for one team's week of work, LU data not transcribed, many categories missing, additional discrepancy arises from asynchronous fixing by two different teams. Requires weeks of streamlining in OR, GoogleEarthPro, ArcGIS, and old PDfs of field records, images and spreadsheets to triangulate closer to the past reality.
-- 2017 legacy data verification with a mature data model, digital FAIMS output, 
-- 2018 repeat of 2017 in a different region with minor tweaks to data model, but very active body of participants who added annotations everywhere.
+- 2009 (20 ATTRIBUTES) field survey and remote sensing verification, initial season, data model not complete hence some missing attributes, 
+- 2010 (58 ATTRIBUTES)legacy data verification on the basis of historical topographic maps, data model also not fully sorted,plus robbery of office leads to the loss of image data for one team's week of work, LU data not transcribed, many categories missing, additional discrepancy arises from asynchronous fixing by two different teams. Requires weeks of streamlining in OR, GoogleEarthPro, ArcGIS, and old PDfs of field records, images and spreadsheets to triangulate closer to the past reality.
+- 2017 (46 ATTRIBUTES)legacy data verification with a mature data model, digital FAIMS output, 
+- 2018 (58 ATTRIBUTES) repeat of 2017 in a different region with minor tweaks to data model, but very active body of participants who added annotations everywhere.
+
+Difference in attributes stems from notes attached to individual fields in later seasons. 
 
 ## Streamlining
 

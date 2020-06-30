@@ -23,7 +23,7 @@ mounds_bara %>%
 
 ######################################################################################################################
 
-## PARTIAL JOIN - MEANINGFUL MOUNDS
+## PARTIAL JOIN - MEANINGFUL MOUNDS ABMOUNDS
 
 ## MERGE BY TRAP
 # I consider my dataset better and so start with a left join to adela's table via TRAP id to preserve adela's data and append bara's
@@ -78,7 +78,7 @@ ableftj %>%
 
 ################################################################################################
 
-## FULL JOIN
+## FULL JOIN AB2010
 
 # now try a full join (both match). It can be an issue as erroneous data in bara is added, and needs to be filtered
 ab2010 <- full_join(mounds_adela, mounds_bara[-which(mounds_bara$TRAPCode==1936),],   # 1936 is a wrong number (too low to have been used in Yambol)
