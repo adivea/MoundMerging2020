@@ -2,18 +2,18 @@
 #             Creating a master 2010 verified mound dataset
 # the main aim is to have a dataset that tells us something about mound morphology for chronological modelling
 # it should not contain that many extinct mounds whose dimensions are unknown
+# it might contain all potential mounds (digitized from historical maps with TopoIDs and visited or remotely sensed)
 
 # This procedure requires several steps: 
-# 1) liberal full join of verified mounds of adela and bara's 
-# 2) verifying and sanity checking mound IDs etc.
+# 1) liberal full join of verified or attempted mounds of adela and bara's by TopoID
+# 2) verifying and sanity checking of attributes such as mound IDs etc.
 # 3) compare ground truthing data (LU, dimensions and CRM) and asses divergence. LU in 2010 adela is from GEpro remote sensing, in bara from formse
-# 4) optional: merging the result of 1 with RS mounds to compare LU and dimensions
+# 4) output is a ab2010 (n=493) dataset of all potential map mounds with attributes collected during groundtruthing. Should encompass all mounds whether or not they gota  TRAP ID.
 
-
-# Another approach is more conservative
+# A more conservative fork on this process is:
 # 1) Merge only verified Type== mound features from adela and bara to cut to the chase
-# 2) compare lanuse among the with RS
-# 3) merge results
+# 2) compare landuse among the with RS
+# 3) Create a verified dataset where all mounds have a topo and TRAP ID.(n=290)
 
 
 # Libraries
@@ -117,7 +117,8 @@ topo_mounds <- topo_mounds %>%
 
 
 # SUMMARY
-# TOPO_MOUNDS DATASET NOW CONTAINS MOSTLY MOUNDS, BUT MAY EXLCUDE SOME FROM ADELA'S DATASET BASED ON TRAP, MIGHT NEED TO RETURN TO RELIABLE MOUNDS FROM ABMOUNDS
+# TOPO_MOUNDS DATASET NOW CONTAINS MOSTLY MOUNDS, BUT MAY EXLCUDE SOME FROM ADELA'S DATASET BASED ON TRAP, 
+# MIGHT NEED TO RETURN TO RELIABLE MOUNDS FROM ABMOUNDS
 # topo dataset is good to check consistency of RS readings on landuse with those of Bara' team.
 
 

@@ -1,0 +1,52 @@
+---
+title: "LanduseComparison"
+author: "Adela Sobotkova"
+date: "2 July 2020"
+output: html_document
+---
+
+## LANDUSE CLASSIFICATION PRECISION: FIELD versus REMOTE CONTROL
+
+Previous merging of Adela and Bara 2010 data has shown considerable differences in how landuse around mound was classified by fieldwalkers in the field (bara\s transcribed forms) and how it was classified by Adela during remote sensing in Google Earth Pro.
+This script explores the issue further,asking:
+1) is the 2010 discrepancy owing to poor 2010 practice? A number of factors undermines the data quality in LU category: LGV was conducted first time, teams were inconsistent in recording landuse, which was relatively low priority, teams did not always use the right english term during documentation and sometimes conflated landuse around with landuse on top of mound )
+2) to test whether the inconsistency between fieldwork and remote sensing is real, I need to extend the analysis to consistently recorded 2017-2018 data where landuse was validated for, fully encoded using picture dictionaries and included annotations to encompass variation. Furthermore, teams were aware of landuse significance for vulnerability studies. If the perception of field walkers is distinct and differ from that of remote sensers even in consistently documented field datasets, then we can speak of true classification precision issue.
+
+# INPUTS
+
+1) mnd2017 and mnd2018 are OR-cleaned products of data collection with FAIMS where Landuse is in XX categories , coded via picture dictionaries , allowing for annotations.
+2) mounds_RS which is the product of remote sensing in GoogleEarth Pro of map features from 2010. It contains landuse categories,which might help with topo_mounds
+
+
+The main aim here is to: 
+
+merge the two inputs and gauge how much the field-observations of landuse around and on top of mound differ from those seen in RS data.
+
+# Prerequisite: Spatial query!
+A query on 20092010Verified.shp (n=887 from 2009-2018) on features in the 50m radius of LegacyPoints17Jan17 yields 740 matches.
+Proceeding with spatial join between the two objects to see which specific features fall where.
+see README on GoogleDrive and process Leg10Mnd17 to get RS values for 2017 data
+and apply to 2017-2018 ? and all others datasets.
+
+# MERGE?
+
+```{r}
+topo_rs <- left_join(topo_mounds, mounds_RS, 
+                         by = "TopoID", copy = FALSE, suffix = c(".topo", ".rs")) # 
+```
+
+And lets subset from the 46 columns to 16, picking only those columns of interest.
+
+```{r}
+topors <- topo_rs %>% 
+  select(TopoID, Trap, TRAPCode, SomethingPresentOntheGround, Type, LandUseAround, LanduseOn, LU_Around, LU_top, Length.topo, `Length (max, m)`, Length.rs, RS_Status, RS_feature_type, Condition, Principal)
+
+```
+
+How many of the original 850 RS features have a counterpart in the Verified Mound data?
+
+```{r}
+topors %>%
+  filter
+  filter(!is.na(RS_Status))
+```

@@ -1,10 +1,16 @@
+############################################################################################################
+#             Creating a master 2010 verified mound dataset
+# the main aim is to have a dataset that tells us something about mound morphology for chronological modelling
+# it should not contain that many extinct mounds whose dimensions are unknown
+
 # Purpose
 
-# This script helps generate a clean 2010 dataset, an intermediate step towards verified mounds in Yambol from field surveys 2009-2018. 
-# The cleaning happens in 2 stages: 
-# 1) it takes 2010 version adela and bara as two inputs. 
-# 2) It merges via left join to adelas and compare two legacy datasets, address discrepancies, and extracts ground truthing information. 
-# 3) it outputs a cleanish verified mound dataset called abmounds
+# This script helps generate a clean 2010 dataset of visited mounds, an intermediate step towards verified mounds in Yambol from field surveys 2009-2018.
+
+# The cleaning happens in the following stages: 
+# 1) it takes 2010 version adela and bara dataset as two inputs. 
+# 2) It merges via left join to adela's dataset via TRAP ID and compare two legacy datasets, address discrepancies, and extracts ground truthing information. 
+# 3) it outputs a cleanish verified mound dataset called abmounds. These are all mounds that have a TRAP ID and could potentially represent mounds
 
 # Libraries
 library(tidyverse)
@@ -34,16 +40,20 @@ ableftj <- left_join(mounds_adela, mounds_bara,
                        by = c("TRAP" = 'TRAPCode')) # 444 observations on the basis of 444 adelas
 ableftj%>% 
   filter(TopoID.x==0) %>% 
-  select(TRAP, SomethingPresentOntheGround, TopoID.x, TopoID.y, Width.x, Width.y)
-# 444 mounds have been documented in 2010; 292 of adela's them have an equivalent in the map (features have TopoID). 
+  select(TRAP, SomethingPresentOntheGround, TopoID.x, TopoID.y, Width.x, Width.y) %>% 
+  group_by(SomethingPresentOntheGround) %>% 
+  tally()
+# 444 features have received TRAP ID in 2010; 292 of adela's them have Topo ID, an equivalent in the map. 
+# 152 of 444 features do not have TopoID, 146 of these 152 are mounds, and 6 are other. 
 
 
 # filtering out meaningful mounds
 ableftj %>% 
-  #filter(SomethingPresentOntheGround == "mound") # 406 out of 441 have a mound on the ground >> MOST MEANINGFUL
+  #filter(SomethingPresentOntheGround == "mound") # 406 out of 444 have a mound on the ground >> MOST MEANINGFUL
    filter(SomethingPresentOntheGround != "mound") %>%  # 38 are not immedaitely identifiable as a mound on the ground
    group_by(as.factor(SomethingPresentOntheGround)) %>% 
    tally()
+# out of 444 features, 406 have a mound identified in the field, while 38 are recognized as something else
 
 # A tibble: 8 x 2
 # `as.factor(SomethingPresentOntheGround)`     n
@@ -101,7 +111,7 @@ ab2010 %>%
 
 # 10 records here range from Burial Mound(?) to Extinct Burial Mound, 6/11 lack dimensions and show inconsistencies
 # such as Extinct status but 5 m height. Topo ID of 1936 (not a range used in Yambol, )
-# not worth it to use ab2010 grab these 10-11 remainders from bara. Continue with Adela 
+# not worth it to use ab2010 grab these 10-11 remainders from bara. Continue with Adela or abmounds
 
 
 

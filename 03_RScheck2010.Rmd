@@ -9,20 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## LANDUSE
+## GOAL
+The main aim of this script is to merge the topo_mounds 2010 dataset with data verified in Google Earth pro and gauge how much landuse information  can we extract from  RS data and what needs to be further verified with remote sensing.
 
-To explain this script: 
-inputs:
-1) topo_mounds which is a (full_join) merged product of adela and bara versions of 2010 data, counting some 289 individual records. Only bara's records contain landuse, transcribed from the forms (which casts doubt on their quality, but theoretically has been verified in extant images as per LU_Source)
+Inputs:
+1) topo_mounds which is a (full_join) merged product of adela and bara versions of 2010 data, counting some 289 individual records, where a mound was positively identified in the field (grepl("Burial Mound", Type) | SomethingPresentOntheGround == "mound"). Only Bara's records contain landuse, transcribed from the forms (which casts doubt on their quality, but theoretically has been verified in extant images as per LU_Source)
 2) mounds_RS which is the product of remote sensing in GoogleEarth Pro of map features from 2010. It contains landuse cateories,which might help with topo_mounds
 
 
-The main aim here is to: 
-
-merge the two inputs and gauge how much landuse can we verify with RS data and what needs to be further verified with remote sensing.
-
-
-# REQUIRES A NEW MERGE: HERE WE NEED TO COMPARE BARA DATA WITH RS DATA!
+# CHALLENGE: A NEW MERGE NEEDED and HERE WE NEED TO COMPARE BARA FIELD DATA WITH ADELA's RS DATA!
 ```{r}
 topo_rs <- left_join(topo_mounds, mounds_RS, 
                          by = "TopoID", copy = FALSE, suffix = c(".topo", ".rs")) # 
@@ -44,11 +39,12 @@ topors %>%
   filter(!is.na(RS_Status))
 ```
 
-It seems that only 24 mounds out of 850 features have a counterpart TopoID in the Verified mounds! That seems awfully low for 2010 season, although not impossible. (Maybe the filtering was too drastic previously? Or maybe the remote sensig was doe on the features we did not visit adequately!? Or we need to add 2017-2018 data before rushing to conclusions..:)
+It seems that only 24 mounds out of 850 features have a counterpart TopoID in the Verified mounds! That seems awfully low for 2010 season, although not impossible. (Maybe the filtering was too drastic previously?)
+Consultation of the kmz files, the reason emerges:  remote sensig was done on "needGC" file, or the features we did not visit adequately to complement the 2010 field recording!
+Anyways. The Landuse line of research: chceking the common discrepancies between fieldwalking and remote sensing classificaiton of landuse. >  see line XXX below,
+
 
 Lets see how many LU problems can we solve or if the missingLU needs to be done in GoogleEarthPro. 
-
-
 
 ```{r}
 topors %>% 
@@ -101,4 +97,4 @@ RS data is not very helpful for 2010 datasets, perhaps because the RS spatial da
 
 Landuse in 2010 data (bara version) needs to be verified in GoogleEarth by exporting the kmx from ArcGIS > import to GEpro > review and then repeating the steps above. 
 
-
+We need to see about 2017-2018 data next, before rushing to too dire conclusions..:)

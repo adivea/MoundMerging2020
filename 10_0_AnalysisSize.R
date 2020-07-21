@@ -1,7 +1,7 @@
 ### Analyze size differences - script copied from previous work on LGV mounds!
 
 ### Mounds Size Assessment 
-## inspired by Larsen's study of the Bahrain cemetery
+## inspired by Laursen's study of the Bahrain cemetery
 
 # categorical sizes?
 

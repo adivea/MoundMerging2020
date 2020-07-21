@@ -29,6 +29,8 @@ Datasets were cleaned of the issues within before merging.
 Once each dataset was reasonably consistent, the merging could commence. Upon mergin, I discovered that despite cleaning, vocabularies slightly differed among datasets (spelling, capitalisation, etc.) from one year to another even in established categories such as Landuse, and more under attributes such as CRM/Conservation. Column names also varied. This was tractable with grepl and attention. 
 Divergence in the semantic model behind attributes wasnot tractable mechanically but required reinterpretation: e.g. the application of Landuse has also shifted from 2009, when only a single landuse category was used without closer specification , while in 2017 we differentiated between Landuse_Around, Landuse_Top to specify what landuse was meant.  Having written the guidelines in 2009, I now I intended landuse around the mound, but some teams recorded on mound surface judging from the comparison of landuse visible in field photos and the spreadsheets.
 
-Spatial data: 
+## Spatial data: 
 I don't even wish to go here now yet. :)
+
+
 

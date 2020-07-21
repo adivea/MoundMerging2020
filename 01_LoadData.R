@@ -12,7 +12,7 @@ library(tidyverse)
 # Load the datasets
 mounds_bara <- read_csv(file = "raw_data/2010-LGV-Bara-enrichedOR-20200619.csv")# 441 obs legacy data verification Bara version (streamlined manually in 2018) version
 mounds_RS <- read_csv(file = "raw_data/RSMounds_Temporal20200526.csv") # 850 obs remote sensing data for verifying LU and presence of mound in map features
-mounds_adela <- read_csv(file = "raw_data/2010-LGV-AdelaLU-20200629.csv") # 444 obs legacy data verification Adela (original 2017 but OR streamlined) version
+mounds_adela <- read_csv(file = "raw_data/2010-LGV-AdelaLU-20200629.csv") # 444 obs legacy data verification Adela (original 2017 but streamlined in Open Refine with LU supplied by and dimensions verified via GoogleEarth) version
 mnd2017 <- read_csv(file = "raw_data/2017ElenovoAll.csv")
 mnd2018 <- read_csv(file = "raw_data/2018Bolyarovo.csv") # 282 records cleaned in OR from annotations
 mnd2009<- read_csv(file = "raw_data/2009Mounds_20200430.csv") # this file contains 2009 survey and RS mounds that Adela check in GEPro (exists on GDrive)
