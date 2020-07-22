@@ -10,7 +10,7 @@
 ## Inputs - check what they look like at this point
 colnames(mnd2009)  # 2009 dateset cleaned in GoogleDocs
 colnames(abmounds) # 2010 only mounds (n=406) based on TRAP number and left join to adela:  conservative dataset
-colnames(ab2010)   # 2010 collection (493) of mounds (406) and other features(87) - potentially extinct mounds
+colnames(ableftj)   # 2010 collection (493) of mounds (406) and other features(87) - potentially extinct mounds
 colnames(mnd2017)  # 2017 mounds (413)
 colnames(mnd2018)  # 2018 mounds (282)
 
@@ -26,25 +26,28 @@ library(lubridate)
 
 # only dropping a few needless columns.
 
-mnd2009 <- mnd2009[,-c(6, 8:12)] # removing "LUCheckedinGE","Year", "Mo", "Day" columns as the data is managerial only, "Lat and Long" because they are empty
+mnd2009 <- mnd2009 %>% 
+  select(-one_of("LUCheckedinGE", "Year", "Mo", "Day", "Lat", "Long")) %>% 
+  filter(!grepl("*GE*", Type))
 
-dmy(mnd2009$Date)  # checking that date parses (it does if you attach the lubridate library)
-tail(mnd2009)
-
+# fix the Dates to read as year-mo-day
 mnd2009 <- mnd2009 %>% 
   mutate(Date = dmy(Date))
 
+# rename columns to standard 
 mnd2009 <- mnd2009 %>% 
-  rename(DiameterMax = Length, DiameterMin= Width, PrincipalSourceOfImpact=PrincipalFactor, 
-         DataProvenance= Provenance, HeightMax = HeightGC) %>% 
-  rename(TRAP=TRAPCode)
-
+  rename(TRAP=TRAPCode, DiameterMax = Length, DiameterMin = Width, PrincipalSourceOfImpact=PrincipalFactor, 
+         DataProvenance = Provenance, HeightMax = HeightGC) 
 
 # 2009 mounds are good to go: Source "Survey" is guaranteed mounds, source "RS" or "LGV"not always. 
 # 2009 contain 81 potential mounds, 78 are certain, 3 c(8051, 8054, 8055) are uncertain.
 # (missing dates signal inaccessible locations or problematic ones)
 
-# 2017 DATASET 
+
+
+#### 2017 DATASET 
+
+
 mnd2017 <- mnd2017 %>% 
   select(-one_of("uuid","HandheldGPSPoint", "Elevation", "Photo")) %>%  # Uuid is corrupted by excel, and other fields are managerial mostly (refer to sqlite)
   rename(TRAP=identifier, LU_Around = LanduseAroundMound, LU_Top=LanduseOnTopOfMound)   
@@ -63,7 +66,7 @@ mnd2017 <- mnd2017 %>%
   unite(DamageNotes, c(grep(" 2",names(mnd2017))), sep = ",", remove = TRUE, na.rm = TRUE)  # Damage notes have "2" in column name from OpenRefine
 mnd2017$DamageNotes  # we have reduced the initial 46 to 37 variables
 
-# Clean up the timestamp
+# Clean up the Date
 dmy(mnd2017$Date) # needs appending 2017 to it _OpenRefine task
 #test
 paste(mnd2017$Date, sep="-","2017")
@@ -73,22 +76,24 @@ mnd2017 <- mnd2017 %>%
 
 #preview final result
 mnd2017 %>% 
-  mutate(Timestamp=dmy(Date)) %>% 
+  mutate(Date=dmy(Date)) %>% 
   glimpse()
 
 mnd2017 <- mnd2017 %>% 
-  mutate(Timestamp=dmy(Date))
+  mutate(Date=dmy(Date))
 
-mnd2017 <- mnd2017 %>% 
-  select(-Date) %>% 
-  rename(Date = Timestamp)
+# Check Type
+levels(as.factor(mnd2017$Type))
 
 # all done with 2017
 
 
 
-# 2018 DATASET 
+#### 2018 DATASET 
+
 names(mnd2018)
+
+# Drop and rename columns
 mnd2018 <- mnd2018 %>% 
   select(-one_of("File","uuid", "HandheldGPSPoint", "Elevation", "Photo", "modifiedBy", "modifiedAtGMT", "BurialMoundAuthor")) %>% 
   rename(TRAP=identifier, Timestamp=createdAtGMT, Type=Type_Adela, LU_Around = LanduseAroundMound, LU_Top=LanduseOnTopOfMound)# Uuid is corrupted by excel, and other fields are managerial mostly (refer to sqlite)
@@ -97,7 +102,8 @@ mnd2018 <- mnd2018 %>%
 mnd2018 <- mnd2018 %>% 
   mutate(Date = date(Timestamp))
 
-# Aggregate notes from 2018 -2018 to a single column using, https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr
+# Aggregate notes to a single column 
+# using, https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr
 
 # Look where notes are distributed
 mnd2018 %>% 
@@ -114,6 +120,8 @@ mnd2018 <- mnd2018 %>%
   unite(DamageNotes, all_of(damagenotes), sep = ",", remove = TRUE, na.rm = TRUE)  # Damage notes have "2" in column name from OpenRefine
 mnd2018  # we have reduced the initial 58 to 40 variables
 
+# Check Type
+levels(as.factor(mnd2018$Type))
 # All done with 2018
 
 
@@ -133,7 +141,7 @@ mnd2018  # we have reduced the initial 58 to 40 variables
 #   select(-one_of("Excav", "Necropolis","ElevationTopo", "Certainty", "GC", )
 
 
-# Consolisation of notes, renaming of columns
+# Consolidation of notes, renaming of columns
 
 abmounds <- abmounds %>% 
   rename(TopoMapHeight=Note_1) %>% 
@@ -157,7 +165,7 @@ abmounds$TopoID.y[problemTopoID]
 
 # Generating finalized 2010 conservative dataset (n =406, 32 columns)
 mnd2010 <- abmounds %>% 
-  rename(Type=SomethingPresentOntheGround, LU_Around = LandUseAround, LU_Top=LanduseOn, LU_Source=LandUseSource,
+  rename(TypeGE=SomethingPresentOntheGround, LU_Around = LandUseAround, LU_Top=LanduseOn, LU_Source=LandUseSource,
          Width_Bara = Width.y, Height_Bara = Height.y, Condition_Bara = Condition, Condition = CRM, 
          DiameterMin = Width.x, Height_Adela = Height.x, RT_numberGE = RT_number, RT_number = RTDescription, 
          TopoID2017 = `2017identifier`, TopoID = TopoID.x,
@@ -168,12 +176,12 @@ mnd2010 <- abmounds %>%
   select(-one_of("Source.x", "Excav", "Certainty", "Necropolis", "GC", "TopoID.y", "ElevationTopo")) %>%  #remove needless
   select(-one_of("Latitude", "Longitude", "Northing", "Easting")) #remove sensitive and incomplete
 
-# fixing date
+# Fixing Date
 
 mnd2010 <- mnd2010 %>% 
   mutate(Date = date(Timestamp))
 
-# additional streamlining of Height is necessary as 12 values do not agree
+# Streamlining of Height is necessary as 12 values do not agree
 
 mnd2010$Height_Adela[!mnd2010$Height_Adela%in%mnd2010$Height_Bara]
 heightissue <- !mnd2010$Height_Adela%in%mnd2010$Height_Bara
@@ -204,32 +212,143 @@ mnd2010 <- mnd2010 %>%
   rename(HeightMax=Height_Adela) 
 
 
+
+# Type in 2010?
+ 
+levels(as.factor(mnd2010$TypeGE))
+levels(as.factor(mnd2010$TypeBara))
+mnd2010 %>% filter(TypeBara == "Surface Scatter")
+
+# Review type in TypeBara as Type is only 'mound'; need to fix 45 NAs if we are to use this column
+mnd2010 %>% 
+  select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
+  group_by(TypeBara) %>% 
+  summarize(Havg = mean(!is.na(HeightMax)), n()) 
+
+# If we exclude Burial Mound types, the NAs don't show
+mnd2010new %>% 
+  select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
+  filter(TypeBara != "Burial Mound") %>% 
+  group_by(TypeBara) %>%
+  tally()
+
+# Eliminate NAs: 
+# first, createa a temp df that contains all NAs from TypeBara and verify in photos
+temp <- mnd2010 %>% 
+  select(TRAP, TypeGE, TypeBara, HeightMax, DiameterMax, DiameterMin, Condition, AllNotes) %>% 
+  filter(is.na(TypeBara)) # %>% 
+# head(25)
+#  filter(HeightMax<1.1 | DiameterMax <15 | DiameterMin < 15) # couple Heights are wrong .e.g. 9302 is clearly 1m at least
+# , 9107 and 9106 is extinct, 9097 is excavated? 9098 is not a mound?, 9089 is a mound
+
+# photo results classified:  
+mounds <- c(9089, 9090, 9091, 9092, 9093, 9094, 9095, 9096, 9099:9105, 9108, 9109, 9305:9312)  
+ext <- c(9097, 9106,9107,9214, 9303, 9304, 9301, 9313, 9435, 9438)  
+unc <-  c(9077, 9098)
+remnants <-  temp$TRAP[temp$TRAP%nin%c(mounds,ext,unc)] 
+
+# replace NA values
+`%nin%` = Negate(`%in%`)
+
+mnd2010 <- mnd2010 %>% 
+  #select(TRAP, TypeBara) %>% 
+  #filter(is.na(TypeBara)) %>% 
+  mutate(TypeBara = case_when(TRAP%in%mounds ~  "Burial Mound", 
+                              TRAP%in%ext ~ "Extinct Burial Mound",
+                              TRAP%in%unc ~ "Burial Mound?", 
+                              TRAP%in%remnants ~ "Burial Mound",
+                              TRAP%nin%c(mounds,ext,unc)~ TypeBara)) %>% 
+  rename(Type = TypeBara)
+
+
+levels(as.factor(mnd2010$Type))
+
+mnd2010new %>% 
+  group_by(Type) %>% 
+  tally()
+
+# Further classification vs dimension checks
+# mndXXXX %>% 
+#   select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>% 
+#   filter(HeightMax<0.6 | DiameterMax <15 | DiameterMin < 15) %>% 
+#   tail(13)
+# mutate(Type = "Extinct Burial Mound") %>% 
+#   filter(HeightMax == 0) %>% 
+#   mutate(Type = "Uncertain Mound")
+# 
+# levels(as.factor(mnd2017$Type))
+
+
+
 #########################################################################################mnd2009
  
-# There are 11 shared columns between 2010 and 2009 
+# There are 12 shared columns between 2010 and 2009 
 dim(mnd2010) # 31 columns in 2010 dataset
 names(mnd2009)[which(names(mnd2009)%in%names(mnd2010))] # TopoID is extra in 2010
 
-# There are 10 shared columns between 2018 and 2009 
+# There are 11 shared columns between 2018 and 2009 
 dim(mnd2018) # 40 columns in 2018 dataset
 names(mnd2009)[which(names(mnd2009)%in%names(mnd2018))]
 
-# There are 10 shared columns between 2017 and 2009 
+# There are 11 shared columns between 2017 and 2009 
 dim(mnd2017) # 38 columns
-columnames <- names(mnd2009)[which(names(mnd2009)%in%names(mnd2017))]
 
-mnd2018[, columnames]
+# There are 36 shared columns between 2018 and 2017 
+dim(mnd2018) # 40 columns in 2018 dataset
+dim(mnd2017) # 38 columns in 2017 dataset
+names(mnd2018)[which(names(mnd2018)%in%names(mnd2017))]
+
+names_all <- names(mnd2009)[which(names(mnd2009)%in%names(mnd2017))]  # 11 shared columns (essential ones in there)
+names_manual <- names(mnd2009)[which(names(mnd2009)%in%names(mnd2010))] # 12 shared in 2009-2010, (TopoID being extra)
+names_faims <- names(mnd2018)[which(names(mnd2018)%in%names(mnd2017))] # 36 shared columns in 2017-2018 (richer data)
+
+mnd2018[, names_all]
 
 ################################################################################
 
-# MASTER DATASET
+# MASTER DATASET - conservative 2009-2010, liberal 2017-2018
 
-master <- rbind(mnd2018[, c(columnames, "geospatialcolumn")], mnd2017[, c(columnames, "geospatialcolumn")], 
-                mnd2010[, c(columnames, "geospatialcolumn")], mnd2009[, c(columnames, "geospatialcolumn")])
 master = NULL
-master <- rbind(mnd2009[, columnames], mnd2010[, columnames], mnd2017[, columnames], mnd2018[, columnames])
+master <- rbind(mnd2009[, names_all], mnd2010[, names_all], mnd2017[, names_all], mnd2018[, names_all])
+dim(master)
+
+# fix Type
+master$Type[master$Type=="Burial Mound?"] <- "Uncertain Mound"
+
+
 
 #################################################################################
 
-# CONTINUE THINKING: WHAT OTHER COLUMNS DO I NEED? TYPE (Burial mound vs other?)
 
+# NEXT STEPS: MERGE WITH SPATIAL DATA > NEW SCRIPT 06
+# NEXT STEPS: CONTINUE THINKING: WHAT OTHER COLUMNS DO I NEED? OR WHAT CHECKS ARE NEEDED?
+
+# - check for duplicates: 
+# - geospatial can be extracted from GIS
+# - TopoID can be extracted from GIS (but exists in 2009-2010)
+# - Type is not super consistent
+# BEWARE: 9313 geospatial info in mnd2010 may be wrong as is inconsistent with image (road on image, none in GE)
+
+
+# Duplicates (revisited mounds)
+master %>% 
+  group_by(TRAP) %>% 
+  filter(n()>1) %>% 
+  arrange(TRAP)
+
+dupl_ids <- master$TRAP[duplicated(master$TRAP)]
+# [1] 8051 9338 9071 9400  # need to be dealt with
+which(duplicated(master$TRAP))
+# [1]  80 778 779 839
+
+
+# Further dimension checks
+mndXXXX %>%
+  select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>%
+  filter(HeightMax<0.6 | DiameterMax <15 | DiameterMin < 15) %>%
+  tail(13)
+mutate(Type = "Extinct Burial Mound") %>%
+  filter(HeightMax == 0) %>%
+  mutate(Type = "Uncertain Mound")
+
+levels(as.factor(master$Type))

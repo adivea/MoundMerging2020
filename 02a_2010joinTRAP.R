@@ -3,9 +3,11 @@
 # the main aim is to have a dataset that tells us something about mound morphology for chronological modelling
 # it should not contain that many extinct mounds whose dimensions are unknown
 
-# Purpose
+# Goal
 
-# This script helps generate a clean 2010 dataset of visited mounds, an intermediate step towards verified mounds in Yambol from field surveys 2009-2018.
+# This script helps generate two clean datasets of 2010 visited mounds, 
+# one conservative (only mounds - abmounds) and one more liberal(potential mounds - ableftj)
+# This is an intermediate step towards verified mounds in Yambol from field surveys 2009-2018, as 2010 has been forked and needs conciliation.
 
 # The cleaning happens in the following stages: 
 # 1) it takes 2010 version adela and bara dataset as two inputs. 
@@ -29,7 +31,7 @@ mounds_bara %>%
 
 ######################################################################################################################
 
-## PARTIAL JOIN - MEANINGFUL MOUNDS ABMOUNDS
+## PARTIAL JOIN - MEANINGFUL MOUNDS ABMOUNDS AND POTENTIAL MOUNDS ABLEFTJ
 
 ## MERGE BY TRAP
 # I consider my dataset better and so start with a left join to adela's table via TRAP id to preserve adela's data and append bara's
@@ -85,12 +87,17 @@ ableftj %>%
   filter(SomethingPresentOntheGround != "tell")
 # >> 417 results
 
+# Final notes on left join:
+# Immediate product ableftj contains 444 features (same as Adela) and represents both verified mounds and potential mounds (that exist in maps, but were ambiguous or destroyed in the field)
+# Filtered product of left join, abmounds, contains 406 features that were classified as burial mounds on the ground.
+# Both are usable, ableftj for analysis needing locations mostly and not dimensions, abmounds for analysis where dimensions are essential
 
 ################################################################################################
 
-## FULL JOIN AB2010
+## FULL JOIN AB2010 - ALL ATTEMPTED MAP FEATURES FROM 2010
 
-# now try a full join (both match). It can be an issue as erroneous data in bara is added, and needs to be filtered
+# full join of adela and bara (all TRAP ids from both), resulting in 493 rows. 
+# Collating all TRAP IDs can be an issue as erroneous TRAP ids can seep in. ID 1936 needs to be filtered, for example.
 ab2010 <- full_join(mounds_adela, mounds_bara[-which(mounds_bara$TRAPCode==1936),],   # 1936 is a wrong number (too low to have been used in Yambol)
                      by = c("TRAP" = 'TRAPCode'))
 
@@ -109,9 +116,24 @@ ab2010 %>%
   filter(is.na(SomethingPresentOntheGround)) %>% 
   filter(grepl("Mound",Type)) 
 
-# 10 records here range from Burial Mound(?) to Extinct Burial Mound, 6/11 lack dimensions and show inconsistencies
-# such as Extinct status but 5 m height. Topo ID of 1936 (not a range used in Yambol, )
-# not worth it to use ab2010 grab these 10-11 remainders from bara. Continue with Adela or abmounds
+
+# FINAL NOTES ON FULL JOIN
+# There are issues with the full join final dataset, such as:
+# - containing 50 unvisited features with no attributes, 
+# - same (406) number of mounds as in the most conservative dataset of abmounds above
+# - 10 records here range from Burial Mound(?) to Extinct Burial Mound, 
+# - 6/11 lack dimensions and show inconsistencies such as Extinct status but 5 m height. 
+# - Topo ID of 1936 (not a range used in Yambol, )
+# These were detected upon cursory review and probably contain more issues. 
+
+
+#######################################################################################
+# SUMMARY
+
+# All in all it not worth it to use ab2010 (n=493) to grab 10-11 additional potential mounds from bara, given the ~70 problematic features and the 
+# same amount of 'mounds' (n=406). 
+# ab2010 is only useful for remote sensing analysis, with 70 uncertain and 406 certain features. 
+# Analysis depending on attributes should use abmounds or ableftj
 
 
 
