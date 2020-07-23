@@ -1,4 +1,4 @@
-## CREATING MASTER DATASET
+##### CREATING MASTER DATASET
 
 # Requires couple prerequisites, such as 
 # 1) dropping and renaming columns to achieve consistency between datasets
@@ -29,10 +29,7 @@ library(lubridate)
 mnd2009 <- mnd2009 %>% 
   select(-one_of("LUCheckedinGE", "Year", "Mo", "Day", "Lat", "Long")) %>% 
   filter(!grepl("*GE*", Type))
-
-# fix the Dates to read as year-mo-day
-mnd2009 <- mnd2009 %>% 
-  mutate(Date = dmy(Date))
+# got 15 columns, 80 observations now
 
 # rename columns to standard 
 mnd2009 <- mnd2009 %>% 
@@ -313,8 +310,10 @@ master <- rbind(mnd2009[, names_all], mnd2010[, names_all], mnd2017[, names_all]
 dim(master)
 
 # fix Type
+levels(as.factor(master$Type))
 master$Type[master$Type=="Burial Mound?"] <- "Uncertain Mound"
 
+write.csv(master, "output_data/Master0918.csv")
 
 
 #################################################################################
