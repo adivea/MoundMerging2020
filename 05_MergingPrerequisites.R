@@ -1,5 +1,10 @@
 ##### CREATING MASTER DATASET
 
+# Goal
+# Create a master dataset of all visited features in Yambol and surroundings from 2009-2018, which can be used to generate derivates, 
+# such as all visited features in Yambol, all potential mounds in Yambol and surroundings, and all potential and all confirmed mounds in Yambol
+
+ 
 # Requires couple prerequisites, such as 
 # 1) dropping and renaming columns to achieve consistency between datasets
 # 2) aggregating notes into a single column_to_rownames
