@@ -1,14 +1,30 @@
 ############################################################################################################
 #             Creating a master 2010 verified mound dataset
 # the main aim is to have a dataset that tells us something about mound morphology for chronological modelling
-# it should not contain that many extinct mounds whose dimensions are unknown
-# it might contain all potential mounds (digitized from historical maps with TopoIDs and visited or remotely sensed)
+# This script is an intermediate step towards the master dataset of verified mounds in Yambol from field surveys 2009-2018, 
+# as 2010 has been forked and needs conciliation. In this script we use Topo IDs to carve out a 2010 dataset.
+# This 2010 verified dataset should not contain too many features whose dimensions are unknown or that don't have the potential of having once been a mound
+# This 2010 dataset might contain all potential mounds (digitized from historical maps with TopoIDs and visited or remotely sensed)
 
+# Goal, Inputs and Outputs
+
+# As input this script takes the 2010 datasets created with 01_LoadData.R,
+# specifically, mounds_adela and mounds_bara. 
+# This script then helps generate one broad dataset of 2010 map mounds by a full-join of those 2010 records that have a TopoID.
+# The final dataset topo_mounds is useful for analysis of survey and remote sensing methods, as it covers all map features and
+# observations of their characteristics from both pedestrian survey and remote sensing in GoogleEarthPro.
+# the output is a topo_mounds (n=289) dataset of all potential map mounds with attributes collected during groundtruthing. 
+# It should encompass all mounds whether or not they got a TRAP ID and be a suitable input for 03_RScheck2010.Rmd.
+
+
+# Process
 # This procedure requires several steps: 
 # 1) liberal full join of verified or attempted mounds of adela and bara's by TopoID
 # 2) verifying and sanity checking of attributes such as mound IDs etc.
-# 3) compare ground truthing data (LU, dimensions and CRM) and asses divergence. LU in 2010 adela is from GEpro remote sensing, in bara from formse
-# 4) output is a ab2010 (n=493) dataset of all potential map mounds with attributes collected during groundtruthing. Should encompass all mounds whether or not they gota  TRAP ID.
+# 3) compare ground truthing data (LU, dimensions and CRM) between adela and bara and asses divergence. 
+# LU in 2010 adela is from GEpro remote sensing, in bara it originates from scanned forms and photos (because forms are often incomplete or it is not clear whether they refer to on the top or around LU.
+# 4) The output can be fed into the 03_RScheck2010.Rmd for further analysis
+
 
 # A more conservative fork on this process is:
 # 1) Merge only verified Type== mound features from adela and bara to cut to the chase
@@ -41,7 +57,7 @@ length(which(mounds_a$TopoID%in%mounds_b$TopoID)) # ok there were at least 249 s
 # lets try full join - to return all TopoIDs from both datasets with NA where either x or y dataset do not have a match
 topo_mounds <- full_join(mounds_a, mounds_b, 
                             by = "TopoID", copy = FALSE, suffix = c(".as", ".bw")) # 340 observations, 
-topo_mounds # 339 obs upon liberal merge, this is 100 TopoIDs are not shared among adela and bara datsets. 
+topo_mounds # 339 obs upon liberal merge, this is 100 TopoIDs are not shared among adela and bara datasets. 
 # These 100 unshared TopoIDs represent map locations where nothing was found.
 
 
@@ -117,14 +133,14 @@ topo_mounds <- topo_mounds %>%
 
 
 # SUMMARY
-# TOPO_MOUNDS DATASET NOW CONTAINS MOSTLY MOUNDS, BUT MAY EXLCUDE SOME FROM ADELA'S DATASET BASED ON TRAP, 
+# TOPO_MOUNDS DATASET NOW CONTAINS MOSTLY MOUNDS, BUT MAY EXCLUDE SOME FROM ADELA'S DATASET BASED ON TRAP, 
 # MIGHT NEED TO RETURN TO RELIABLE MOUNDS FROM ABMOUNDS
 # topo dataset is good to check consistency of RS readings on landuse with those of Bara' team.
 
 
 
 ##############################################################################
-# LANDUSE ENRICHMENT OF ADELA's DATA
+# LANDUSE COMPARISON OF ADELA's (RS) DATA WITH BARA'S (SURVEY) DATA
 
 # Overall number of mounds in different landuse categories according to bara/forms from 2010
 topo_mounds %>% 

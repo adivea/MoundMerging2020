@@ -42,7 +42,7 @@ mnd2009 <- mnd2009 %>%
          DataProvenance = Provenance, HeightMax = HeightGC) 
 
 # 2009 mounds are good to go: Source "Survey" is guaranteed mounds, source "RS" or "LGV"not always. 
-# 2009 contain 81 potential mounds, 78 are certain, 3 c(8051, 8054, 8055) are uncertain.
+# 2009 contain 80 potential mounds, 77 are certain, 3 c(8051, 8054, 8055) are uncertain.
 # (missing dates signal inaccessible locations or problematic ones)
 
 
@@ -56,11 +56,11 @@ mnd2017 <- mnd2017 %>%
 
 
 # Aggregate notes to two columns using, https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr
-# Look where notes are distributed
+# Look where notes are distributed >> 7 columns
 mnd2017 %>% 
   select(grep(" 2",names(mnd2017)), grep("[Nn]ote",names(mnd2017)))
 
-# unite them with sep = ",", remove = TRUE, na.rm = TRUE
+# Unite them into two columns with sep = ",", remove = TRUE, na.rm = TRUE
 mnd2017 <- mnd2017 %>% 
   unite(AllNotes, c(grep("[Nn]ote",names(mnd2017))), sep = ",", remove = TRUE, na.rm = TRUE) 
 mnd2017$AllNotes
@@ -69,8 +69,8 @@ mnd2017 <- mnd2017 %>%
 mnd2017$DamageNotes  # we have reduced the initial 46 to 37 variables
 
 # Clean up the Date
-dmy(mnd2017$Date) # needs appending 2017 to it _OpenRefine task
-#test
+dmy(mnd2017$Date) # needs appending 2017 to it else it does not work, continue below
+#test the command - does the data look like dates now?
 paste(mnd2017$Date, sep="-","2017")
 #implementation
 mnd2017 <- mnd2017 %>% 
@@ -82,7 +82,7 @@ mnd2017 %>%
   glimpse()
 
 mnd2017 <- mnd2017 %>% 
-  mutate(Date=dmy(Date))
+  mutate(Date=ymd(Date))
 
 # Check Type
 levels(as.factor(mnd2017$Type))
@@ -102,18 +102,19 @@ mnd2018 <- mnd2018 %>%
 
 # Fix date
 mnd2018 <- mnd2018 %>% 
-  mutate(Date = date(Timestamp))
+  mutate(Date = date(Timestamp)) %>% 
+  mutate(Date = ymd(Date))
 
 # Aggregate notes to a single column 
 # using, https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr
 
-# Look where notes are distributed
+# Look where notes are distributed > 12 notes columns here
 mnd2018 %>% 
   select(grep("[Nn]ote",names(mnd2018)))
 
 # I wish to distinguish betweeen generic notes and damage comments
-allnotes <- names(mnd2018[grep("[Nn]ote",names(mnd2018))])[c(1,6,2,3,4,5,7)]
-damagenotes <- names(mnd2018[grep("[Nn]ote",names(mnd2018))])[8:12]
+allnotes <- names(mnd2018[grep("[Nn]ote",names(mnd2018))])[c(1,6,2,3,4,5,7)] # generic notes reordered
+damagenotes <- names(mnd2018[grep("[Nn]ote",names(mnd2018))])[8:12] # condition-related notes
 
 # apply these column names vectors to aggregate the notes columns as desired
 mnd2018 <- mnd2018 %>% 
@@ -124,64 +125,66 @@ mnd2018  # we have reduced the initial 58 to 40 variables
 
 # Check Type
 levels(as.factor(mnd2018$Type))
-# All done with 2018
+# All done with 2018, it still needs some column dropping (e.g. timestamp)
 
 
 ### 2010 Dataset
 
-# Input is abmounds (n = 406), a conservative result of a left join between adela and bara 2010 datasets, filtered by type== mound. 
-# Another potential input is ableftj (n=444), which is a more liberal result of left join with 38 features that were mapped as mounds, look like mounds, but are 
+# Input is abmounds (n = 406), a conservative result of a left join between adela and bara 2010 datasets,
+# filtered by type== mound. 
+# Another potential input is ableftj (n = 444), which is a more liberal result of left join with 38 features that were mapped as mounds, look like mounds, but are 
 # bunkers, waterstations and other features instead. 
 
 # Drop undesired columns. If you are running this the first time, uncomment.
 
-# abmounds <- abmounds[,-c(40:44,46)]  # dropping extra info from digitisation
-# abmounds<- abmounds[,-c(46, 48,50:52)] # dropping additional coordinates
-# abmounds <- abmounds[,-47]
-# abmounds[3,40:47]
-# abmounds %>% 
-#   select(-one_of("Excav", "Necropolis","ElevationTopo", "Certainty", "GC", )
+names(abmounds)
+
+# Drop unwanted columns from 58 to 37
+ab <- abmounds %>% 
+   select(-one_of("Excav", "Necropolis","ElevationTopo", "Certainty", "GC",
+         "Leader", "Datum" ,"SurfaceMaterial","SampleCollected","uuid","createdBy",
+         "Latitude","Longitude","Northing","Easting","Source_1","GC_1",
+         "Mound_ID","DateCompl0","y_proj","x_proj"))
 
 
 # Consolidation of notes, renaming of columns
-
-abmounds <- abmounds %>% 
-  rename(TopoMapHeight=Note_1) %>% 
-  rename(RSNotes=X18, TypeBara=Type, LU_AroundRS = Landuse_AroundRS, LU_TopRS=Landuse_TopRS, DiameterMax = Length, 
-         Diameter_Bara= `Length (max, m)`, PrincipalSourceOfImpact = Principal, 
-         ArchaeologicalPotential=ArcheoPotential, MostRecentDamageWithin=When) %>% 
+names(ab)
+ab <- ab %>% 
+  rename(TopoMapHeight= Note_1) %>% 
+  rename(TypeBara=Type, LU_AroundRS = Landuse_AroundRS, LU_TopRS=Landuse_TopRS, 
+         DiameterMax = Length, Diameter_Bara= `Length (max, m)`, 
+         PrincipalSourceOfImpact = Principal, 
+         ArchaeologicalPotential=ArcheoPotential, 
+         MostRecentDamageWithin=When, RSNotes=X18) %>% 
   unite(RTDescription, c("RTNumber", "RTPosition", "RTDescription"), sep = ";", remove = TRUE, na.rm = TRUE) 
 
 # checking which TopoID to retain  - .x is better
-problemTopoID <- which(!abmounds$TopoID.x%in%abmounds$TopoID.y)
-abmounds$TopoID.y[problemTopoID]
+problemTopoID <- which(!ab$TopoID.x%in%ab$TopoID.y)  # 35 discrepancies in Topo IDs btw adela and bara
+ab$TopoID.y[problemTopoID] # most are zeroes in Bara, only 200244 a problem, which is perhaps a typo?? CHECK IN GE
 
-# fixing Date column (happenned earlier above - try it if starting from scratch!)
-# length(which(is.na(abmounds$Date))) # ok 73 don't have a date
-# 
-# abmounds <- abmounds %>% 
-#   mutate(Date=paste(abmounds$Date, sep="-","2010")) %>% 
-#   mutate(Timestamp=dmy(Date)) %>% 
-#   glimpse()
+# Fixing Date column (happenned earlier above - try it if starting from scratch!)
+# length(which(is.na(ab$Date))) # ok 73 don't have a date
+
+ab <- ab %>%
+  mutate(Date=paste(abmounds$Date, sep="-","2010")) %>%
+  mutate(Date=dmy(Date)) %>%
+  glimpse()
 
 
-# Generating finalized 2010 conservative dataset (n =406, 32 columns)
-mnd2010 <- abmounds %>% 
+# Generating finalized 2010 conservative dataset (n =406, 30 columns)
+mnd2010 <- ab %>% 
   rename(TypeGE=SomethingPresentOntheGround, LU_Around = LandUseAround, LU_Top=LanduseOn, LU_Source=LandUseSource,
          Width_Bara = Width.y, Height_Bara = Height.y, Condition_Bara = Condition, Condition = CRM, 
          DiameterMin = Width.x, Height_Adela = Height.x, RT_numberGE = RT_number, RT_number = RTDescription, 
          TopoID2017 = `2017identifier`, TopoID = TopoID.x,
-         HeightMap = TopoMapHeight, Source = Source.y, DiameterMax_Bara=Diameter_Bara, DiameterMin_Bara=Width.y) %>% 
+         HeightMap = TopoMapHeight, Source = Source.y, 
+         DiameterMax_Bara=Diameter_Bara, DiameterMin_Bara=Width.y) %>% 
   unite(Name_BG, c("BLG_Name","NameTopo"), sep = ";", remove = TRUE, na.rm = TRUE) %>% 
   unite(AllNotes, c("Notes", "Description"), sep = "; Bara:", remove = TRUE, na.rm = TRUE) %>% 
   unite(RT_Number, c("RT_number", "RT_numberGE"), sep = "; GE:", remove = TRUE, na.rm = TRUE) %>% 
-  select(-one_of("Source.x", "Excav", "Certainty", "Necropolis", "GC", "TopoID.y", "ElevationTopo")) %>%  #remove needless
-  select(-one_of("Latitude", "Longitude", "Northing", "Easting")) #remove sensitive and incomplete
+  select(-one_of("Source.x", "TopoID.y"))   #remove needless
+ 
 
-# Fixing Date
-
-mnd2010 <- mnd2010 %>% 
-  mutate(Date = date(Timestamp))
 
 # Streamlining of Height is necessary as 12 values do not agree
 
@@ -206,6 +209,7 @@ mnd2010$Height_Adela[38] <- "0.5"  #overwriting 9057 height with Baras value
 mnd2010$TRAP[38] 
 mnd2010[278,]
 
+# Which Height column is better? There are more missing values in Height_Bara
 which(is.na(as.numeric(mnd2010$Height_Adela)))  # 6 NAs get introduced by coercion to numeric
 which(is.na(as.numeric(mnd2010$Height_Bara)))  # 48 NAs get introduced to Bara
 
@@ -215,7 +219,7 @@ mnd2010 <- mnd2010 %>%
 
 
 
-# Type in 2010?
+# Streamline feature Type attribute in 2010?
  
 levels(as.factor(mnd2010$TypeGE))
 levels(as.factor(mnd2010$TypeBara))
@@ -228,7 +232,7 @@ mnd2010 %>%
   summarize(Havg = mean(!is.na(HeightMax)), n()) 
 
 # If we exclude Burial Mound types, the NAs don't show
-mnd2010new %>% 
+mnd2010 %>% 
   select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
   filter(TypeBara != "Burial Mound") %>% 
   group_by(TypeBara) %>%
@@ -265,9 +269,14 @@ mnd2010 <- mnd2010 %>%
 
 levels(as.factor(mnd2010$Type))
 
-mnd2010new %>% 
+mnd2010 %>% 
   group_by(Type) %>% 
   tally()
+
+mnd2010 %>% 
+  select(TRAP, TypeGE, Type, HeightMax, Condition) %>% 
+  group_by(Type) %>% 
+  summarize(Havg = mean(!is.na(HeightMax)), n()) 
 
 # Further classification vs dimension checks
 # mndXXXX %>% 
@@ -320,6 +329,7 @@ master$Type[master$Type=="Burial Mound?"] <- "Uncertain Mound"
 
 write.csv(master, "output_data/Master0918.csv")
 
+# 1181 records in the master dataset with 11 variables
 
 #################################################################################
 

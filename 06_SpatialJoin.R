@@ -23,15 +23,16 @@ library(sf)
 library(tidyverse)
 
 
-# load spatial data
+# load spatial data, 1240 features created in ArcGIS (1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
 shapefile <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMax.shp")
 plot(shapefile$geometry)
 plot(shapefile$geometry[which(shapefile$TRAP%in%master$TRAP)]) # difference of ca 60 points which lack dimensions
 
+
+# a few diagnostics on matching TRAP ids 
 length(which(shapefile$TRAP%in%master$TRAP)) # 1174 shapes have match in master dataset
 length(which(shapefile$TRAP%nin%master$TRAP)) # 66 shapes are missing from master
 (missingshapes <- sort(shapefile$TRAP[which(shapefile$TRAP%nin%master$TRAP)]))
-
 
 miss_atrap10 <- adelatrap10[which(adelatrap10%nin%baratrap10)] # which of adela's TRAP ids are not in Baras (and therefore missing from shapefile)
 miss_btrap10 <- baratrap10[which(baratrap10%nin%adelatrap10)] # which of bara's TRAP ids are not in Adela (and missing from master)
@@ -45,19 +46,14 @@ length(which(missingshapes%in%mnd2018$TRAP))# 0 missing shapes come from 2018
 
 # the data has been filtered out of the component datasets probably becuase of missing dimensions.
 
-
 # load csv with spatial data DONT USE
-verified <- read_csv("raw_data/Verified0918.csv")# this file is now obsolete and superceded; it represents the conservative bara output with sliven data 
-verified <- verified %>% 
-  select(TRAP, Xtext,Ytext, Easting, Northing, Topo_ID) %>% 
-  rename(Longitude = Xtext, Latitude = Ytext)
+# verified <- read_csv("raw_data/Verified0918.csv")# this file is now obsolete and superceded; it represents the conservative bara output with sliven data 
+# verified <- verified %>% 
+#   select(TRAP, Xtext,Ytext, Easting, Northing, Topo_ID) %>% 
+#   rename(Longitude = Xtext, Latitude = Ytext)
 
 
 # Join?
-
-
-
-
 
 master %>% 
   group_by(Type) %>% 
@@ -72,9 +68,13 @@ master %>%
 
 master %>%
   filter(Type == "Burial Mound" | Type == "Extinct Burial Mound")
-# 833 mounds, 990 mound and extinct mounds
+# 833 mounds, 990 mound or extinct mounds
 
 master %>% 
   filter(TRAP%in%shapefile$TRAP) %>% 
   filter(Type == "Burial Mound")
-# 797 mounds
+# 797 mounds 
+# on second attempt, I get 831 mounds with a matching ID in shapefile, or 988 extinct and mounds 
+
+
+master_points <- left_join(master, shapefile, by = "TRAP", copy = FALSE) ## maybe I need to join to the shapefile!!

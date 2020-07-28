@@ -1,14 +1,25 @@
 ############################################################################################################
 #             Creating a master 2010 verified mound dataset
-# the main aim is to have a dataset that tells us something about mound morphology for chronological modelling
-# it should not contain that many extinct mounds whose dimensions are unknown
+# the main aim of this script is to have a master dataset that tells us something about mound morphology and surrounding landuse
+# for chronological modelling and for vulnerability modelling
+# This script is an intermediate step towards the master dataset of verified mounds in Yambol from field surveys 2009-2018, 
+# as 2010 has been forked and needs conciliation. In this script we use TRAP IDs to carve out a 2010 dataset.
+# 2010 verified dataset should not contain too many features whose dimensions are unknown or that don't have the potential of having once been a mound
 
-# Goal
 
-# This script helps generate two clean datasets of 2010 visited mounds, 
-# one conservative (only mounds - abmounds) and one more liberal(potential mounds - ableftj)
-# This is an intermediate step towards verified mounds in Yambol from field surveys 2009-2018, as 2010 has been forked and needs conciliation.
+# Goal, Inputs and Outputs
 
+# As input this script takes the 2010 datasets created with 01_LoadData.R,
+# specifically, mounds_adela and mounds_bara. This script then helps generate two clean datasets 
+# of 2010 visited mounds for use in 05_MergingPrerequisites.R 
+# 1) conservative mostly mounds  - abmounds dataset, and 
+# 2) liberal, potential mounds - ableftj dataset (containing waterhouses, etc.). 
+# There is also a third, broadest dataset, ab2010 that is a union of bara and adela, 
+# but it's messy and therefore not of much use until a case study requires such broad dataset.
+
+
+
+# Process
 # The cleaning happens in the following stages: 
 # 1) it takes 2010 version adela and bara dataset as two inputs. 
 # 2) It merges via left join to adela's dataset via TRAP ID and compare two legacy datasets, address discrepancies, and extracts ground truthing information. 
@@ -24,7 +35,7 @@ source(LoadData.R)
 summary(mounds_adela$TRAP)
 summary(mounds_bara$TRAPCode)
 mounds_bara %>% 
-  filter(TRAPCode==0)
+  filter(TRAPCode==0)  # 10 mounds lack TRAP ID in Bara's dataset
 
 ### Merge datasets to compare data quality
 # https://dplyr.tidyverse.org/reference/join.html
@@ -34,14 +45,20 @@ mounds_bara %>%
 ## PARTIAL JOIN - MEANINGFUL MOUNDS ABMOUNDS AND POTENTIAL MOUNDS ABLEFTJ
 
 ## MERGE BY TRAP
-# I consider my dataset better and so start with a left join to adela's table via TRAP id to preserve adela's data and append bara's
+# I consider adela dataset better (verified from several sources) and so we start with a left join 
+# of bara's to adela's data via TRAP ID to preserve adela's data and append bara's
 # all mounds should have TRAP number since they have been surveyed (in theory) and verified. 
-#Line 21-22 shows that Bara's dataset has 10 mounds with missing TRAP ID. These are missing because mounds were not reachable/accessible in the field.
+# Line 33-34 shows that Bara's dataset has 10 mounds with missing TRAP ID. 
+# These are missing because mounds were not reachable/accessible in the field and field procedure was not fully determined 
+# (we had not trusted the maps enough to give .
 
 ableftj <- left_join(mounds_adela, mounds_bara, 
-                       by = c("TRAP" = 'TRAPCode')) # 444 observations on the basis of 444 adelas
+                       by = c("TRAP" = 'TRAPCode')) # 444 observations on the basis of 444 adela records
+
+# What kind of features hide behind non-map-features (TopoIDs=0) in Adela and Bara? 
+# How many non-map features were encountered in 2010 and what were they?
 ableftj%>% 
-  filter(TopoID.x==0) %>% 
+  filter(TopoID.x==0) %>%   # 
   select(TRAP, SomethingPresentOntheGround, TopoID.x, TopoID.y, Width.x, Width.y) %>% 
   group_by(SomethingPresentOntheGround) %>% 
   tally()
@@ -49,13 +66,20 @@ ableftj%>%
 # 152 of 444 features do not have TopoID, 146 of these 152 are mounds, and 6 are other. 
 
 
-# filtering out meaningful mounds
+# Searching for a borderline between actual clearcut mounds, potential or extinct mounds and other features.
+
 ableftj %>% 
-  #filter(SomethingPresentOntheGround == "mound") # 406 out of 444 have a mound on the ground >> MOST MEANINGFUL
-   filter(SomethingPresentOntheGround != "mound") %>%  # 38 are not immedaitely identifiable as a mound on the ground
-   group_by(as.factor(SomethingPresentOntheGround)) %>% 
+  filter(SomethingPresentOntheGround == "mound") %>% 
+  group_by(as.factor(Type)) %>% 
+  tally()
+# 406 out of 444 have an actual or extinct mound on the ground >> MOST MEANINGFUL
+   
+
+ableftj %>%
+  filter(SomethingPresentOntheGround != "mound") %>%  # 38 are not immediately identifiable as a mound on the ground
+  group_by(as.factor(SomethingPresentOntheGround)) %>% 
    tally()
-# out of 444 features, 406 have a mound identified in the field, while 38 are recognized as something else
+# out of 444 features, 38 are classified as something else than a burial mound: 
 
 # A tibble: 8 x 2
 # `as.factor(SomethingPresentOntheGround)`     n
