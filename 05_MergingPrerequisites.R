@@ -323,16 +323,122 @@ master = NULL
 master <- rbind(mnd2009[, names_all], mnd2010[, names_all], mnd2017[, names_all], mnd2018[, names_all])
 dim(master)
 
-# fix Type
-levels(as.factor(master$Type))
-master$Type[master$Type=="Burial Mound?"] <- "Uncertain Mound"
 
-write.csv(master, "output_data/Master0918.csv")
 
 # 1181 records in the master dataset with 11 variables
 
 #################################################################################
+# FIX UP MASTER CATEGORIES
 
+# Fix Type
+levels(as.factor(master$Type))
+master$Type[master$Type=="Burial Mound?"] <- "Uncertain Mound"
+
+# Streamline LU spelling
+master %>% 
+  group_by(LU_Around) %>% 
+  tally()
+
+master %>% 
+  group_by(LU_Top) %>% 
+  tally()
+
+
+master$LU_Around[master$LU_Around =="Fallow"] <- "Annual agriculture"
+master$LU_Around[master$LU_Around =="Annual"] <- "Annual agriculture"
+master$LU_Around[master$LU_Around =="Pasture/Scrub"] <- "Scrub"
+
+master$LU_Top[master$LU_Top =="Fallow"] <- "Annual agriculture"
+master$LU_Top[master$LU_Top =="Annual"] <- "Annual agriculture"
+master$LU_Top[master$LU_Top =="Annual/Pasture"] <- "Annual agriculture"
+master$LU_Top[master$LU_Top =="Pasture/Scrub"] <- "Scrub"
+
+
+# Fix missing Landuse - substituting with Adela's RS values where missing in Bara's
+# 45 mounds lack LU values
+master %>% 
+  group_by(LU_Around) %>% 
+  tally()
+
+master %>% 
+  group_by(LU_Top) %>% 
+  tally()
+
+# lets see which ones
+LUmissing <- master %>% 
+  filter(is.na(LU_Around)) %>% 
+  select(TRAP)
+
+LUTmissing <- master %>% 
+  filter(is.na(LU_Top)) %>% 
+  select(TRAP)
+
+LUmissing$TRAP%in%LUTmissing$TRAP
+
+LUmiss_subs <- mnd2010 %>% 
+  filter(TRAP %in% LUmissing$TRAP) %>% 
+  select(TRAP, LU_AroundRS, LU_TopRS) %>% 
+  rename(LU_Around =LU_AroundRS,LU_Top=LU_TopRS)
+ 
+# Apply rows_patch(x,y) to update/change NA values in LU_Around and LU_Top in master dataset
+?rows_update
+
+# select the rows from master dataset
+names(master[which(is.na(master$LU_Around)),c(1,4,5)])
+master[which(master$TRAP%in%LUTmissing$TRAP),c(4)]
+# confirm the column names in both datasets are identical
+names(LUmiss_subs)%in%names(master[which(is.na(master$LU_Around)),c(1,4,5)])
+
+# rows_patch() is not working
+# master %>% 
+#   rows_patch(tibble(
+#     a = master[which(is.na(master$LU_Around)),c(1,4,5)],  
+#     b = LUmiss_subs), )
+#     #by = c("TRAP","TRAP")) # R complains so I hid the by =
+#                     # R complains that columns in y are not contained in x (they are)
+
+
+# different approach of updating specific values one by one with case_when, 
+# adding also "Nodata" trap ids to these
+
+abmounds %>% 
+  filter(LandUseAround == "Nodata") %>% 
+  select(TRAP, LU_AroundRS, LU_TopRS)
+  
+  
+
+
+LUmiss_subs$LU_Around
+scrub <- c(LUmiss_subs$TRAP[which(LUmiss_subs$LU_Around == "Scrub")], 9411,9412)
+annual <- c(LUmiss_subs$TRAP[which(LUmiss_subs$LU_Around == "Annual agriculture")],9419,9423)
+pasture <- c(LUmiss_subs$TRAP[which(LUmiss_subs$LU_Around == "Pasture")],9420)
+
+levels(as.factor(LUmiss_subs$LU_Top))
+Scrub <- c(LUmiss_subs$TRAP[which(LUmiss_subs$LU_Top == "Scrub")], 9411,9419)
+Annual <- LUmiss_subs$TRAP[which(LUmiss_subs$LU_Top == "Annual agriculture")]
+Pasture <- c(LUmiss_subs$TRAP[which(LUmiss_subs$LU_Top == "Pasture")], 9412,9420,9423)
+
+master <- master %>% 
+  #filter(is.na(master$LU_Around)|is.na(master$LU_Top)) %>% 
+  mutate(LU_Around = case_when(TRAP%in%scrub ~  "Scrub", 
+                              TRAP%in%pasture ~ "Pasture",
+                              TRAP%in%annual ~ "Annual agriculture", 
+                              TRAP%nin%c(scrub,pasture,annual)~ LU_Around),
+         LU_Top = case_when(TRAP%in%Scrub ~  "Scrub", 
+                             TRAP%in%Pasture ~ "Pasture",
+                             TRAP%in%Annual ~ "Annual agriculture",
+                             TRAP%nin%c(Scrub,Pasture,Annual)~ LU_Top))
+
+## FINAL LANDUSE: there should be no "Nodata" or NA's as it was replaced with RS data, where it exists. 
+master %>% 
+  group_by(LU_Top) %>% 
+  tally()
+master %>% 
+  group_by(LU_Around) %>% 
+  tally() %>% 
+  mutate(perc = n/sum(n)*100)
+
+#################################################################################
 
 # NEXT STEPS: MERGE WITH SPATIAL DATA > NEW SCRIPT 06
 # NEXT STEPS: CONTINUE THINKING: WHAT OTHER COLUMNS DO I NEED? OR WHAT CHECKS ARE NEEDED?
