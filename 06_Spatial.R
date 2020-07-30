@@ -6,16 +6,17 @@
 # Have both attribute and spatial data for verified mounds - conservative and liberal, in Yambol and everywhere.
 
 # Inputs
-
 # 1) Largest
-# Verified 2009-2018, as a shapefile Ver09_18.shp and Verified0819.csv exported from ArcGIS on 22 July. It represents a combination of bara's conservative in-Yambol dataset
+# Verified 2009-2018 mound dataset, as a shapefile Ver09_18.shp and Verified0819.csv exported from ArcGIS on 22 July. It represents a combination of bara's conservative in-Yambol dataset
 # with Sliven mounds added, as well as Malomirovo mounds from day 1 cut off, etc. 
 # These datasets are 1033 long, and collate Bara verified data with my additions (all of 2010 or only a section>>)
 # plus 2017 Sliven section of Elenovo dataset. It is on the conservative side.
 
 # 2) Conservative and more ethical 
-# 20092010VerifiedMounds (n = 887) - represents a bara's conservative in-Yambol dataset with Sliven mounds as well as Malomirovo mounds from day 1 cut off.
+# 20092010VerifiedMounds (n = 887) [check that name has not changed?] 
+# - represents a bara's conservative in-Yambol dataset 2009-2018 without Sliven mounds or Malomirovo mounds from day 1.
 
+# Outputs
 
 
 # Library
@@ -53,7 +54,7 @@ length(which(missingshapes%in%mnd2018$TRAP))# 0 missing shapes come from 2018
 #   rename(Longitude = Xtext, Latitude = Ytext)
 
 
-# Join?
+# Overlap between mound shapes in GIS and master dataset based on attributes.
 
 master %>% 
   group_by(Type) %>% 
@@ -72,9 +73,7 @@ master %>%
 
 master %>% 
   filter(TRAP%in%shapefile$TRAP) %>% 
-  filter(Type == "Burial Mound")
-# 797 mounds 
-# on second attempt, I get 831 mounds with a matching ID in shapefile, or 988 extinct and mounds 
+  #filter(Type == "Burial Mound")
+  filter(Type == "Burial Mound" | Type == "Extinct Burial Mound")
+# 831 mounds with a matching ID in shapefile, or 988 extinct and mounds 
 
-
-master_points <- left_join(master, shapefile, by = "TRAP", copy = FALSE) ## maybe I need to join to the shapefile!!

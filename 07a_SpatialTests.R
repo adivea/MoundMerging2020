@@ -1,0 +1,40 @@
+# testing st_nearest
+
+ls1 = st_linestring(rbind(c(0,0), c(1,0)))
+ls2 = st_linestring(rbind(c(0,0.1), c(1,0.1)))
+ls3 = st_linestring(rbind(c(0,1), c(1,1)))
+(l = st_sfc(ls1, ls2, ls3))
+
+p1 = st_point(c(0.1, -0.1))
+p2 = st_point(c(0.1, 0.11))
+p3 = st_point(c(0.1, 0.09))
+p4 = st_point(c(0.1, 0.9))
+
+(p = st_sfc(p1, p2, p3, p4))
+try(st_nearest_feature(p, l))
+try(st_nearest_points(p, l[st_nearest_feature(p,l)], pairwise = TRUE))
+
+r = sqrt(2)/10
+b1 = st_buffer(st_point(c(.1,.1)), r)
+b2 = st_buffer(st_point(c(.9,.9)), r)
+b3 = st_buffer(st_point(c(.9,.1)), r)
+circles = st_sfc(b1, b2, b3)
+plot(circles, col = NA, border = 2:4)
+pts = st_sfc(st_point(c(.3,.1)), st_point(c(.6,.2)), st_point(c(.6,.6)), st_point(c(.4,.8)))
+plot(pts, add = TRUE, col = 1)
+
+# draw points to nearest circle:
+nearest = try(st_nearest_feature(pts, circles))
+nearest
+if (inherits(nearest, "try-error")) # GEOS 3.6.1 not available
+  nearest = c(1, 3, 2, 2)
+ls = st_nearest_points(pts, circles[nearest], pairwise = TRUE)
+plot(ls, col = 5:8, add = TRUE)
+dist = st_distance(pts, circles[nearest], by_element = TRUE)
+dist
+
+# draw features on a map!!!
+
+pts = locator(20,type="p")
+pts[2]
+spts <- st_sfc(pts, crs = 4236)
