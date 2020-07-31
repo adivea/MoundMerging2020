@@ -17,6 +17,18 @@ Inputs:
 2) mounds_RS which is the product of remote sensing in GoogleEarth Pro of map features from 2010. It contains landuse cateories,which might help with topo_mounds
 
 
+# QUICK CHECK: How much help is the RS dataset going to be?
+```{r, echo = FALSE}
+paste0("There are ",length(which(mounds_adela$TopoID%in%mounds_RS$TopoID)), " mounds shared between 2010 adela and RS dataset") 
+paste0("There are ",length(which(mounds_bara$TopoID%in%mounds_RS$TopoID)), " mounds shared between 2010 bara and RS dataset") 
+revLU_b <-  mounds_bara$TopoID[which(mounds_bara$TopoID%in%mounds_RS$TopoID)]
+revLU_a <- mounds_adela$TopoID[which(mounds_adela$TopoID%in%mounds_RS$TopoID)]
+revLU <- c(revLU_a, revLU_b)
+paste0("There are ",length(revLU), " mounds shared between 2010 adela and bara, and RS dataset") 
+paste0(length(unique(revLU))," shared mounds between both 2010 and RS datasets are unique.") 
+```
+RS dataset is not going to be very helpful for 2010 dataset. Maybe we should try it with 2017-2018 data instead.
+
 # CHALLENGE: A NEW MERGE NEEDED and HERE WE NEED TO COMPARE BARA FIELD DATA WITH ADELA's RS DATA!
 ```{r}
 topo_rs <- left_join(topo_mounds, mounds_RS, 
@@ -39,7 +51,7 @@ topors %>%
   filter(!is.na(RS_Status))
 ```
 
-It seems that only 24 mounds out of 850 features have a counterpart TopoID in the Verified mounds! That seems awfully low for 2010 season, although not impossible. (Maybe the filtering was too drastic previously?)
+It seems that only 24 mounds out of 850 possible mound features have a counterpart TopoID in the Verified mounds! That seems awfully low for 2010 season, although not impossible. (Maybe the filtering was too drastic previously?)
 Consultation of the kmz files, the reason emerges:  remote sensig was done on "needGC" file, or the features we did not visit adequately to complement the 2010 field recording!
 Anyways. The Landuse line of research: chceking the common discrepancies between fieldwalking and remote sensing classificaiton of landuse. >  see line XXX below,
 
@@ -76,7 +88,7 @@ rstopo %>%
 ```
 
 Still only 24 have some sort of moundlike status
-Are the 34 mounds needing landuse in the rs dataset?
+Are the 34 mounds needing landuse in the RS dataset?
 
 ```{r}
 which(missingLU$TopoID %in% rstopo$TopoID)

@@ -1,9 +1,11 @@
 # Purpose
-# This script helps me create cleanish data on burial mounds in Yambol based on legacy data from field surveys 2009-2018. 
+# This script helps me create analysis-ready data from observations of burial mounds in Yambol province, 
+# based on field surveys during 2009-2018, collected using paper-digital hybrid workflow (2009-2010) and fully digital FAIMS-based workflow (2017-2018). 
+# After data collection, these datasets have been cleaned in OpenRefine and outputs of this streamlining were placed in the raw_data folder
+
 # The cleaning happens in 2 stages: 
 # 1) merge and compare two legacy datasets, address discrepancies, and extract ground truthing information. 
 # 2) enrich the landuse and status categories with remotely sensed data where it was missing on discrepant.
-
 
 # Libraries
 library(tidyverse)
@@ -15,35 +17,28 @@ mounds_RS <- read_csv(file = "raw_data/RSMounds_Temporal20200526.csv") # 850 obs
 mounds_adela <- read_csv(file = "raw_data/2010-LGV-AdelaLU-20200629.csv") # 444 obs legacy data verification Adela (original 2017 but streamlined in Open Refine with LU supplied by and dimensions verified via GoogleEarth) version
 mnd2017 <- read_csv(file = "raw_data/2017ElenovoAll.csv")
 mnd2018 <- read_csv(file = "raw_data/2018Bolyarovo.csv") # 282 records cleaned in OR from annotations
-mnd2009<- read_csv(file = "raw_data/2009Mounds_20200722.csv") # 83 records of 2009 survey and RS mounds that Adela verified in GEPro(exists on GDrive)
+mnd2009<- read_csv(file = "raw_data/2009Mounds_20200722.csv") # this file contains 2009 survey and RS mounds that Adela check in GEPro (exists on GDrive)
 
 
 
-# REVIEW (OPTIONAL) Looking at the 'OR-cleaned' data
+# Looking at the open-refined data
 
-glimpse(mnd2017)  # everything is a double or character, we'll need to sort the dates
+glimpse(mnd2017)  # only mounds in Yambol, bring in the whole dataset maybe? and check that it is cleaned up? > run through OR script?
 glimpse(mnd2018) # 2018MalomirMnds_AS needs cleaning of annotations, grab the OR 2018Bolyarovo dataset, 
 glimpse(mnd2009)
 
-length(unique(mnd2017$identifier))
-length(unique(mnd2018$identifier))
+# Checking IDs and data overlaps within datasets in 2010, 2017, 2018
 
-# Checking IDs and data overlaps within datasets
-
-length(which(mounds_adela$TopoID%in%mounds_bara$TopoID))
-length(which(mounds_adela$TRAP%in%mounds_bara$TRAPCode))
-which(mnd2017$identifier%in%mounds_bara) # any duplicates from 2010 in 2017 data?
-which(mnd2018$identifier%in%mounds_bara) # any duplicates from 2010 in 2018 data?
+length(which(mounds_adela$TopoID%in%mounds_bara$TopoID)) # 401 records share TopoID between 2010 bara and adela 
+length(which(mounds_adela$TRAP%in%mounds_bara$TRAPCode)) # 391 records share TrapID between 2010 bara and adela
+which(mnd2017$identifier%in%mounds_bara) # any duplicates from 2010 in 2017 data? None
+which(mnd2018$identifier%in%mounds_bara) # any duplicates from 2010 in 2018 data? None
 
 
-# How much help is the RS dataset going to be? 
-length(which(mounds_bara$TopoID%in%mounds_RS$TopoID)) # between 32 adn 38 mounds are shared in bara, adela and RS data. NOT MUCH
-# revLU_b <-  mounds_bara$TopoID[which(mounds_bara$TopoID%in%mounds_RS$TopoID)]
-# revLU_a <- mounds_adela$TopoID[which(mounds_adela$TopoID%in%mounds_RS$TopoID)]
-# revLU <- c(revLU_a, revLU_b)     
-# length(revLU)
-# length(unique(revLU))
-
-# Summary: 
-# Clearly the RS dataset was complementary to the LGV data, not duplicating it. It is therefore not useful to crosscheck against bara data.
-# Adela needs to add landuse data to 2010 via remote sensing to have a constrast/complement to bara landuse. DONE on 29 June And merged back in as mounds_adela from 2010_LGV_AdelaLU
+# Summary
+# 2010 datasets need serious work
+# 2009, 2017, 2018 datasets need work on convergence of column names and content datatype. 
+# RS dataset is not useful for 2010. It was complementary to 2010 LGV data, not duplicating/enriching it. 
+# As a result, Adela needed to review landuse data for 2010 features in Google Earth Pro to have a 
+# comparison to landuse encoded by bara' (potentially flawed or inconsistent). This remote sensing was DONE on 29 June 2020 
+# And merged back in as mounds_adela from 2010_LGV_AdelaLU.

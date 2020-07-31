@@ -1,12 +1,15 @@
 ############################################################################################################
 #             Creating a master 2010 verified mound dataset
+############################################################################################################
+
 # the main aim of this script is to have a master dataset that tells us something about mound morphology and surrounding landuse
-# for chronological modelling and for vulnerability modelling
+# for chronological modeling and for vulnerability modeling
 # This script is an intermediate step towards the master dataset of verified mounds in Yambol from field surveys 2009-2018, 
 # as 2010 has been forked and needs conciliation. In this script we use TRAP IDs to carve out a 2010 dataset.
 # 2010 verified dataset should not contain too many features whose dimensions are unknown or that don't have the potential of having once been a mound
 
 
+############################################################################################################
 # Goal, Inputs and Outputs
 
 # As input this script takes the 2010 datasets created with 01_LoadData.R,
@@ -18,8 +21,9 @@
 # but it's messy and therefore not of much use until a case study requires such broad dataset.
 
 
-
+############################################################################################################
 # Process
+
 # The cleaning happens in the following stages: 
 # 1) it takes 2010 version adela and bara dataset as two inputs. 
 # 2) It merges via left join to adela's dataset via TRAP ID and compare two legacy datasets, address discrepancies, and extracts ground truthing information. 
@@ -28,8 +32,12 @@
 # Libraries
 library(tidyverse)
 
-# Load the datasets
-source(LoadData.R)
+############################################################################################################
+# Load the inputs
+df_name <- c("mounds_adela", "mounds_bara")
+if (exists(df_name)){
+  is.data.frame(get(df_name))
+}  else source("LoadData.R")
 
 # Check for TRAP ID
 summary(mounds_adela$TRAP)
@@ -41,10 +49,10 @@ mounds_bara %>%
 # https://dplyr.tidyverse.org/reference/join.html
 
 ######################################################################################################################
-
-## PARTIAL JOIN - MEANINGFUL MOUNDS ABMOUNDS AND POTENTIAL MOUNDS ABLEFTJ
-
-## MERGE BY TRAP
+# LEFT JOIN BY TRAP - MEANINGFUL MOUNDS ABMOUNDS AND POTENTIAL MOUNDS ABLEFTJ
+############################################################################################################
+#
+## Left join to adela's dataset
 # I consider adela dataset better (verified from several sources) and so we start with a left join 
 # of bara's to adela's data via TRAP ID to preserve adela's data and append bara's
 # all mounds should have TRAP number since they have been surveyed (in theory) and verified. 
@@ -100,7 +108,7 @@ ableftj %>%
 # and keep the others. A conservative measure would be to grab explicit 'mounds' only.
 
 #Conservative mounds 2010
-abmounds <- ableftj %>% 
+mnd2010 <- ableftj %>% 
   filter(SomethingPresentOntheGround == "mound") 
 # 406 results
 
@@ -116,10 +124,10 @@ ableftj %>%
 # Filtered product of left join, abmounds, contains 406 features that were classified as burial mounds on the ground.
 # Both are usable, ableftj for analysis needing locations mostly and not dimensions, abmounds for analysis where dimensions are essential
 
-################################################################################################
-
-## FULL JOIN AB2010 - ALL ATTEMPTED MAP FEATURES FROM 2010
-
+############################################################################################################
+#  FULL JOIN AB2010 - ALL ATTEMPTED MAP FEATURES FROM 2010
+############################################################################################################
+#
 # full join of adela and bara (all TRAP ids from both), resulting in 493 rows. 
 # Collating all TRAP IDs can be an issue as erroneous TRAP ids can seep in. ID 1936 needs to be filtered, for example.
 ab2010 <- full_join(mounds_adela, mounds_bara[-which(mounds_bara$TRAPCode==1936),],   # 1936 is a wrong number (too low to have been used in Yambol)
@@ -140,8 +148,9 @@ ab2010 %>%
   filter(is.na(SomethingPresentOntheGround)) %>% 
   filter(grepl("Mound",Type)) 
 
-
+#########################################################################################################
 # FINAL NOTES ON FULL JOIN
+
 # There are issues with the full join final dataset, such as:
 # - containing 50 unvisited features with no attributes, 
 # - same (406) number of mounds as in the most conservative dataset of abmounds above
@@ -151,13 +160,13 @@ ab2010 %>%
 # These were detected upon cursory review and probably contain more issues. 
 
 
-#######################################################################################
+#########################################################################################################
 # SUMMARY
 
-# All in all it not worth it to use ab2010 (n=493) to grab 10-11 additional potential mounds from bara, given the ~70 problematic features and the 
+# All in all it not worth it to use the full-join product ab2010 (n=493) to grab 10-11 additional potential mounds from bara, given the ~70 problematic features and the 
 # same amount of 'mounds' (n=406). 
 # ab2010 is only useful for remote sensing analysis, with 70 uncertain and 406 certain features. 
-# Analysis depending on attributes should use abmounds or ableftj
+# Analysis depending on attributes should use abmounds or ableftj from now on.
 
 
 
