@@ -1,0 +1,109 @@
+---
+title: "Spatial Visualisation"
+author: "Adela Sobotkova"
+date: "04/08/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Goals 
+https://mgimond.github.io/megug2017/#extracting-raster-properties-and-data
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Libraries
+```{r libraries}
+
+library(tidyverse)
+library(raster)
+library(rgdal)
+library(tmap)
+library(sf)
+```
+
+## Load data and plot
+
+Lets load the raster for background
+
+```{r}
+Yam <- raster("F:/Shared GIS/Satellite imagery/ASTER/DEM/ASTGTM_N42E026/prjYAM_DEM_N42E026.tif")
+Yam
+```
+
+
+And start visualising
+
+```{r pressure, echo=FALSE}
+tm_shape(Yam)+tm_raster(style= "sd", n = 10 , palette = "Greys")+tm_legend(outside = TRUE)
+```
+The `style` parameter controls the classification method (standard deviation is chosen here). Other options include `pretty`, `jenks` and `kmeans` just to name a few.
+
+If you want to adopt a continuous color scheme, set `style` to `cont`. We’ll also move the legend box off to the side.
+
+```{r}
+tm_shape(Yam)+tm_raster(style= "kmeans", n = 10 , palette = "Greys") + tm_legend(outside = TRUE)
+```
+`kmeans` style provides a higher contrast image, while `pretty` (below) is softer and similar to `sd`
+
+This is kind of big and does not show much detail in the middle where we want to see it. So lets' zoom on the mound area and maybe subset the view to a smaller area. On the way there, lets' first overlay some vector layers.
+
+```{r}
+tm_shape(Yam)+tm_raster(style= "pretty", n = 10 , palette = "Greys", legend.show = FALSE)+
+ tm_shape(shapefile) + tm_symbols(shape = 17, col = "brown", scale = 0.5, title.size = "Verified features") + tm_legend(outside = TRUE)   +
+  tm_compass(type = "arrow", position = c("left", "bottom")) +
+  tm_scale_bar(position = c("left", "bottom"), breaks = c(0,5,10)) + 
+  tm_credits("Sobotkova 2020", position = c("left", "bottom")) +
+  tm_layout(title = "Verified map features \n in the Yambol province", title.position = c("center", "top"))
+```
+
+
+##Cropping a raster interactively
+You can also crop a raster manually by drawing either a rectangle or a polygon directly on the plot.
+
+```{r}
+plot(Yam)
+Yam2 <- select(Yam, use="rec") # To select by rectangle
+Yam2 <- select(Yam, use="pol") # To select by polygon
+```
+
+Note that you will not see the outlines of the rectangle or polygon until you are done defining the crop region. If defining by polygon, press the esc key to terminate drawing.
+
+## Focal Operations
+Focal operations require that a kernel be defined. The kernel can be defined via a weighted matrix (as used in the following example) or a function. The kernel definition is passed to the w parameter in the focal function.
+
+```{r}
+elev2f <- focal(Yam, w=matrix(1/10201,nrow=101,ncol=101))
+tm_shape(elev2f) + tm_raster() + tm_legend(outside = TRUE)
+```
+
+
+## Specialized Focal stats
+
+In this example, we’ll compute a slope using the terrain function. Output can be in degrees or radians (we’ll choose the latter since such units are needed to create a hillshade in a later step).
+
+```{r}
+slope <- terrain(Yam, opt="slope", unit="radians", neighbors=8)
+tm_shape(slope) + tm_raster() + tm_legend(outside = TRUE)
+```
+
+Next, we’ll compute the aspect.
+
+```{r}
+aspect <- terrain(Yam, opt="aspect", unit="radians", neighbors=8)
+tm_shape(aspect) + tm_raster() + tm_legend(outside = TRUE)
+
+```
+
+We can now combine the aspect and slope rasters to generate a Hillshade.
+```{r}
+shade <- hillShade(slope, aspect)
+tm_shape(shade) +tm_raster(style="cont", palette = "Greys") +tm_legend(show=FALSE)
+```
+
+
+## Zonal operations
+Here, we’ll use the zonal function to summarize pixel values by zone. The zonal layer must be a raster so we’ll first rasterize the shp vector object. Since the zonal function will expect the zonal layer to share the same extent as the (to be summarised) raster we’ll use elev2 to define shp’s raster output extent and pixel resolution. We also need to specify the attribute whose value will be assigned to the output pixels (field = "Id", note that R is case sensitive).

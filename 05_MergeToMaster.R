@@ -70,7 +70,7 @@ names_faims <- names(m2018)[which(names(m2018)%in%names(m2017))] # 36 shared col
 
 m2018[, names_all]
 
-####################################  MASTER DATASET FOR ALL SEASONS ############################################
+####################################  MASTER M DATASET FOR ALL SEASONS ############################################
 
 ## MASTER DATASET - conservative selection of mostly mounds in 2009-2010, liberal features in 2017-2018
 
@@ -82,7 +82,7 @@ write.csv(m, "output_data/merged.csv")
 
 # 1181 records in the master dataset with 11 variables
 
-####################################  MASTER DATASET FOR FAIMS SEASONS 2017 - 2018 #####################################
+####################################  MASTER M_FAIMS DATASET FOR FAIMS SEASONS 2017 - 2018 #####################################
 
 # MASTER DATASET FOR FAIMS YEARS
 
@@ -92,7 +92,7 @@ dim(m_Faims)
 
 write.csv(m_Faims, "output_data/mergedfaims.csv")
 
-####################################  STREAMLINE MASTER ALL ##################################################
+####################################  STREAMLINE M INTO MASTER FOR ALL SEASONS ##################################################
 
 ####  We will need fields such as Type, Height, Landuse and others streamlined before analysis
 

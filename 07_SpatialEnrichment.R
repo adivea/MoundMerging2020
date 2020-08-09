@@ -220,12 +220,33 @@ masterall$effect
 masterall <- masterall %>% left_join(enviro_Yammnds[,1:10], by = c("TRAP" = "mounds.TRAP"))
 
 ################################# VISUALIZE SOME RESULTS ########################################################################## 
-# VISUALIZE
+# PREPARE the RASTER
+
+# Cropping a raster using a vector
+# We’ll use the rgdal package to read the clip shapefile. 
+# The first argument is the folder location (relative to the session’s working directory) 
+# and the second argument is the name of the shapefile (without the .shp extension).
+library(rgdal)
+shp   <- readOGR(".","Clip")
+elev2 <- crop(elev.mem, shp)
+
+# Cropping a raster interactively
+# You can also crop a raster manually by drawing either a rectangle or a polygon directly on the plot.
+plot(Yam)
+Yam2 <- select(Yam, use="rec") # To select by rectangle: select topleft and bottomright corner!
+plot(Yam2)
+plot(shapefile$geometry, add = TRUE)
+Yam2 <- select(Yam, use="pol") # To select by polygon, press escape to finish drawing the polygon
 
 
+# VIEW RASTER VALUES
 Yam_df <- as.data.frame(Yam, xy = TRUE)
 
 
+# Clip mound data
+plot(shapefile)
+plot(st_intersection(shapefile$geometry, Y_region))
+plot(Y_region, add = TRUE)
 
 nrow(elev_Yammnds)
 hist(Yam_df$prjYAM_DEM_N42E026, main="Overlapping Regional and Mound Elevation")
