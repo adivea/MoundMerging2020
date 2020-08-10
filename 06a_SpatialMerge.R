@@ -47,21 +47,19 @@ library(tidyverse)
 
 # load mound/feature shapefile created in ArcGIS (1240 features, 1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
 shapefile <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMax.shp") # large file compiled by Adela
-plot(shapefile$geometry)
+plot(shapefile$geometry, col = "red")
 plot(shapefile$geometry[which(shapefile$TRAP%in%master$TRAP)]) # difference of ca 60 points which lack dimensions
 shapefilemin <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMinYam.shp") # conservative file from Bara
+plot(shapefilemin$geometry, pch = 17, add =TRUE)
 
-##################################    CREATE SPATIAL DATA VIA CSV - DONT USE
-# verified <- read_csv("raw_data/Verified0918.csv")# this file is now obsolete and superceded; it represents the conservative bara output with sliven data 
-# verified <- verified %>% 
-#   select(TRAP, Xtext,Ytext, Easting, Northing, Topo_ID) %>% 
-#   rename(Longitude = Xtext, Latitude = Ytext)
+##################################    INVESTIGATE OVERLAP BETWEEN SPATIAL DATASETS AND ATTRIBUTE DATA
 
-
-##################################    INVESTIGATE OVERLAP BETWEEN MIN AND MAX SPATIAL DATA AND ATTRIBUTE DATA
 # a few diagnostics on matching TRAP ids between shapefiles 
 # spatial
-shapefilemin$TRAP[which(shapefilemin$TRAP%nin%shapefile$TRAP)]  # 2 Bara's TRAP features are missing from adela's GIS shapefile, 8229, 9454 
+shapefilemin$TRAP[which(shapefilemin$TRAP%nin%shapefile$TRAP)]# 2 Bara's TRAP features 8229, 9454 are missing from adela's GIS shapefile or master  
+master %>% filter(TRAP==9454) # tibble of 0
+m2010
+
 sort(shapefile$TRAP[which(shapefile$TRAP%nin%shapefilemin$TRAP)]) # over 300 adela TRAP features are missing from Bara (this makes sense, many are outside Yambol)
 
 # attribute data and larger shapefile
@@ -123,10 +121,11 @@ master_sp %>%
   plot()
 
 
-##################################    MERGE ATTRIBUTE AND SPATIAL DATA 
+##################################    MERGE ATTRIBUTE AND SPATIAL DATA AND PRINT TO LOCAL FILES
 
 
-shapefile_coord <- cbind(shapefile, X = st_coordinates(shapefile)[,1], Y =st_coordinates(shapefile)[,2])
+shapefile_coord <- cbind(shapefile, X = st_coordinates(shapefile)[,1], Y =st_coordinates(shapefile)[,2]) # extracting X, Y out of mound shapefile
+shapefile_4236 <- st_transform(shapefile_coord, crs = 4326) # converting to Web Mercator, GSC in order to have Lat Long in addition to X, Y
 
 ######### MOUNDS ONLY
 
@@ -166,28 +165,3 @@ features_Yam <- master %>%
   inner_join(shapefile_Yam, c=by("TRAP"="TRAP"))
 write.csv(features_Yam, "output_data/features_Yam.csv")
 
-##################################    MOVE OUTPUTS TO SCIENCEDATA.DK 
-
-# Install the package for data transfer to sddk
-#devtools::install_github("sdam-au/sdam")
-
-# Activate the library
-library(sdam)
-
-### Authentication options
-
-# Alternative A
-# Input your sciencedata.dk username - type directly into the RStudio console
-user <- readline("your sciencedata username: ")
-# Make the request (you will be asked for password in a new pop-up window)
-resp = request("EDH_cleaned_2020-06-26.json", path="/sharingin/648597@au.dk/SDAM_root/SDAM_data/EDH/", method="GET", cred=c(user, getPass("your sciencedata password: ")))
-
-# Alternative B
-# Save credentials as a vector of c("username", "password") and then use it with cred argument.
-cred <- c("au616760@au.dk","Aarhus@2019")
-
-# I tried these to no avail (No visible change in the sddk directory)
-sddk("output_data/mounds_Yam.csv", method="PUT", path = "/sharingin/648597@au.dk/SDAM_root/SDAM_data/mounds/", cred = cred)
-sddk("output_data/mounds_all.csv", method="PUT", path = "/sharingin/648597@au.dk/SDAM_root/SDAM_data/mounds/", cred = cred)
-sddk("output_data/features_Yam.csv", method="PUT", path = "/sharingin/648597@au.dk/SDAM_root/SDAM_data/mounds/", cred = cred)
-sddk("output_data/features_all.csv", method="PUT", path = "/sharingin/648597@au.dk/SDAM_root/SDAM_data/mounds/", cred = cred)
