@@ -1,3 +1,54 @@
+###################### ###################### ###################### ###################### 
+#                       SAVE FINAL DATASET AND POST IT TO SCIENCEDATA.DK
+###################### ###################### ###################### ###################### 
+
+###################### EXPORT DATA -- MOUNDS ONLY - 2 DATASETS
+
+# Prerequisite: Load regional boundary 
+Y_region <- st_read("F:/Shared GIS/Vector/Oxbow Shapefiles/13_Janouch/Area_borders_shp/Yambol_province_TRAP.shp")
+# Region polygon needs the attributes culled to not clutter the final dataset
+Y_region <- Y_region %>% 
+        select(OBJECTID, geometry)
+
+# Visual review
+plot(Y_region$geometry,  col = "pink")
+plot(st_intersection(mnd_shp$geometry, Y_region), add = TRUE)
+
+
+
+#### Mounds inside and outside Yambol *984 obs of 16 variables
+
+mounds_all <- master_sp %>%
+        filter(Type == "Burial Mound" | Type == "Extinct Burial Mound")  
+
+write.csv(mounds_all, "output_data/mounds_all.csv")
+
+
+#### Mounds inside Yambol *806 obs with 16 variables
+
+# Crop by feature is achieved by st_intersection of sf object with regional boundary
+mounds_Yam <- master_sp %>%
+        filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") %>% 
+        st_intersection(Y_region, c=by("TRAP"="TRAP"))%>% 
+        select(-OBJECTID)
+
+plot(mounds_Yam$geometry)
+write.csv(mounds_Yam, "output_data/mounds_Yam.csv") 
+
+
+######################## EXPORT DATA -  FEATURES - 2 DATASETS
+
+#### Features inside and outside Yambol
+write.csv(master_sp, "output_data/features_all.csv")
+plot(master_sp$geometry) # 1174 obs and 16 variables
+
+#### Features inside Yambol
+features_Yam <- master_sp %>%
+        st_intersection(Y_region, c=by("TRAP"="TRAP")) # 975 obs and 16 variables
+write.csv(features_Yam, "output_data/features_Yam.csv")
+
+
+
 ##################################    MOVE OUTPUTS TO SCIENCEDATA.DK 
 
 # Inputs: 
@@ -10,6 +61,7 @@
 # Libraries 
 library(sdam)
 library(getPass)
+library(here)
 
 ### Authentication options
 

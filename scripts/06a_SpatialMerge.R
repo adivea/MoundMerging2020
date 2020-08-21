@@ -26,6 +26,8 @@
 # 20092010VerifiedMounds (n = 887) [check that name has not changed?] - represents a bara's strictly in-Yambol dataset 2009-2018 
 # without Sliven mounds from 2017 or Malomirovo mounds from day 1. It is data we expect to be in AKB national register of sites.
 
+# Outputs
+# YYYYYY
 
 # Prerequisites 
 # 1) previously cleaned master datasets from 2009-2018 with shared column names
@@ -46,26 +48,26 @@ library(tidyverse)
 ##################################    LOAD SPATIAL DATA
 
 # load mound/feature shapefile created in ArcGIS (1240 features, 1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
-shapefile <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMax.shp") # large file compiled by Adela
-plot(shapefile$geometry, col = "red")
-plot(shapefile$geometry[which(shapefile$TRAP%in%master$TRAP)]) # difference of ca 60 points which lack dimensions
-shapefilemin <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMinYam.shp") # conservative file from Bara
-plot(shapefilemin$geometry, pch = 17, add =TRUE)
+mnd_shapes <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMax.shp") # large file compiled by Adela
+plot(mnd_shapes$geometry, col = "red")
+plot(mnd_shapes$geometry[which(mnd_shapes$TRAP%in%master$TRAP)]) # difference of ca 60 points which lack dimensions
+mnd_shapesmin <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMinYam.shp") # conservative file from Bara
+plot(mnd_shapesmin$geometry, pch = 17, add =TRUE)
 
 ##################################    INVESTIGATE OVERLAP BETWEEN SPATIAL DATASETS AND ATTRIBUTE DATA
 
 # a few diagnostics on matching TRAP ids between shapefiles 
 # spatial
-shapefilemin$TRAP[which(shapefilemin$TRAP%nin%shapefile$TRAP)]# 2 Bara's TRAP features 8229, 9454 are missing from adela's GIS shapefile or master  
+mnd_shapesmin$TRAP[which(mnd_shapesmin$TRAP%nin%mnd_shapes$TRAP)]# 2 Bara's TRAP features 8229, 9454 are missing from adela's GIS shapefile or master  
 master %>% filter(TRAP==9454) # tibble of 0
 m2010
 
-sort(shapefile$TRAP[which(shapefile$TRAP%nin%shapefilemin$TRAP)]) # over 300 adela TRAP features are missing from Bara (this makes sense, many are outside Yambol)
+sort(mnd_shapes$TRAP[which(mnd_shapes$TRAP%nin%mnd_shapesmin$TRAP)]) # over 300 adela TRAP features are missing from Bara (this makes sense, many are outside Yambol)
 
 # attribute data and larger shapefile
-length(which(shapefile$TRAP%in%master$TRAP)) # 1174 shapes from max shapefile have match in master dataset
-length(which(shapefile$TRAP%nin%master$TRAP)) # 66 shapes from max shapefile are missing from master (makes sense as I excluded poor records, while they still have shape representation)
-(missingshapes <- sort(shapefile$TRAP[which(shapefile$TRAP%nin%master$TRAP)])) # shapes with no attribute records 
+length(which(mnd_shapes$TRAP%in%master$TRAP)) # 1174 shapes from max shapefile have match in master dataset
+length(which(mnd_shapes$TRAP%nin%master$TRAP)) # 66 shapes from max shapefile are missing from master (makes sense as I excluded poor records, while they still have shape representation)
+(missingshapes <- sort(mnd_shapes$TRAP[which(mnd_shapes$TRAP%nin%master$TRAP)])) # shapes with no attribute records 
 
 miss_atrap10 <- mounds_adela$TRAP[which(mounds_adela$TRAP%nin%mounds_bara$TRAPCode)] # 53 of adela's TRAP ids are not in Baras (and therefore missing from shapefile)
 miss_btrap10 <- mounds_bara$TRAPCode[which(mounds_bara$TRAPCode%nin%mounds_adela$TRAP)] # 50 of bara's TRAP ids are not in Adela (and missing from master)
@@ -104,36 +106,50 @@ master %>%
 # 832 mounds, 987 mound or extinct mounds
 
 master %>% 
-  filter(TRAP%in%shapefile$TRAP) %>% 
+  filter(TRAP%in%mnd_shapes$TRAP) %>% 
   #filter(Type == "Burial Mound")
   filter(Type == "Burial Mound" | Type == "Extinct Burial Mound")
 # 829 mounds with a matching ID in shapefile, or 984 extinct and burial mounds 
 
 
 
+##################################    EXTRACT COORDINATES FROM SPATIAL DATA AND ADD THEM TO OBJECTS
+
+# As simple features don't advertise coordinates (X, Y), I extract them and print them into two separate columns 
+mnd_sp32635 <- cbind(mnd_shapes, X = st_coordinates(mnd_shapes)[,1], Y =st_coordinates(mnd_shapes)[,2]) 
+
+# After the extraction of X and Y in 32635 EPSG, I want also a spatial object in 4326 EPSG for web visualisation
+# converting to Web Mercator, GSC in order to have Lat Long in addition to X, Y
+mnd_sp4326 <- mnd_shapes %>% 
+  st_transform(crs = 4326) %>% 
+  cbind(Lat = st_coordinates(mnd_shapes)[,1], Long =st_coordinates(mnd_shapes)[,2])
+
+mnd_sp4326
+
 ##################################    MARGE ATTRIBUTE AND SPATIAL DATA MASTER_SP
 
-master_sp <- shapefile %>% inner_join(master, c=by("TRAP"="TRAP")) # 1174 records
+# Full join between simple features and attributes, resulting in sf object
+master_sp <- mnd_sp32635 %>% inner_join(master, c=by("TRAP"="TRAP")) # 1174 records
 plot(master_sp$geometry)
 
 master_sp %>% 
   filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") %>% 
   plot()
 
+# just visualizing
+ggplot(master_sp, aes(X, Y))+
+  geom_sf(colour = "red")
+  
 
-##################################    MERGE ATTRIBUTE AND SPATIAL DATA AND PRINT TO LOCAL FILES
+######### WRITING DATA OUT FOR MOUNDS ONLY
 
-
-shapefile_coord <- cbind(shapefile, X = st_coordinates(shapefile)[,1], Y =st_coordinates(shapefile)[,2]) # extracting X, Y out of mound shapefile
-shapefile_4236 <- st_transform(shapefile_coord, crs = 4326) # converting to Web Mercator, GSC in order to have Lat Long in addition to X, Y
-
-######### MOUNDS ONLY
 
 #### Mounds inside and outside Yambol
-mounds_all <- master %>%
-  filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") %>% 
-  inner_join(shapefile_coord, c=by("TRAP"="TRAP"))
+mounds_all <- master_sp %>%
+  filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") 
+
 write.csv(mounds_all, "output_data/mounds_all.csv")
+
 
 
 #### Mounds in Yambol

@@ -20,7 +20,7 @@ library(lubridate)
 df_name <- c("mnd2010")
 if (exists(df_name)){
   is.data.frame(get(df_name))
-}  else source("02_2010dataTRAP.R")
+}  else source("scripts/02_2010dataTRAP.R")
 
 ### 2010 Dataset
 
@@ -41,13 +41,14 @@ m2010 <- mnd2010 %>%
 
 # Rename columns and consolidate notes columns (using https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr)
 names(m2010)
+
 m2010 <- m2010 %>% 
   rename(TopoMapHeight= Note_1) %>% 
   rename(TypeBara=Type, LU_AroundRS = Landuse_AroundRS, LU_TopRS=Landuse_TopRS, 
-         DiameterMax = Length, Diameter_Bara= `Length (max, m)`, 
+         DiameterMax = Length.x, Diameter_Bara= Length.y, 
          PrincipalSourceOfImpact = Principal, 
          ArchaeologicalPotential=ArcheoPotential, 
-         MostRecentDamageWithin=When, RSNotes=X18) %>% 
+         MostRecentDamageWithin=When, RSNotes = ends_with("18")) %>% 
   unite(RTDescription, c("RTNumber", "RTPosition", "RTDescription"), sep = ";", remove = TRUE, na.rm = TRUE) 
 
 # Check which TopoID to retain  - .x is better
@@ -67,6 +68,7 @@ m2010 <- m2010 %>%
 ############################################################################################################
 
 # Additional renaming and dropping of columns
+# https://suzan.rbind.io/2018/01/dplyr-tutorial-1/#selecting-columns-based-on-regex
 
 m2010 <- m2010 %>% 
   rename(TypeGE=SomethingPresentOntheGround, LU_Around = LandUseAround, LU_Top=LanduseOn, LU_Source=LandUseSource,

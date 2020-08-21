@@ -35,7 +35,7 @@ for (i in df_name){
   if (exists(df_name[i])){
     get(df_name[i])
   }  else {
-    source(here(script[contains(gsub("m","", i), vars = script)]))
+    source(paste0("scripts/",(script[contains(gsub("m","", i), vars = script)])))
   }
 }
 
