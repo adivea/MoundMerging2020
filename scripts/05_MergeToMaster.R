@@ -232,6 +232,16 @@ rm(scrub, Scrub, pasture, Pasture, annual, Annual)
 rm(LUmiss_subs, LUmissing, LUTmissing)
 rm(dupl_rows)
 
+# STREAMLINE CONDITION
+unique(master$Condition)
+# view suggested fix
+master %>%
+  mutate(Condition = str_extract(Condition, "\\d")) %>%
+  mutate(Condition = case_when(Condition == 0 ~ "NA",
+                               Condition == 6 ~ "5",
+                               Condition != 0 ~ Condition)) %>%
+  distinct(Condition)
+
 # Output the cleaned master dataset
 write.csv(master, "output_data/mergedclean.csv")
 
@@ -244,6 +254,8 @@ write.csv(master, "output_data/mergedclean.csv")
 # - geospatial can be extracted from GIS
 # - TopoID can be extracted from GIS (but exists in 2009-2010)
 # BEWARE: 9313 geospatial info in m2010 may be wrong as is inconsistent with image (road on image, none in GE)
+
+
 
 # REVIEW DIMENSIONS AND TYPE CONCORDANCE
 # mXXXX %>%

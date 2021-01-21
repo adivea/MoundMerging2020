@@ -32,5 +32,13 @@ Divergence in the semantic model behind attributes wasnot tractable mechanically
 ## Spatial data: 
 I don't even wish to go here now yet. :)
 
+# How to use
 
+1. For first-time users, start by running the script `source("scripts/05_MergeToMaster.R")` to create a master dataset from the 2009-2018 data above. 
+2. Afterwards, depending on your needs, either enrich data spatial using
+
+* `06_GetSpatial.R` which loads the point shapefiles for the mounds and
+* `06a_SpatialMerge` and `06b_SpatialEnrichment` which respectively merge spatial data and attributes, and extract environmental data from rasters at points (via `raster::extract`)
+
+3. Look at and develop some of the following studies, whether on landuse classificaiton assessment (effect of perspective and discrepancy between remote sensing and field evaluation) or size effect on looting or other vulnerability.
 

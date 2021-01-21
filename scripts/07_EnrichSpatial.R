@@ -195,5 +195,7 @@ enviro_Yammnds$prom10kmbuff <- raster::extract(Yam,  # raster containing elevati
 hist(enviro_Yammnds$prom2kmbuff)
 
 
-
-
+############################################## EXPORT DATA
+master_sp$geometry
+library(sf)
+st_write(master_sp, "output_data/enriched_all.shp")

@@ -28,6 +28,11 @@ mnd2009<- read_sheet("https://docs.google.com/spreadsheets/d/1FqqVPbK263RoOVEgSz
 # all datasets are tibbles
 
 
+
+#convert to DataFrame
+#apply clean() function 
+mnd2017 <- read_sheet("https://docs.google.com/spreadsheets/d/1TyWsxAbRTqOBnim7Asg8qmYqlMcvV7Q0ZuBtWKCntdE/edit#gid=433356722")
+
 # Looking at the open-refined data
 class(mnd2009)
 glimpse(mnd2017)  # only mounds in Yambol, bring in the whole dataset maybe? and check that it is cleaned up? > run through OR script?
