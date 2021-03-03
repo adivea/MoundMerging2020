@@ -44,8 +44,8 @@ if (exists(df_name)){
 
 # Load ASTER raster, in this case ASTER DEM from JICA, projected to WGS82, UTM 35N
 
-#Yam <- raster("E:/TRAP Workstation/Shared GIS/Satellite imagery/ASTER/DEM/ASTGTM_N42E026/prjYAM_DEM_N42E026.tif")
-Yam <- raster("F:/Shared GIS/Satellite imagery/ASTER/DEM/ASTGTM_N42E026/prjYAM_DEM_N42E026.tif")
+Yam <- raster("E:/TRAP Workstation/Shared GIS/Satellite imagery/ASTER/DEM/ASTGTM_N42E026/prjYAM_DEM_N42E026.tif")
+#Yam <- raster("F:/Shared GIS/Satellite imagery/ASTER/DEM/ASTGTM_N42E026/prjYAM_DEM_N42E026.tif")
 Yam # projected WGS84 35N raster 27m resolution, 4112x3053
 Yaspect<- raster("F:/Shared GIS/Satellite imagery/ASTER/DEM/ASTGTM_N42E026/prjYAM_Aspect.tif")
 Yslope<- raster("F:/Shared GIS/Satellite imagery/ASTER/DEM/ASTGTM_N42E026/prjYAM_Slope.tif")
@@ -199,3 +199,4 @@ hist(enviro_Yammnds$prom2kmbuff)
 master_sp$geometry
 library(sf)
 st_write(master_sp, "output_data/enriched_all.shp")
+levels(factor(master_sp$Condition))

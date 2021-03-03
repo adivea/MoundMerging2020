@@ -5,14 +5,16 @@
 ###################### EXPORT DATA -- MOUNDS ONLY - 2 DATASETS
 
 # Prerequisite: Load regional boundary 
-Y_region <- st_read("F:/Shared GIS/Vector/Oxbow Shapefiles/13_Janouch/Area_borders_shp/Yambol_province_TRAP.shp")
+Y_region <- st_read("F:/Shared GIS/Vector/Oxbow Shapefiles/13_Janouch/Yambol_Region.shp")
 # Region polygon needs the attributes culled to not clutter the final dataset
 Y_region <- Y_region %>% 
         select(OBJECTID, geometry)
 
+
+
 # Visual review
 plot(Y_region$geometry,  col = "pink")
-plot(st_intersection(mnd_shp$geometry, Y_region), add = TRUE)
+plot(st_intersection(mnd_shapes$geometry, Y_region), add = TRUE)
 
 
 
@@ -31,7 +33,7 @@ mounds_Yam <- master_sp %>%
         filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") %>% 
         st_intersection(Y_region, c=by("TRAP"="TRAP"))%>% 
         select(-OBJECTID)
-
+names(mounds_Yam)
 plot(mounds_Yam$geometry)
 write.csv(mounds_Yam, "output_data/mounds_Yam.csv") 
 

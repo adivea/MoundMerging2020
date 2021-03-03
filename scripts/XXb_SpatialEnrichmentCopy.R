@@ -52,9 +52,9 @@ towns <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vector
 
 # Load distance to settlement ("near") table from ArcGIS if not wanting to deal with sf package
 
-distanceTown <- read_csv("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/MndTownDistance.csv")
-distanceTown <- distanceTown %>%
-  select(TRAP,NEAR_DIST, NEAR_X, NEAR_Y)
+# distanceTown <- read_csv("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/MndTownDistance.csv")
+# distanceTown <- distanceTown %>%
+#   select(TRAP,NEAR_DIST, NEAR_X, NEAR_Y)
 
 ################################# VISUAL CHECK - PLOT LOADED DATASETS ##########################################################################
 
