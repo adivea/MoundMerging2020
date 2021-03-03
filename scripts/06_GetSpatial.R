@@ -88,3 +88,4 @@ ggplot(master_sp, aes(X, Y))+
 master_sp %>% 
   filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") %>% 
   plot()
+
