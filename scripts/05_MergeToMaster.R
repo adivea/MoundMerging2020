@@ -29,6 +29,7 @@ library(here)
 ################################## LOAD DATA ######################################################
 
 # Load the inputs
+gs4_auth(email = adela@faims.edu.au) # select Google account with which you are downloading data
 df_name <- c("m2009","m2010","m2017","m2018")
 script <- c("03_Clean2009.R","03_Clean2010.R","03_Clean2017.R","03_Clean2018.R")
 for (i in df_name){
@@ -232,19 +233,65 @@ rm(scrub, Scrub, pasture, Pasture, annual, Annual)
 rm(LUmiss_subs, LUmissing, LUTmissing)
 rm(dupl_rows)
 
-# STREAMLINE CONDITION
+####################################### ADDITIONAL EDITS (OPTIONAL)
+
+#### STREAMLINE CONDITION
+# Condition is expressed on Likert scale 1 - 5 with verbose description 
+# of each number, e.g. 1-pristine, 5 - extinct, as a character
 unique(master$Condition)
-# view suggested fix
-master %>%
+
+# view suggested fix - cleaning the Condition to numbers only
+master <- master %>%
   mutate(Condition = str_extract(Condition, "\\d")) %>%
-  mutate(Condition = case_when(Condition == 0 ~ "NA",
+  mutate(Condition = case_when(Condition == 0 ~ NA,
                                Condition == 6 ~ "5",
-                               Condition != 0 ~ Condition)) %>%
-  distinct(Condition)
+                               Condition != 0 ~ Condition)) #%>%
+  #distinct(Condition)
+
+master$Condition <- factor(master$Condition, levels = c("1","2","3","4","5","NA"))
+hist(as.numeric(master$Condition))
+master$Condition[master$Condition=="NA"] <- NA
+
+head(master$Condition)
+
+
+#### STREAMLINE HEIGHT
+
+# Height is mostly numeric, but a few missing values were reconstructed from old atlases,
+# and entered as text. e.g.[454] "2 acc to topomap". These four entries can be either made NAs,
+# as they are reconstructions, or digits can be extracted with regexes.
+
+# Checking height measures
+class(master$HeightMax)
+hist(as.numeric(master$HeightMax))
+mean(as.numeric(master$HeightMax), na.rm = TRUE)
+
+# Missing Heights in original master dataset
+length(which(is.na(master$HeightMax))) # 18 missing heights in 
+# [1]  460  964  970 1076 1086 1088 1116 1117 1118 1119 1120 1121 1122 1123 1124
+# [16] 1125 1126 1127
+
+# Additional 4 NAs if we force text to number for indeces 130  456  459 461
+length(which(is.na(as.numeric(master$HeightMax)))) # 22 missing heights
+
+# 454ff have text with reconstructios from an atlas instead of the numbers, 
+# create a version with the numbers reconstructed, or force to NAs
+master_reconstr_heights <- master %>%
+  mutate(HeightMax = str_extract(HeightMax,"\\d\\.?\\d?"),
+         HeightMax = as.numeric(HeightMax))
+master <- master %>%
+  mutate(HeightMax = as.numeric(HeightMax))
+
+mean(master$HeightMax, na.rm = TRUE)
+mean(master_reconstr_heights$HeightMax, na.rm = TRUE)
+
+hist(master$HeightMax)
+hist(master_reconstr_heights$HeightMax, col= "pink", add = TRUE, alpha = 0.5)
 
 # Output the cleaned master dataset
 write.csv(master, "output_data/mergedclean.csv")
-
+write.csv(master, "../MoundHealth/data/master.csv")
+write.csv(master_reconstr_heights, "../MoundHealth/data/master_reconstr_heights.csv")
 ####################################  NEXT STEPS #############################################
 
 # NEXT STEPS: Streamline m_Faims
