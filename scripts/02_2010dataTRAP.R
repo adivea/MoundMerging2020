@@ -38,9 +38,11 @@ library(here)
 ############################################################################################################
 # Load the inputs
 df_name <- c("mounds_adela", "mounds_bara")
-if (exists(df_name)){
-  is.data.frame(get(df_name))
+for (i in df_name){
+if (exists(i)){
+  is.data.frame(get(i))
 }  else source("scripts/01_LoadDataG.R")
+}
 
 # Check for TRAP ID
 summary(mounds_adela$TRAP)
@@ -56,7 +58,7 @@ mounds_bara %>%
 ############################################################################################################
 #
 ## Left join to adela's dataset
-# I consider adela dataset better (verified from several sources) and so we start with a left join 
+# I consider adela dataset slightly verified (from several sources) and so we start with a left join 
 # of bara's to adela's data via TRAP ID to preserve adela's data and append bara's
 # all mounds should have TRAP number since they have been surveyed (in theory) and verified. 
 # Line 33-34 shows that Bara's dataset has 10 mounds with missing TRAP ID. 

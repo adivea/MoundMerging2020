@@ -1,5 +1,5 @@
 ---
-title: "Merging 2017-2018 data with RS"
+title: "Consistency Check: comparing 2017-2018 attribute data with RS"
 author: "Adela Sobotkova"
 date: "24 June 2020"
 output: html_document

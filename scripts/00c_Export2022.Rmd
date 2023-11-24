@@ -1,0 +1,207 @@
+---
+title: "AKB prep"
+author: "Adela Sobotkova"
+date: "2022-12-27"
+output: html_document
+---
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+library(formatR)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+## Preparing data for AKB for 2022
+
+The purpose of this script is to take all data collected during Elhovo 2022 campaign (Elhovo and Straldzha), enrich them with distance and azimuth to the administrative unit (often but not always the nearest governing village (zemlishte)) so that Todor can submit them to AKB
+
+## Setup
+```{r libraries}
+library(tidyverse)
+library(sf)
+```
+
+
+## Load data
+I am not sure the attribute data is the most recent
+```{r -load-aggr-data}
+mun <- read_sf("../data/Yam_Municipalities.shp")
+
+mounds22 <- read_csv("../data/2022Elhovo.csv")
+mnd22 <- mounds22 %>%
+  dplyr::rename(TRAP=MoundID, Type=TypeClean, LU_Around = LanduseAroundMound, LU_Top = LanduseOnTopOfMound) %>% 
+  dplyr::select(TRAP, Source, Type, LU_Around, LU_Top, DiameterMax, HeightMax, Condition, PrincipalSourceOfImpact, Date, Northing, Easting, geospatialcolumn)
+#colnames(features)
+
+# check for missing coordinates
+which(is.na(mnd22$geospatialcolumn))
+
+# convert to a simple feature
+mn22 <- st_as_sf(mnd22, coords = c("Easting", "Northing"), crs = 32635)
+
+# sanity check
+library(mapview)
+mapview(mn22, zcol = 'Type')
+```
+
+### Distance from each mound to its "zemlishte"
+
+AKB asks for distance and azimuth to the assigned cadastral village (in "zemlishte"). The tricky part is that the cadastral villages need not be the geographically nearest places, and so we first need to establish which zemlishte territory each mound is within (and join their attributes on the basis of a spatial join) in so we can calculate the distance between the 'capital' of the territory and all the mounds in the village cadastre.
+
+The information about which village cadastre does a mound belong to can be derived from an intersection of the mounds and zemlishte polygons. Here we use a shortcut: spatial points output from a spatial query in ArcGIS (ElhStr_features.shp), which contains the TRAP ID of each mound and the Name and number of the zemlishte village (Name_en and EKATTE)
+We have the zemlishte village point data with Name_en and EKATTE in ElhStr_towns shapefile
+
+```{r load-zemlishe}
+# Zemlishte information fr each mound sits in Yam_feat_zem shapefile
+village <- read_sf("../data/Yam_zem_villages.shp")
+feat_zem <- read_sf("../data/Yam_feat_zem.shp")
+sum(mnd22$TRAP%in%feat_zem$TRAP) # must be 310
+```
+
+### Wrangle the features and nearest zemlishte 
+```{r wrangle-zemlishte}
+# Subset the features 2022 data to only TRAP numbers and the name of the  zemlishte-defining village
+features22 <- feat_zem %>%
+  dplyr::filter(TRAP%in%mnd22$TRAP) %>%  # subset to 2022 mounds
+  dplyr::select(TRAP,EKATTE, Name_en) #EKATTE and Name_en are the number and name of the zemlishte that we are interested in
+
+unique(features22$Name_en)
+
+unique(features22$Name_en)%in%unique(village$Name_en) # Devetintsi (Burgas) is missing 
+
+# Create a point for each TRAP feature from 2022 that corresponds to the village the mound belongs to. We need to strip the spatial data out of the TRAP features lest the join does not work.
+
+villages22 <- features22 %>% 
+  st_drop_geometry() %>%  # dropping feature geometry
+  left_join(village, by = "EKATTE") %>%  # now joining village geometry to TRAP numbers
+  dplyr::select(-Descr_bg, -Name_bg, -Suffix_bg, -Suffix_en)
+
+#villages22 <- village %>% 
+#  dplyr::select(-Descr_bg, -Name_bg, -Suffix_bg, -Suffix_en) %>% 
+#  right_join(features22 %>% st_drop_geometry(), by = "EKATTE")
+  
+villages22 <- st_as_sf(villages22)
+mapview(village) + mapview(features22, zcol = "Name_en")
+
+```
+
+### Calculate distances
+
+Once we have the starting and ending points, the distances are trivial to calculate between mounds and zemlishte using the `st_distance()` function, utilizing `by_element` argument to calculate pairwise distances and not a distance table. 
+```{r distance-zemlishte}
+ls('package:sf') # check all the functions inside sf package
+
+features22$distToTown <- st_distance(features22$geometry, villages22$geometry, by_element = TRUE)
+summary(features22$distToTown)
+```
+
+### Calculate azimuth
+
+Azimuth can be tricky as it is an angular measurement which is often produced only in geographic space and here we have geometric, planar space. I use the `nngeo` package of Michael Dorman as it calculates "planar" /geometric azimuth (https://michaeldorman.github.io/nngeo/index.html).
+sf library works in geometric /planar space and so 
+The other `geosphere::azimuth` which calculates geographic azimuth in `latlong` coordinates.(https://stackoverflow.com/questions/51030060/in-geosphere-package-in-r-why-arent-bearings-in-0-360-degrees) 
+
+
+```{r azimuth-nngeo-install}
+# install.packages("remotes")
+# remotes::install_github("michaeldorman/nngeo")
+```
+
+```{r azimuth-calculate}
+library(nngeo)
+features22$azimuth <- nngeo::st_azimuth(features22$geometry, villages22$geometry)
+```
+As a fun pastime, look up Coxcomb diagram or a Windrose to plot the azimuth data. 
+
+
+## Export for Toshko
+Toshko requested all 2022 data
+```{r export}
+# All 310 features from the Elhovo and Straldzha municipality from 2022
+Toshko_data <- cbind(features22 %>% st_drop_geometry(), Easting = st_coordinates(features22)[,1], Northing = st_coordinates(features22)[,2])
+
+Toshko_data_extended <- Toshko_data %>% 
+  left_join(features, by = "TRAP") %>% 
+  dplyr::select(-EKATTE,-geometry, -distTown,-distBG) %>% 
+  dplyr::rename(Zemlishte = Name_en,DistanceZemlishte = distToTown,DirectionToZemlishte = azimuth)
+
+#write.csv(features22 %>% st_drop_geometry(), "../output_data/features22forToshko.csv")
+write.csv(Toshko_data_extended, "../output_data/features22forToshko.csv")
+```
+
+
+## Data for Stralzha and Elhovo from 2010-2020
+Create distances to zemlishte for all features in Straldzha and Elhovo. Beware! features_aggr_27Dec.rds contains spatial duplicates so use either dd_early or dd_later variant!!!
+Early are data from 2010 campaign, whose TRAP IDs are in the AKB; dd_later variant are the revisits whose TRAP IDs are not in the AKB.
+```{r}
+features <- readRDS("../output_data/features_dd_early_27Dec.rds")
+mun <- read_sf("../data/Yam_Municipalities.shp")
+
+ElhStr <- mun[c(1,4),]
+
+ElhStr_features <- feat_zem %>%
+  st_intersection(ElhStr$geometry) %>%  # subset to Straldzha and Elhovo mounds
+  dplyr::select(TRAP,EKATTE, Name_en) #EKATTE and Name_en are the number and name of the zemlishte that we are interested in
+
+unique(ElhStr_features$Name_en)
+
+unique(ElhStr_features$Name_en)%in%unique(village$Name_en) # Devetintsi (Burgas) is missing 
+
+# Create a point for each TRAP feature from 2022 that corresponds to the village the mound belongs to. We need to strip the spatial data out of the TRAP features lest the join does not work.
+
+villages <- ElhStr_features %>% 
+  st_drop_geometry() %>%  # dropping feature geometry
+  left_join(village, by = "EKATTE") %>%  # now joining village geometry to TRAP numbers
+  dplyr::select(-Descr_bg, -Name_bg, -Suffix_bg, -Suffix_en)
+
+
+villages <- st_as_sf(villages)
+mapview(villages) + mapview(ElhStr_features, zcol = "Name_en")
+
+```
+
+### Distances and Azimuth
+```{r}
+ElhStr_features$distToTown <- st_distance(ElhStr_features$geometry, villages$geometry, by_element = TRUE)
+summary(ElhStr_features$distToTown)
+
+library(nngeo)
+ElhStr_features$azimuth <- nngeo::st_azimuth(ElhStr_features$geometry, villages$geometry)
+```
+
+
+
+### Export for Elhovo and Straldzha
+```{r}
+# All 523 features from the Elhovo and Straldzha municipality from 2010- 2022 (beware spatial duplicates!!)
+StrElh_data <- cbind(ElhStr_features %>% st_drop_geometry(), Easting = st_coordinates(ElhStr_features)[,1], Northing = st_coordinates(ElhStr_features)[,2])
+
+StrElh_data_extended <- StrElh_data %>% 
+  left_join(features, by = "TRAP") %>% 
+  dplyr::select(-EKATTE ,- geometry, - distTown,- distBG) %>% 
+  dplyr::rename(Zemlishte = Name_en,DistanceZemlishte = distToTown,DirectionToZemlishte = azimuth)
+
+
+write.csv(StrElh_data_extended, "../output_data/StrElhforToshko523.csv")
+
+```
+
+### Export in csv2
+```{r}
+m523 <- read_csv("../output_data/StrElhforToshko523.csv")
+write.csv2(m523, "../output_data/StrElhforToshko523_csv2.csv")
+m310 <- read_csv( "../output_data/features22forToshko.csv")
+write.csv2(m310, "../output_data/features22forToshko_csv2.csv")
+```
+
+

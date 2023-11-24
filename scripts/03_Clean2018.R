@@ -57,11 +57,9 @@ dim(m2018)  # we have reduced the initial 58 columns to 40
 
 rm(allnotes, damagenotes)
 
-
 # Check Type
 levels(as.factor(m2018$Type)) # there are some inconsistencies with 2009-2017, best fixed at master level
 
 # All done with 2018
-m2018
-
+glimpse(m2018)
 

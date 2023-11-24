@@ -1,0 +1,217 @@
+---
+title: "Deduplicate"
+author: "Adela Sobotkova"
+date: "2023-01-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+## Spatial deduplication 
+Some of the mounds were recorded twice during successive seasons accidentally or revisited because of incomplete information. We need to eliminate duplicates and tri+plicates before further analysis.
+The approach is to find mounds that are 15-20 m from one another and then manually check if it is the same feature or not. If the proximate features were captured in the same season, they are not duplicates (their physical proximity may be a result of GPS error or small feature size) and their numbers will be sequential. Mounds duplicated in different season will thus have non-proximate numbers. 
+
+```{r libraries}
+library(tidyverse)
+library(sf)
+library(raster)
+library(mapview)
+```
+
+```{r load-features}
+features <- read_rds("../output_data/features_aggr_27Dec.rds")
+```
+
+
+```{r find-spatial-duplicates}
+# create a buffer of 15m
+dupl <- st_buffer(features, 15)
+
+# check which of these near buffers intersect
+# this produces a sgbp matrix 
+dupl_sp <- st_intersects(dupl, dupl$geometry)
+
+# produce a logical vector from sgbp that marks TRUE records with at least 2 features
+dupl <- lengths(st_intersects(dupl, dupl$geometry)) >= 2  # there are 108 duplicate and triplicate records
+
+multiples <- features %>%
+  st_drop_geometry() %>% 
+  select(TRAP) %>% 
+  filter(dupl) %>% 
+  distinct()
+
+# write.table(multiples, "../output_data/multiples_sp.txt") # list of 108 multiples
+
+# use the list to filter mounds 
+# use the resulting map to visually inspect potential duplicates
+features %>% filter(dupl) %>% mapview(zcol= "Type")
+```
+So, not only there are duplicates, but sometimes there seem to be three or more mounds in close proximity. Let's deal with the duplicates first and tri- and more-plicates second.
+
+
+### Duplicates
+Let's find exactly two matching or proximate spatial points, and filter out their TRAP IDs for manual check.
+```{r duplicates}
+# create a buffer of 15m
+dupl <- st_buffer(features, 15)
+
+# Logical vector marking 94 records that have at least 1 duplicate
+dupl <- lengths(st_intersects(dupl, dupl$geometry)) == 2
+
+# The actual list of duplicates's indeces in pairs
+list_duplicates <- dupl_sp[dupl]
+
+# The duplicate TRAP ids
+duplicates <- features %>%
+  st_drop_geometry() %>% 
+  select(TRAP) %>% 
+  filter(dupl) %>% 
+  distinct() %>% 
+  arrange(TRAP)
+
+# print out the troublesome TRAP numbers for review
+write.table(duplicates, "../output_data/duplicates_sp.txt")
+
+
+# View the locations of all duplicates
+features %>% filter(dupl) %>% mapview() + mapview(features, cex = 0.1)
+
+```
+Results of visual review: 
+NOT Duplicated: 
+Mamarchevo W, Malko Sharkovo, Iglika, Voden SE, G.Polyana NE, Bolyarovo SW, Granitovo N, Trankovo W, Drama. Krumovo S, General Inzovo, Borisovo S (8046 ok), Botevo, Pitovo, Mezhda N (two nearest clusters), Prohorovo NE, Kunevo N, Radevo, Sokol, Elenovo, Skobelevo,
+
+YES Duplicated: 
+Slaveikovo 8669 (animal act) X 9740 (military act) seem like same point - why the different num ranges?
+Boyanovo: 8030X9358, 6011X9357, 8202 LGV X 8035RS?? What is going on?
+Karavelovo: 8022, 8023, 8024, 8025 and 8028 which were rudimentarily recorded in 2009 as part of remote sensing ground truthing, and again in 2010 as 9592 -96 (from 2010+). In this case 2009 can be replaced with later records. An interesting note: most have grown from 0.5 to 0.9m from 2009 - > 2010+
+Mogila: There is another cluster near the quarry west of the Mogila village, with the following five duplicates: 8346, 8347, 8348, 8349, 8350 from 20XX to 9222, 9223, 9224, 9225, 9226. These need to be reviewed.
+Mezhda: 9715 X 9077RS
+
+See the scan from 6 Jan 2023 in cas email for manual review of duplicates.
+
+### Triplicates
+Let's repeat the duplicate workflow for triple- and multiplicates.
+```{r triplicates}
+# create a buffer of 15m
+dupl <- st_buffer(features, 15)
+
+
+# Logical vector marking 94 records that have at least 1 duplicate
+mult <- lengths(st_intersects(dupl, dupl$geometry)) > 2
+
+# How many triplicates or 2+ ?
+sum(mult) # 14
+
+# Specific TRAP ids of triplicates+
+list_triplicates <- dupl_sp[mult]
+
+# Series of indeces for the triplicates
+triples <- list_triplicates %>% 
+  unlist()
+
+# Pull TRAP IDs out of mounds using the triplicate indeces
+triplicates <- features %>%
+  st_drop_geometry() %>% 
+  select(TRAP) %>% 
+  slice(triples) %>% 
+  arrange(TRAP)
+
+# print potential triplicates for manual check
+write.table(triplicates, "../output_data/triplicates_sp.txt")
+
+# Use the indeces from above to view
+features %>% 
+  slice(triples) %>% 
+  mapview() + mapview(features, zcol = "Type", cex = 0.1)
+
+```
+Triplicates!!
+Not triplicated: Chernozem, Malenovo, two clusters near Mezhda,Skobelevo
+Overlap: Mogila 8346-49 vs 9222- 9225, but these were already found in duplicate analysis above.
+
+"TRAP"
+"1" 8282 - Sitovo OK
+"2" 8283 --
+"3" 8284 --
+"4" 8332 - Mezhda OK
+"5" 8333 --
+"6" 8334 --
+"7" 8346 - Mogila duplicate 9224
+"8" 8347 -- 9225
+"9" 8348 -- 9223
+"10" 8349 -- 9222
+"11" 8584 - Chernozem ok
+"12" 8585 --
+"13" 8586--
+"14" 8590--
+"15" 9073 - Mezdha ok
+"16" 9074 --
+"17" 9075 --
+"18" 9089 - Skobelevo ok
+"19" 9090 --
+"20" 9091 --
+"21" 9222 - Mogila duplicates - see above
+"22" 9223
+"23" 9224
+"24" 9225
+
+### Eliminate spatial duplicates
+In terms of duplicates, we have two options of dealing with them: 
+
+* keep the original first-time (upto2010) records (which may be incomplete and less compatible as they result from remote sensing ground truthing, but exist in AKB) and discard post-2010 records
+* replace the first-time (upto2010) records with revisit records (more compatible, but do not exist in AKB)
+
+### Duplicates' TRAP IDs by season
+in two paired vectors. Item in upto2010 matches the location of its duplicate in post2010 for future reference.
+```{r dupl-TRAPids}
+# Early records
+upto2010 <- c(6011,8022:8025, 8028,8029,8030, 8035, 8350:8353, 8357,8359, 8434,8669, 9077)
+
+# Later records
+post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358, 8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
+
+
+write.table(cbind(upto2010,post2010), "../output_data/duplicates_final.txt")
+```
+
+### Eliminate either set of duplicates
+```{r}
+`%nin%` = Negate(`%in%`)
+
+# To keep early records (more likely in AKB)
+early <- features %>% 
+  filter(TRAP%nin%post2010)
+
+# To keep later/newer records (may not be in AKB)
+later <- features %>% 
+  filter(TRAP%nin%upto2010)
+early %>% 
+  group_by(Type) %>% 
+  tally()
+later
+```
+
+## Export enriched dataset
+
+Export the interim enriched and spatially de-duplicated set of all features (inside and outside of Yambol) collected during 2009-2022 seasons within the Yambol region and surroundings. These will need to be filtered for actual mounds as there are settlement mounds, bunkers and lots of other stuff in there. They also need streamlining in terms of Condition, Height, etc. 
+```{r interim-export}
+write_rds(later, "../output_data/features_dd_later_27Dec.rds")  
+write_rds(early, "../output_data/features_dd_early_27Dec.rds")
+
+```

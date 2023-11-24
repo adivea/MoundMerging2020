@@ -1,0 +1,1488 @@
+TRAP,Source,Type,LU_Around,LU_Top,Date,DiameterMax,DiameterMin,HeightMax,Condition,PrincipalSourceOfImpact
+8021,RS:FNEG,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,20,,0.3,5,Agriculture
+8022,RS:SITE,Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,20,,0.7,5,Agriculture
+8023,RS:SITE,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,25,,0.1,4,Agriculture
+8024,RS:SITE,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,20,,0.5,5,Agriculture
+8025,RS:SITE,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,20,,0.5,5,Agriculture
+8026,RS:FNEG,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,20,,0.3,5,Agriculture
+8027,RS:FNEG,Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,30,,1,4,Agriculture
+8028,RS:FNEG,Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,40,,1,4,Agriculture
+8029,RS:FNEG,Burial Mound,Annual agriculture,Annual agriculture,2009-11-22,45,,1.5,3,Agriculture
+8030,RS:FNEG - duplicate 9358,Burial Mound,Annual agriculture,Pasture,2009-11-23,40,,2.5,3,Post-depositional
+8031,RS:FNEG,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-23,30,,0.5,3,Agriculture
+8032,RS:FNEG,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-23,30,,0.5,5,Agriculture
+8033,RS:SITE,Burial Mound,Annual agriculture,Other,2009-11-23,60,,6,5,Excavation
+8034,RS:SITE,Burial Mound,Forest,Forest,2009-11-23,60,,8,2,Post-depositional
+8035,RS:SITE,Burial Mound,Forest,Scrub,2009-11-23,50,,3,2?,Post-depositional
+8036,RS:SITE,Burial Mound,Annual agriculture,Annual agriculture,2009-11-24,30,,0.7,4,Agriculture
+8037,RS:SITE,Burial Mound,Pasture,Scrub,2009-11-24,25,,2.5,5,Excavation
+8038,RS:SITE,Extinct Burial Mound,Annual agriculture,Pasture,2009-11-24,30,,0.3,4,Excavation/Looted?
+8039,RS:FNEG,Burial Mound,Scrub,Scrub,2009-11-24,40,,2,2,Looting
+8041,RS:SITE,Burial Mound,Pasture,Scrub,2009-11-24,50,,4.5,2,Looting
+8043,RS:SITE,Burial Mound,Scrub,Scrub,2009-11-24,50,,8,2,Development
+8044,RS:SITE,Burial Mound,Annual agriculture,Pasture,2009-11-24,30,,1.5,3,Agriculture
+8045,RS:FNEG,Burial Mound,Annual agriculture,Annual agriculture,2009-11-24,20,,1,5,Agriculture
+8046,RS:SITE,Burial Mound,Annual agriculture,Annual agriculture,2009-11-24,30,,1.5,4,Agriculture
+8047,RS:SITE,Extinct Burial Mound,Annual agriculture,Pasture,2009-11-24,20,,0.5,5,Military| Agriculture
+8048,RS:FNEG,Burial Mound,Scrub,Pasture,2009-11-24,30,,6,1,Development
+8049,RS:FNEG,Burial Mound,Pasture,Pasture,2009-11-24,30,,4,1,Development
+8050,RS:FNEG,Burial Mound,Annual agriculture,Scrub,2009-11-24,40,,0.7,4?,Agriculture
+6000,survey,Burial Mound,Annual agriculture,Scrub,2009-10-12,30,,2.5,1,Post-depositional
+6001,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-10-12,15,,0.5,1,Agriculture
+6002,survey,Burial Mound,Scrub,Scrub,2009-10-12,48,,3.5,2,Post-depositional
+6003,survey,Burial Mound,Scrub,Scrub,2009-10-13,63,,6,1,Post-depositional
+6004,survey,Burial Mound,Forest,Forest,2009-10-13,12,,0.5,5,Looting
+6005,survey,Burial Mound,Forest,Forest,2009-10-13,35,,2,3,Looting
+6006,survey,Burial Mound,Forest,Forest,2009-10-13,45,,1.5,2,Looting
+6009,survey,Burial Mound,Scrub,Scrub,2009-10-20,22,,1.5,3,Post-depositional | Looting
+6010,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-10-26,13,,0.5,5,Agriculture
+6011,survey,Burial Mound,Annual agriculture,Other,2009-10-27,56,,1,5,Excavation
+6012,survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-10-27,28,,0.5,5,Agriculture
+6013,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-10-28,8,,1,1,Agriculture
+6015,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,65,,2,4,Agriculture
+6016,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,57,,1.5,4,Agriculture
+6017,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,67,,5,4,Agriculture
+6019,survey,Burial Mound,Annual agriculture,Scrub,2009-11-05,77,,10,2,Post-depositional
+6020,survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-05,30,,0.5,5,Agriculture
+6022,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-06,38,,2,5,Agriculture
+6023,survey,Extinct Burial Mound,Annual agriculture,Scrub,2009-11-07,17,,0.5,5,Looting | Agriculture
+6024,survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-11-07,20,,0.3,5,Agriculture
+6025,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-07,40,,0.8,5,Agriculture
+7001,survey,Burial Mound,Annual agriculture,Scrub,2009-10-12,20,,1.5,1,Post-depositional
+7002,survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2009-10-12,10,,0.5,5,Agriculture
+7003,survey,Burial Mound,Scrub,Scrub,2009-10-12,30,,5,2,Post-depositional
+7004,survey,Burial Mound,Scrub,Scrub,2009-10-20,40,,3.5,1,Post-depositional
+7005,survey,Burial Mound,Annual agriculture,Scrub,2009-10-21,35,,2.5,5,Agriculture | Looting
+7006,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-10-22,20,,1,5,Agriculture
+7007,survey,Burial Mound,Annual agriculture,Pasture,2009-10-26,35,,2,5,Agriculture | Looting
+7010,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,35,,1.5,2,Agriculture
+7011,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,45,,1.5,5,Agriculture
+7012,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,50,,2.5,2,Agriculture
+7013,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,40,,1,5,Agriculture
+7014,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-02,35,,0.7,5,Agriculture
+7015,survey,Burial Mound,Annual agriculture,Pasture,2009-11-05,18,,1,3,Post-depositional
+7016,survey,Burial Mound,Annual agriculture,Scrub,2009-11-06,35,,5,2,Looting
+7017,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-07,45,,1,3?,Agriculture
+7018,survey,Uncertain Mound,Annual agriculture,Scrub,2009-11-09,12,,0.7,5,Agriculture
+7021,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-13,25,,3,3?,Agriculture
+7022,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-13,20,,2,3?,Agriculture
+8000,survey,Burial Mound,Annual agriculture,Pasture,2009-10-12,50,,6,2,Looting
+8004,survey,Burial Mound,Scrub,Pasture,2009-10-12,46,,7,1,Post-depositional
+8006,survey,Burial Mound,Annual agriculture,Pasture,2009-10-13,37,,6,1,Post-depositional
+8007,survey,Burial Mound,Pasture,Pasture,2009-10-20,15,,4.5,1,Post-depositional | Development
+8008,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-10-21,20,,4,5,Agriculture
+8009,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-10-21,16,,4,4,Agriculture
+8010,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-10-27,30,,3,4,Agriculture
+8013,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-13,35,,0.5,5,Agriculture
+8014,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-13,35,,1,4,Agriculture
+8015,survey,Burial Mound,Annual agriculture,Annual agriculture,2009-11-13,40,,1.1,4,Agriculture | Development
+8017,survey,Burial Mound,Pasture,Scrub,2009-11-14,30,,3,4,Looting
+6030,survey,Burial Mound,Pasture,Scrub,2010-10-22,34,,4,2,Looting
+8051,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,2,3,Looting
+8056,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,4.5,2,Looting
+8057,Legacy verification,Burial Mound,Forest,Scrub,NA,35,,1.8,2,Looting
+8058,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,1.5,1,Looting
+8059,Survey,Burial Mound,Pasture,Pasture,NA,30,,1.5,1,Looting
+8060,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,1.5,5,Looting
+9013,Survey,Burial Mound,Pasture,Pasture,NA,24,,2,2,Looting
+9014,Survey,Burial Mound,Pasture,Scrub,NA,13,,2,5,Looting
+9015,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.5,5,Agriculture
+9016,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.3,5,Agriculture
+9017,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,1.8,5,road
+9018,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,1.5,5,Looting
+9019,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1,5,Looting
+9020,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,50,,1.5,5,Agriculture
+9021,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.5,5,Agriculture
+9022,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,1.5,3,Looting
+9023,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,2,5,Agriculture
+9025,Survey,Burial Mound,Pasture,Scrub,NA,25,,2,3,Bioturbation
+9026,Legacy verification,Burial Mound,Pasture,Scrub,NA,35,,1.5,1,None
+9027,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,4,1,Bioturbation
+9028,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,8,3,Looting
+9029,Survey,Burial Mound,Annual agriculture,Pasture,NA,40,,8,4,Looting
+9030,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,60,,7,5,Looting
+9037,Legacy verification,Burial Mound,Pasture,Pasture,NA,32,,2.5,1,None
+9038,Survey,Burial Mound,Pasture,Scrub,NA,25,,2.0,4,Looting
+9039,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.4,5,Agriculture
+9040,Survey,Uncertain Mound,Annual agriculture,Pasture,NA,30,,2.2,1,Agriculture
+9042,Survey,Surface Scatter,Pasture,Pasture,NA,50,,0.1,5,Construction
+9043,Legacy verification,Burial Mound,Scrub,Scrub,NA,30,,1.5,5,Looting
+9044,Legacy verification,Burial Mound,Scrub,Pasture,NA,50,,6,5,Looting
+9046,Survey,Uncertain Mound,Forest,Forest,NA,10,,1,5,Looting
+9048,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.8,5,Agriculture
+9049,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,3,5,Agriculture
+9050,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,5,Agriculture
+9054,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,35,,3.5,2,Agriculture
+9055,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,35,,2,2,None
+9056,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.2,5,Agriculture
+9057,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.5,5,Agriculture
+9058,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,28,,0.5,5,Agriculture
+9059,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,35,,0.5,5,Agriculture
+9060,Survey,Burial Mound,Annual agriculture,Pasture,NA,30,,4,4,Looting
+9061,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,1,5,road
+9062,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1,5,Agriculture
+9063,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,40,,1,5,Agriculture
+9064,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,60,,6,5,Looting
+9065,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2,5,road
+9066,Survey,Burial Mound,Annual agriculture,Pasture,NA,40,,3,5,Looting
+9067,Legacy verification,Burial Mound,Pasture,Pasture,NA,22,,1.7,2,Construction
+9068,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.5,5,Agriculture
+9069,Legacy verification,Burial Mound,Pasture,Scrub,NA,30,,2,4,Looting
+9070,Legacy verification,Burial Mound,Scrub,Forest,NA,30,,NA,5,Bioturbation
+9072,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,NA,60,,2,5,Agriculture
+9073,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,4,4,Looting
+9074,Survey,Uncertain Mound,Pasture,Pasture,NA,20,,2,5,Construction
+9075,Survey,Uncertain Mound,Pasture,Pasture,NA,20,,2,5,Construction
+9076,Legacy verification,Burial Mound,Pasture,Scrub,NA,80,,3,5,Looting
+9077,NA,Uncertain Mound,Scrub,Scrub,NA,40,,2.5,5,NA
+9078,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,50,,2,5,Agriculture
+9079,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,3,4,Looting
+9080,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,60,,1.5,5,Agriculture
+9081,Survey,Uncertain Mound,Annual agriculture,Scrub,NA,15,,0.5,4,Looting
+9082,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1.5,3,Construction
+9083,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,2,5,Agriculture
+9084,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,35,,0.5,5,Agriculture
+9085,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.4,5,Agriculture
+9086,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,15,,2,5,Agriculture
+9087,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1,5,Agriculture
+9088,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,38,,4.5,1,Looting
+9089,NA,Burial Mound,Pasture,Pasture,NA,15,,1,1,NA
+9090,NA,Burial Mound,Pasture,Pasture,NA,10,,0.5,3,NA
+9091,NA,Burial Mound,Pasture,Pasture,NA,20,,1.5,4,NA
+9092,NA,Burial Mound,Pasture,Pasture,NA,35,,2,3,NA
+9093,NA,Burial Mound,Pasture,Pasture,NA,20,,1.5,4,NA
+9094,NA,Burial Mound,Pasture,Pasture,NA,40,,2,4,NA
+9095,NA,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,3,NA
+9096,NA,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,3,NA
+9097,NA,Extinct Burial Mound,Annual agriculture,Pasture,NA,20,,2,5,NA
+9098,NA,Uncertain Mound,Annual agriculture,NA,NA,40,,0.3,5,NA
+9099,NA,Burial Mound,Annual agriculture,Pasture,NA,40,,6,4,NA
+9100,NA,Burial Mound,Scrub,Scrub,NA,25,,3,3,NA
+9101,NA,Burial Mound,Annual agriculture,Scrub,NA,20,,2,5,NA
+9102,NA,Burial Mound,Annual agriculture,Scrub,NA,20,,1.5,5,NA
+9103,NA,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.5,3,NA
+9104,NA,Burial Mound,Scrub,Pasture,NA,30,,3,5,NA
+9105,NA,Burial Mound,Annual agriculture,Pasture,NA,30,,2,5,NA
+9106,NA,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.5,5,NA
+9107,NA,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1,5,NA
+9108,NA,Burial Mound,Annual agriculture,Pasture,NA,30,,2,4,NA
+9109,NA,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,3,NA
+9110,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,60,,6,4,Looting
+9111,Survey,Uncertain Mound,Pasture,Pasture,NA,30,,4,5,Construction
+9112,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,4,Agriculture
+9113,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.8,4,Agriculture
+9114,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,30,,1.5,4,Agriculture
+9115,Survey,Extinct Burial Mound,Pasture,Pasture,NA,30,,1.5,4,Agriculture
+9116,Survey,Burial Mound,Pasture,Pasture,NA,20,,0.6,5,Agriculture
+9117,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,1.5,4,Agriculture
+9118,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,4,Agriculture
+9119,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1,4,Agriculture
+9120,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.5,5,Agriculture
+9121,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.5,5,Agriculture
+9122,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.5,5,Agriculture
+9123,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,2,4,Looting
+9124,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,25,,1.5,5,Looting
+9125,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1,3,Looting
+9126,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2.5,4,Looting
+9127,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,2,3,Looting
+9128,Legacy verification,Burial Mound,Pasture,Pasture,NA,28,,4.5,5,Looting
+9129,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,50,,0.8,5,Agriculture
+9130,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,25,,1.5,2,road
+9131,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,4,3,Looting
+9132,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,2,2,Looting
+9133,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.8,3,Looting
+9135,Legacy verification,Burial Mound,Forest,Scrub,NA,30,,3.5,5,Looting
+9136,Legacy verification,Burial Mound,Forest,Scrub,NA,40,,2,2,Looting
+9137,Legacy verification,Burial Mound,Forest,Scrub,NA,50,,8,5,Looting
+9138,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,6,5,Looting
+9139,Legacy verification,Burial Mound,Pasture,Pasture,NA,50,,7,5,Looting
+9140,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,2,5,Looting
+9141,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,2,5,Agriculture
+9142,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.5,5,Agriculture
+9143,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1,5,Agriculture
+9144,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1,5,Agriculture
+9145,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1,5,Agriculture
+9146,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,5,5,Agriculture
+9147,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5,Agriculture
+9148,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,2,5,Agriculture
+9149,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1,5,Agriculture
+9150,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1,5,Agriculture
+9151,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,3,4,Agriculture
+9152,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,40,,1,5,Agriculture
+9153,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,5,Agriculture
+9154,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,4,5,Agriculture
+9155,Legacy verification,Burial Mound,Pasture,Scrub,NA,25,,1.5,5,Looting
+9156,Survey,Burial Mound,Annual agriculture,Scrub,NA,50,,8,4,Looting
+9157,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,4,5,Looting
+9158,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,2,5,Agriculture
+9159,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,40,,0.1,5,Agriculture
+9160,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,40,,0.1,5,Agriculture
+9161,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,NA,15,,1,5,Agriculture
+9162,Legacy verification,Burial Mound,Pasture,Scrub,NA,35,,2.5,5,Construction
+9163,Legacy verification,Burial Mound,Pasture,Scrub,NA,30,,2.5,5,Looting
+9164,Survey,Burial Mound,Pasture,Scrub,NA,35,,2,5,Looting
+9165,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,6,4,Looting
+9166,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,5,3,Construction
+9167,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,40,,1,4,Agriculture
+9168,Survey,Uncertain Mound,Pasture,Pasture,NA,35,,1.7,2,Construction
+9169,Survey,Burial Mound,Pasture,Pasture,NA,40,,2.5,2,Construction
+9170,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.8,5,Agriculture
+9171,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,2,4,Agriculture
+9172,Survey,Burial Mound,Pasture,Scrub,NA,30,,3,5,Agriculture
+9173,Survey,Burial Mound,Pasture,Scrub,NA,25,,2.5,2,Agriculture
+9174,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,35,,2.5,3,Agriculture
+9175,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,40,,5,1,Agriculture
+9177,Legacy verification,Burial Mound,Pasture,Pasture,NA,45,,1.7,4,Looting
+9178,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.4,5,Agriculture
+9179,Legacy verification,Burial Mound,Pasture,Pasture,NA,50,,5,2,Looting
+9180,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,3,2,Agriculture
+9181,Legacy verification,Burial Mound,Pasture,Scrub,NA,60,,4,2,Anthropogenic
+9182,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,25,,1.8,5,Agriculture
+9183,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,1.2,5,Agriculture
+9184,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.5,5,Agriculture
+9185,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,5,Agriculture
+9186,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.5,5,Agriculture
+9187,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,25,,1,5,Agriculture
+9188,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.8,5,Agriculture
+9189,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,5,Agriculture
+9190,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.5,5,Looting
+9191,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2,5,Agriculture
+9192,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1,5,Agriculture
+9193,Legacy verification,Burial Mound,Pasture,Pasture,NA,45,,2.5,1,Construction
+9194,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2,1,Agriculture
+9195,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,2,Agriculture
+9196,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,4,5,Looting
+9197,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.8,5,Agriculture
+9198,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1,3,Looting
+9199,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,5,Agriculture
+9200,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,4,2,Looting
+9201,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,5,2,Looting
+9202,Legacy verification,Burial Mound,Pasture,Pasture,NA,50,,4.5,2,Looting
+9203,Legacy verification,Burial Mound,Pasture,Perennial agriculture,NA,50,,6,5,Looting
+9204,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,2,5,Construction
+9205,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.7,5,Agriculture
+9206,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,7,1,Looting
+9207,Survey,Burial Mound,Pasture,Pasture,NA,30,,3,3,None
+9208,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.5,5,Agriculture
+9209,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,5,Agriculture
+9210,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.5,5,Agriculture
+9211,Survey,Burial Mound,Annual agriculture,Scrub,NA,30,,2.5,1,Agriculture
+9212,Survey,Burial Mound,Pasture,Pasture,NA,40,,2,3,Construction
+9213,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,35,,4,1,Agriculture
+9214,NA,Extinct Burial Mound,Annual agriculture,Pasture,NA,40,,5,5,NA
+9215,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1,5,Agriculture
+9216,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,49,,5,2,Looting
+9217,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.8,5,Agriculture
+9218,Legacy verification,Burial Mound,Pasture,Pasture,NA,50,,8,3,Looting
+9219,Survey,Burial Mound,Pasture,Pasture,NA,25,,3,3,Looting
+9220,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,3,1,Construction
+9222,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,2,3,Looting
+9223,Survey,Burial Mound,Pasture,Pasture,NA,15,,1.5,4,Looting
+9224,Survey,Burial Mound,Pasture,Pasture,NA,20,,1.5,3,None
+9225,Legacy verification,Burial Mound,Pasture,Pasture,NA,15,,1,2,None
+9226,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1.5,3,Looting
+9227,Survey,Burial Mound,Pasture,Pasture,NA,35,,4,5,Looting
+9228,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,2,5,Agriculture
+9229,Legacy verification,Burial Mound,Pasture,Scrub,NA,50,,1,3,Looting
+9230,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,2,4,Looting
+9231,Legacy verification,Burial Mound,Pasture,Scrub,NA,15,,0.5,5,Looting
+9232,Legacy verification,Burial Mound,Pasture,Scrub,NA,20,,1.5,4,Looting
+9233,Legacy verification,Burial Mound,Forest,Scrub,NA,25,,1.5,5,Looting
+9234,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,15,,0.5,5,Agriculture
+9235,Legacy verification,Burial Mound,Forest,Scrub,NA,35,,3.5,5,Looting
+9236,Legacy verification,Burial Mound,Pasture,Scrub,NA,30,,2,5,Looting
+9237,Legacy verification,Burial Mound,Pasture,Scrub,NA,15,,1.5,4,Looting
+9238,Survey,Burial Mound,Pasture,Scrub,NA,25,,2,4,Looting
+9239,Legacy verification,Burial Mound,Pasture,Scrub,NA,20,,1.5,4,Looting
+9240,Legacy verification,Burial Mound,Pasture,Scrub,NA,35,,3,4,Looting
+9241,Survey,Burial Mound,Pasture,Scrub,NA,15,,0.5,4,Looting
+9242,Survey,Uncertain Mound,Pasture,Scrub,NA,10,,0.5,2,unspecified
+9243,Survey,Burial Mound,Pasture,Scrub,NA,25,,2,5,Looting
+9244,Survey,Burial Mound,Pasture,Scrub,NA,20,,0.5,5,Looting
+9245,Legacy verification,Burial Mound,Pasture,Scrub,NA,30,,3,4,Construction
+9246,Survey,Burial Mound,Pasture,Scrub,NA,20,,2,4,Looting
+9247,Legacy verification,Burial Mound,Pasture,Scrub,NA,35,,4,2,Looting
+9248,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,20,,2.5,2,Construction
+9249,Survey,Burial Mound,Annual agriculture,Pasture,NA,15,,2,3,Looting
+9250,Legacy verification,Burial Mound,Pasture,Scrub,NA,30,,3,2,Looting
+9251,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,2,4,Looting
+9252,Legacy verification,Burial Mound,Pasture,Scrub,NA,30,,3,4,Looting
+9253,Survey,Burial Mound,Forest,Scrub,NA,25,,3,5,Looting
+9254,Survey,Burial Mound,Forest,Scrub,NA,20,,0.5,5,Looting
+9255,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.7,5,Agriculture
+9256,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1,5,Agriculture
+9257,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,2.5,3,Looting
+9258,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,2.5,5,Agriculture
+9259,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,2,5,Construction (military activity)
+9261,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,35,,3,4,Looting
+9262,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,5,Agriculture
+9263,Survey,Burial Mound,Annual agriculture,Pasture,NA,30,,3,2,Looting
+9264,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,2.5,3,Looting
+9265,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,2.5,2,Looting
+9266,Survey,Burial Mound,Pasture,Pasture,NA,30,,2,2,Looting
+9267,Survey,Uncertain Mound,Pasture,Pasture,NA,20,,1,5,Looting
+9268,Survey,Uncertain Mound,Annual agriculture,Pasture,NA,35,,1,5,Agriculture
+9269,Survey,Uncertain Mound,Annual agriculture,Pasture,NA,40,,1,5,Agriculture
+9270,Survey,Burial Mound,Pasture,Pasture,NA,20,,1.5,2,Agriculture
+9271,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1,5,Agriculture
+9272,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2.5,4,Looting
+9273,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,25,,2.5,3,Looting
+9274,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,45,,5,1,None
+9275,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5,Agriculture
+9276,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.7,5,Agriculture
+9277,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.2,5,Agriculture
+9278,Survey,Uncertain Mound,Pasture,Pasture,NA,30,,1,5,Agriculture
+9279,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2,5,Agriculture
+9280,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,5,2,None
+9281,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,4,2,Looting
+9282,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.5,5,Agriculture
+9283,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2,5,Agriculture
+9284,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,5,Agriculture
+9285,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,30,,2,5,Agriculture
+9286,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,7,2,Looting
+9287,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,2.5,2,Looting
+9288,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,25,,1,5,Agriculture
+9289,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5,Agriculture
+9290,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,0.8,5,Agriculture
+9291,Legacy verification,Burial Mound,Pasture,Scrub,NA,35,,2.5,3,Looting
+9292,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5,Agriculture
+9293,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1,5,Agriculture
+9300,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.4,5,Agriculture
+9301,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.5,5,Agriculture
+9302,NA,Burial Mound,Annual agriculture,Pasture,NA,20,,0.5,5,NA
+9303,NA,Extinct Burial Mound,Annual agriculture,Pasture,NA,30,,1,4,NA
+9304,NA,Extinct Burial Mound,Pasture,Pasture,NA,35,,1.5,2,NA
+9305,NA,Burial Mound,Scrub,Scrub,NA,25,,1.8,3,NA
+9306,NA,Burial Mound,Scrub,Scrub,NA,30,,2.5,3,NA
+9307,NA,Burial Mound,Annual agriculture,Scrub,NA,30,,3.1,1,NA
+9308,NA,Burial Mound,Annual agriculture,Pasture,NA,45,,4.5,1,NA
+9309,NA,Burial Mound,Annual agriculture,Pasture,NA,50,,5,2,NA
+9310,NA,Burial Mound,Annual agriculture,Pasture,NA,60,,5,3,NA
+9311,NA,Burial Mound,Scrub,Pasture,NA,30,,3,4,NA
+9312,NA,Burial Mound,Annual agriculture,Pasture,NA,40,,4,3,NA
+9313,NA,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.5,5,NA
+9314,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,2,5,Looting
+9315,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1,2,Looting
+9316,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,2,2,Looting
+9317,Survey,Burial Mound,Pasture,Pasture,NA,20,,1.5,1,Construction
+9318,Survey,Uncertain Mound,Pasture,Pasture,NA,25,,0.5,5,Construction (military activity)
+9319,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,15,,1,3,Agriculture
+9320,Legacy verification,Extinct Burial Mound,Annual agriculture,Pasture,NA,30,,0.5,4,Construction
+9321,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,4,3,Looting
+9322,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,4,1,Looting
+9323,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.4,5,Agriculture
+9324,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.8,3,Agriculture
+9325,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,10,,0.5,5,Looting
+9326,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,3,1,Looting
+9332,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,4,5,Looting
+9334,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.9,4,Agriculture
+9335,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,1,5,Agriculture
+9336,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.8,5,Agriculture
+9337,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.5,5,Agriculture
+9340,Legacy verification,Burial Mound,Forest,Scrub,NA,20,,1,5,Bioturbation (forest)
+9341,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,4,4,Looting
+9342,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,1.7,4,Agriculture
+9343,Survey,Burial Mound,Pasture,Pasture,NA,30,,1.5,4,Agriculture
+9344,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1.5,2,Looting
+9345,Survey,Burial Mound,Pasture,Pasture,NA,10,,1.5,4,Looting
+9346,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2,3,Agriculture
+9347,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2.5,1,None
+9348,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1.7,1,None
+9349,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2.5,2,Looting
+9350,Survey,Burial Mound,Pasture,Scrub,NA,35,,4.5,4,Looting
+9351,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,3,2,Looting
+9352,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,5,Agriculture
+9353,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,15,,0,5,Agriculture
+9354,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,0,5,Agriculture
+9355,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1,4,Agriculture
+9356,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,4,Agriculture
+9357,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,1,5,Excavation
+9358,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,2,4,Looting
+9359,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,2,2,Looting
+9360,Legacy verification,Burial Mound,Pasture,Scrub,NA,70,,14,4,Excavation
+9362,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2.5,5,Excavation
+9361,Survey,Burial Mound,Pasture,Pasture,NA,35,,2,4,Looting
+9363,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,1.5,1,None
+9364,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,2,1,None
+9365,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,2.5,5,Looting
+9366,Survey,Burial Mound,Pasture,Pasture,NA,25,,1,1,None
+9367,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1,2,Agriculture
+9368,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,25,,0.5,2,Agriculture
+9369,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1,3,Agriculture
+9370,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.6,2,Agriculture
+9371,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,2,1,None
+9372,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,30,,0.5,5,unspecified
+9373,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1,4,Agriculture
+9374,Legacy verification,Burial Mound,Pasture,Scrub,NA,35,,3,3,Looting
+9375,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,2,5,Looting
+9376,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5,Agriculture
+9377,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.5,2,Agriculture
+9378,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,0.5,1,None
+9379,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.5,1,Agriculture
+9380,Survey,Burial Mound,Pasture,Scrub,NA,30,,4,1,Looting
+9381,Legacy verification,Burial Mound,Pasture,Pasture,NA,45,,5,1,Bioturbation
+9382,Legacy verification,Burial Mound,Pasture,Scrub,NA,50,,6,1,Looting
+9383,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.5,2,Agriculture
+9385,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,2,1,Looting
+9386,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1,2,Agriculture
+9387,Legacy verification,Burial Mound,Pasture,Scrub,NA,25,,1.7,1,Looting
+9388,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.5,5,Agriculture
+9452,Legacy verification,Burial Mound,Pasture,Scrub,NA,25,,1.7,1,None
+9389,NA,Burial Mound,Annual agriculture,Scrub,NA,15,,1.5,5,NA
+9390,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1,5,Agriculture
+9391,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5,Agriculture
+9392,Survey,Burial Mound,Pasture,Pasture,NA,15,,1,1,Agriculture
+9401,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1,5,Agriculture
+9402,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.5,5,Agriculture
+9403,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.7,5,Agriculture
+9404,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1.5,4,Looting
+9405,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1,5,Agriculture
+9406,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,1.5,5,Agriculture
+9407,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,35,,2,5,Construction
+9409,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,2,2,Agriculture
+9410,Survey,Burial Mound,Pasture,Pasture,NA,10,,3.5,5,Looting
+9411,Survey,Burial Mound,Scrub,Scrub,NA,15,,1.5,2,Nodata
+9412,Survey,Burial Mound,Scrub,Pasture,NA,25,,3.5,2,Nodata
+9413,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,3,1,None
+9414,Survey,Burial Mound,Pasture,Pasture,NA,15,,1,1,None
+9415,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1,5,Agriculture
+9416,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,2,3,Agriculture
+9417,Legacy verification,Burial Mound,Pasture,Pasture,NA,15,,2,4,Looting
+9418,Legacy verification,Burial Mound,Pasture,Pasture,NA,50,,6,2,Looting
+9419,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,25,,4.5,2,Nodata
+9420,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,3.5,1,Nodata
+9421,Survey,Burial Mound,Pasture,Pasture,NA,15,,1,1,None
+9422,Survey,Uncertain Mound,Pasture,Pasture,NA,15,,1,1,Looting
+9423,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,60,,12,1,Nodata
+9424,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,10,,NA,5,Nodata
+9425,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5,Agriculture
+9426,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.7,5,Agriculture
+9427,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,23,,NA,6,Agriculture
+9428,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,NA,,NA,6,Agriculture
+9430,Legacy verification,Burial Mound,Pasture,Pasture,NA,10,,NA,5,Looting
+9431,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,2,5,Looting
+9432,NA,Burial Mound,Annual agriculture,Pasture,NA,30,,2.5,1,NA
+9433,NA,Burial Mound,Annual agriculture,Pasture,NA,30,,3.5,2,NA
+9434,NA,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.5,5,NA
+9435,NA,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1,5,NA
+9436,NA,Burial Mound,Annual agriculture,Pasture,NA,40,,4,3,NA
+9437,NA,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.7,2,NA
+9438,NA,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,10,,0.1,5,NA
+9440,NA,Burial Mound,Annual agriculture,Pasture,NA,50,,5,1,NA
+9442,Legacy verification,Burial Mound,Forest,Scrub,NA,40,,1.5,2,Looting
+9443,Legacy verification,Burial Mound,Forest,Scrub,NA,25,,2,3,Looting
+9444,Legacy verification,Burial Mound,Pasture,Scrub,NA,40,,2,2,Looting
+9445,Legacy verification,Burial Mound,Pasture,Scrub,NA,20,,1.5,4,Agriculture
+9446,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,40,,5,2,Looting
+9447,Survey,Burial Mound,Annual agriculture,Scrub,NA,25,,0.5,5,Agriculture
+9448,Legacy verification,Burial Mound,Pasture,Scrub,NA,20,,2,4,Looting
+9449,Survey,Uncertain Mound,Pasture,Scrub,NA,20,,2,1,Construction (military activity)
+9450,Legacy verification,Burial Mound,Pasture,Scrub,NA,25,,2,3,Looting
+9451,Survey,Burial Mound,Pasture,Scrub,NA,20,,1,5,Looting
+9484,NA,Burial Mound,NA,NA,NA,25,,2,3,NA
+9339,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1.5,2,Looting
+9500,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,70,,1.6,4 - seriously damaged,Agriculture
+9501,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,0.8,3 - damaged,Agriculture
+9502,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,45,,1.3,3 - damaged,Agriculture
+9503,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1,3 - damaged,Agriculture
+9504,Legacy verification,Uncertain Mound,Annual agriculture,Annual agriculture,NA,30,,1.8,4 - seriously damaged,Agriculture
+9505,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2,3 - damaged,Agriculture
+9506,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,5,2 - minor damage,Animal activity
+9507,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,3,2 - minor damage,Looting
+9508,Legacy verification,Burial Mound,Pasture,Pasture,NA,17,,1.6,4 - seriously damaged,Looting
+9509,Legacy verification,Burial Mound,Pasture,Pasture,NA,17,,0.3,5 - extinct or near extinct,Looting
+8100,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,4,2 - minor damage,Looting
+9510,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,3,2 - minor damage,Animal activity
+9511,Legacy verification,Burial Mound,Pasture,Pasture,NA,17,,2,4 - seriously damaged,Looting
+9512,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1.2,4 - seriously damaged,Looting
+8101,Legacy verification,Burial Mound,Pasture,Pasture,NA,12,,0.5,5 - extinct or near extinct,Looting
+8102,Legacy verification,Burial Mound,Scrub,Scrub,NA,20,,0.5,5 - extinct or near extinct,Excavation
+8300,Legacy verification,Extinct Burial Mound,Annual agriculture,Scrub,NA,15,,0.5,5 - extinct or near extinct,Agriculture
+9513,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,28,,2,3 - damaged,Agriculture
+8301,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,17,,2.3,2 - minor damage,Post-depositional
+8103,Legacy verification,Extinct Burial Mound,Scrub,Scrub,NA,0,,0,5 - extinct or near extinct,No observation
+8104,Legacy verification,Uncertain Mound,Scrub,Scrub,NA,0,,0,5 - extinct or near extinct,No observation
+8302,Legacy verification,Burial Mound,Scrub,Scrub,NA,15,,1.5,0 - No observation,Other
+8105,Legacy verification,Uncertain Mound,Forest,Forest,NA,15,,3,1 - pristine,No observation
+9514,Survey,Uncertain Mound,Scrub,Scrub,NA,11,,1.5,4 - seriously damaged,Looting
+8303,Legacy verification,Burial Mound,Perennial agriculture,Pasture,NA,22,,2.7,1 - pristine,Agriculture
+9515,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.6,3 - damaged,Agriculture
+8304,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,13,,1.4,3 - damaged,Agriculture
+8106,Legacy verification,Burial Mound,Annual agriculture,Perennial agriculture,NA,55,,1.5,3 - damaged,Agriculture
+8305,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,22,,0.7,3 - damaged,Agriculture
+9516,Legacy verification,Uncertain Mound,Annual agriculture,Scrub,NA,14,,1,3 - damaged,Agriculture
+8306,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,22,,1,4 - seriously damaged,Agriculture
+8107,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,20,,0.3,4 - seriously damaged,Looting
+9517,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,25,,1,4 - seriously damaged,Agriculture
+8108,Legacy verification,Extinct Burial Mound,Scrub,Scrub,NA,0,,0,5 - extinct or near extinct,Looting
+9518,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,0.9,3 - damaged,Agriculture
+8109,Survey,Extinct Burial Mound,Annual agriculture,Scrub,NA,20,,0.2,5 - extinct or near extinct,Looting
+8307,Legacy verification,Extinct Burial Mound,Other,Other,NA,35,,0.5,5 - extinct or near extinct,Agriculture
+8308,Survey,Uncertain Mound,Other,Other,NA,15,,0.5,5 - extinct or near extinct,Agriculture
+9519,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,28,,1.8,4 - seriously damaged,Looting
+8309,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,18,,1,5 - extinct or near extinct,Looting
+8110,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.8,3 - damaged,Agriculture
+8310,Survey,Uncertain Mound,Annual agriculture,Scrub,NA,25,,1,4 - seriously damaged,Excavation
+9520,Legacy verification,Burial Mound,Pasture,Pasture,NA,15,,0.5,4 - seriously damaged,Looting
+8111,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,2.3,2 - minor damage,Animal activity
+8311,Survey,Uncertain Mound,Annual agriculture,Scrub,NA,20,,0.3,5 - extinct or near extinct,Other
+9521,Legacy verification,Burial Mound,Pasture,Pasture,NA,18,,1.4,4 - seriously damaged,Looting
+8312,Survey,Uncertain Mound,Annual agriculture,Scrub,NA,10,,0.4,5 - extinct or near extinct,Agriculture
+8313,Survey,Uncertain Mound,Annual agriculture,Scrub,NA,16,,1.2,5 - extinct or near extinct,Agriculture
+8112,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,1.5,2 - minor damage,Looting
+8314,Survey,Uncertain Mound,Annual agriculture,Scrub,NA,22,,0.5,5 - extinct or near extinct,Agriculture
+9522,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,55,,1.9,4 - seriously damaged,Looting
+8113,Legacy verification,Burial Mound,Scrub,Scrub,NA,30,,1,1 - pristine,No observation
+8315,Survey,Uncertain Mound,Annual agriculture,Scrub,NA,25,,0.5,5 - extinct or near extinct,Agriculture
+9523,Legacy verification,Burial Mound,Pasture,Scrub,NA,33,,3,2 - minor damage,Post-depositional
+8114,Legacy verification,Burial Mound,Scrub,Scrub,NA,40,,1,4 - seriously damaged,Looting
+8316,Legacy verification,Burial Mound,Perennial agriculture,Scrub,NA,25,,2.3,2 - minor damage,Looting
+8115,Legacy verification,Burial Mound,Scrub,Pasture,NA,30,,2,2 - minor damage,Looting
+8317,Legacy verification,Burial Mound,Scrub,Scrub,NA,36,,3,4 - seriously damaged,Looting
+9524,Legacy verification,Burial Mound,Scrub,Scrub,NA,25,,1.8,4 - seriously damaged,Looting
+8116,Survey,Uncertain Mound,Scrub,Scrub,NA,40,,0.2,5 - extinct or near extinct,Looting
+9525,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,2,4 - seriously damaged,Looting
+9526,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2.3,1 - pristine,No observation
+8318,Survey,Uncertain Mound,Scrub,Other,NA,10,,0.5,5 - extinct or near extinct,Other
+9527,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1.2,4 - seriously damaged,Looting
+8319,Legacy verification,Burial Mound,Scrub,Scrub,NA,16,,1.7,4 - seriously damaged,Looting
+9528,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,1.9,2 - minor damage,Looting
+9529,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1.9,4 - seriously damaged,Looting
+8320,Survey,Uncertain Mound,Scrub,Scrub,NA,16,,0.4,5 - extinct or near extinct,Excavation
+9530,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,42,,4,4 - seriously damaged,Looting
+8321,Legacy verification,Burial Mound,Pasture,Pasture,NA,23,,2.2,2 - minor damage,Excavation
+8117,Legacy verification,Extinct Burial Mound,Annual agriculture,Pasture,NA,15,,0,5 - extinct or near extinct,Agriculture
+8322,Survey,Uncertain Mound,Annual agriculture,Other,NA,9,,0.4,5 - extinct or near extinct,Excavation
+9531,Legacy verification,Burial Mound,Pasture,Pasture,NA,19,,0.8,3 - damaged,Looting
+8323,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.4,5 - extinct or near extinct,Agriculture
+8324,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.8,5 - extinct or near extinct,Agriculture
+8325,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,28,,1.5,3 - damaged,Agriculture
+8326,Legacy verification,Surface Scatter,Annual agriculture,Scrub,NA,150,,0.5,5 - extinct or near extinct,Excavation
+8327,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,5 - extinct or near extinct,Agriculture
+9532,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,2.2,4 - seriously damaged,Looting
+8328,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1,4 - seriously damaged,Agriculture
+8329,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.5,5 - extinct or near extinct,Agriculture
+8330,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,23,,0.8,4 - seriously damaged,Agriculture
+9533,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.6,2 - minor damage,Agriculture
+8118,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,50,,3.5,1 - pristine,No observation
+8331,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.8,4 - seriously damaged,Agriculture
+9534,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,22,,1.5,3 - damaged,Agriculture
+8119,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,50,,3,2 - minor damage,Looting
+8332,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.6,5 - extinct or near extinct,Agriculture
+9535,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,24,,1.8,3 - damaged,Agriculture
+8333,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,10,,0.1,5 - extinct or near extinct,Agriculture
+8334,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,7,,0,5 - extinct or near extinct,Agriculture
+8335,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2.4,3 - damaged,Agriculture
+8336,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.8,4 - seriously damaged,Agriculture
+9536,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,19,,0.6,4 - seriously damaged,Agriculture
+8337,Legacy verification,Uncertain Mound,Annual agriculture,Annual agriculture,NA,40,,0.7,5 - extinct or near extinct,Agriculture
+8120,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,55,,1.5,3 - damaged,Agriculture
+9537,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,17,,0.5,4 - seriously damaged,Agriculture
+8121,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,55,,0.5,5 - extinct or near extinct,Agriculture
+8338,Legacy verification,Uncertain Mound,Scrub,Scrub,NA,35,,6,4 - seriously damaged,Excavation
+9538,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,1.5,4 - seriously damaged,Agriculture
+8339,Legacy verification,Burial Mound,Pasture,Pasture,NA,26,,1.5,1 - pristine,No observation
+8122,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.5,5 - extinct or near extinct,Agriculture
+8340,Legacy verification,Burial Mound,Scrub,Other,NA,50,,7,2 - minor damage,Excavation
+9539,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1,4 - seriously damaged,Agriculture
+8123,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.4,5 - extinct or near extinct,Agriculture
+9540,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,1,5 - extinct or near extinct,Agriculture
+8124,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.5,5 - extinct or near extinct,Agriculture
+8125,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+9541,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,10,,0.1,5 - extinct or near extinct,Agriculture
+8341,Legacy verification,Burial Mound,Scrub,Scrub,NA,15,,1.75,2 - minor damage,Looting
+8126,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+8342,Legacy verification,Burial Mound,Scrub,Scrub,NA,10,,1.5,3 - damaged,Road cut
+8127,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0,5 - extinct or near extinct,Agriculture
+8343,Legacy verification,Uncertain Feature,Scrub,Scrub,NA,15,,1.4,3 - damaged,Road cut
+8344,Legacy verification,Uncertain Mound,Scrub,Scrub,NA,0,,0,0 - No observation,No observation
+8128,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,0,,0,0 - No observation,No observation
+9542,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,No observation
+9543,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,No observation
+9544,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,No observation
+9545,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Looting
+9546,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Agriculture
+9547,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,3,3 - damaged,Looting
+9548,Legacy verification,Burial Mound,Pasture,Pasture,NA,0,,0,0 - No observation,No observation
+9549,Legacy verification,Burial Mound,Pasture,Pasture,NA,17,,1,3 - damaged,Agriculture
+9550,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,2,3 - damaged,Looting
+9551,Legacy verification,Burial Mound,Pasture,Pasture,NA,28,,2,4 - seriously damaged,Looting
+9552,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,2.2,3 - damaged,Looting
+9553,Legacy verification,Burial Mound,Pasture,Pasture,NA,18,,1.6,4 - seriously damaged,Looting
+8345,Legacy verification,Extinct Burial Mound,Other,Other,NA,0,,0,5 - extinct or near extinct,Excavation
+8346,Legacy verification,Burial Mound,Pasture,Pasture,NA,21,,1,2 - minor damage,Post-depositional
+9554,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.5,4 - seriously damaged,Agriculture
+8129,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,4,3 - damaged,Looting
+8347,Legacy verification,Burial Mound,Pasture,Pasture,NA,17,,1.2,1 - pristine,Post-depositional
+8348,Legacy verification,Burial Mound,Pasture,Pasture,NA,15,,1.5,2 - minor damage,Looting
+8130,Survey,Burial Mound,Pasture,Pasture,NA,35,,2.5,3 - damaged,Looting
+8349,Legacy verification,Burial Mound,Pasture,Pasture,NA,17,,1.75,2 - minor damage,Looting
+8350,Legacy verification,Burial Mound,Pasture,Pasture,NA,18,,1.2,2 - minor damage,Post-depositional
+9555,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,17,,0.9,3 - damaged,Agriculture
+8131,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1.8,4 - seriously damaged,Looting
+9556,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,200,,0,2 - minor damage,No observation
+8351,Legacy verification,Burial Mound,Scrub,Pasture,NA,30,,3,2 - minor damage,Post-depositional
+9557,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,NA,17,,1.6,2 - minor damage,Agriculture
+8132,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,4.5,2 - minor damage,Construction
+9558,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,NA,25,,1.5,3 - damaged,Agriculture
+8133,Legacy verification,Burial Mound,Other,Other,NA,45,,1,2 - minor damage,Other
+8352,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,24,,1.3,2 - minor damage,Agriculture
+8134,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,1.8,3 - damaged,Looting
+8353,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,25,,3.2,2 - minor damage,Looting
+9559,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,15,,0.8,3 - damaged,Agriculture
+8135,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,1,4 - seriously damaged,Looting
+8136,Legacy verification,Burial Mound,Pasture,Pasture,NA,45,,1.8,2 - minor damage,Other
+9560,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.3,3 - damaged,Agriculture
+8354,Legacy verification,Burial Mound,Perennial agriculture,Pasture,NA,20,,1,2 - minor damage,Road cut
+8355,Legacy verification,Burial Mound,Perennial agriculture,Scrub,NA,26,,2,2 - minor damage,Other
+8137,Legacy verification,Burial Mound,Scrub,Pasture,NA,20,,0.3,5 - extinct or near extinct,Construction
+9561,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,35,,5,3 - damaged,Looting
+8356,Legacy verification,Burial Mound,Perennial agriculture,Pasture,NA,26,,2,1 - pristine,Looting
+9562,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,2,3 - damaged,Looting
+9563,Legacy verification,Other,Pasture,Scrub,NA,100,,10,2 - minor damage,Post-depositional
+8138,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.3,5 - extinct or near extinct,Agriculture
+8357,Legacy verification,Burial Mound,Pasture,Pasture,NA,32,,3,1 - pristine,No observation
+9564,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,24,,1.4,3 - damaged,Post-depositional
+9565,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.5,3 - damaged,Agriculture
+9566,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,6,4 - seriously damaged,Looting
+8139,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Construction
+8140,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,0,,0,5 - extinct or near extinct,Construction
+8358,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+9567,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,0.8,2 - minor damage,Agriculture
+8142,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,4,2 - minor damage,Looting
+8359,Legacy verification,Uncertain Mound,Scrub,Pasture,NA,23,,2.5,1 - pristine,Post-depositional
+8143,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.8,4 - seriously damaged,Agriculture
+8144,Survey,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Agriculture
+9568,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,No observation
+9569,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,1,3 - damaged,Agriculture
+9570,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,22,,2.4,2 - minor damage,Agriculture
+9571,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.5,3 - damaged,Agriculture
+9572,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,19,,0.8,2 - minor damage,Agriculture
+8360,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.4,3 - damaged,Agriculture
+9573,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.9,2 - minor damage,Agriculture
+8361,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,1.2,4 - seriously damaged,Excavation
+9574,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,2.4,2 - minor damage,Agriculture
+8145,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,NA,60,,3.5,3 - damaged,Agriculture
+9575,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,27,,2.6,2 - minor damage,Agriculture
+9576,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,17,,0.5,3 - damaged,Agriculture
+9577,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,16,,0.5,2 - minor damage,Agriculture
+8146,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+8362,Legacy verification,Burial Mound,Perennial agriculture,Scrub,NA,35,,3.5,3 - damaged,Road cut
+8363,Legacy verification,Burial Mound,Perennial agriculture,Scrub,NA,35,,4,1 - pristine,Post-depositional
+9578,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0.2,4 - seriously damaged,Agriculture
+9579,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,14,,0.4,3 - damaged,Agriculture
+8147,Legacy verification,Burial Mound,Pasture,Pasture,NA,60,,3.5,3 - damaged,Agriculture
+8364,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.4,3 - damaged,Agriculture
+8365,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.1,3 - damaged,Agriculture
+9580,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,22,,0.8,2 - minor damage,Agriculture
+8366,Legacy verification,Burial Mound,Scrub,Scrub,NA,45,,6,2 - minor damage,Excavation
+8148,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+8367,Legacy verification,Burial Mound,Scrub,Scrub,NA,35,,2.7,2 - minor damage,Construction
+9581,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.4,3 - damaged,Agriculture
+8368,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.5,4 - seriously damaged,Agriculture
+8369,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.65,3 - damaged,Agriculture
+8370,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.8,2 - minor damage,Agriculture
+8371,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,33,,1.6,3 - damaged,Agriculture
+8372,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,6.5,1 - pristine,Post-depositional
+8373,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,26,,1,3 - damaged,Agriculture
+8149,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,36,,3,4 - seriously damaged,Looting
+8374,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.5,3 - damaged,Agriculture
+8375,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,26,,1.3,3 - damaged,Agriculture
+9582,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,0.4,3 - damaged,Agriculture
+8376,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,28,,1.45,2 - minor damage,Agriculture
+8377,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,25,,3.5,2 - minor damage,Looting
+9583,Legacy verification,Burial Mound,Urban,Pasture,NA,14,,0.6,3 - damaged,Urban development
+8150,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,1.5,3 - damaged,Agriculture
+8378,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,1.3,3 - damaged,Agriculture
+8379,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.3,3 - damaged,Agriculture
+8380,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,0.8,4 - seriously damaged,Agriculture
+9584,Legacy verification,Burial Mound,Urban,Pasture,NA,19,,2,4 - seriously damaged,Looting
+8381,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,No observation
+8151,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,55,,0.8,3 - damaged,Agriculture
+9585,Legacy verification,Burial Mound,Scrub,Scrub,NA,30,,2.6,4 - seriously damaged,Looting
+8152,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1,4 - seriously damaged,Agriculture
+8153,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,0.8,4 - seriously damaged,Agriculture
+8382,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,150,,0,3 - damaged,Agriculture
+8154,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,1,4 - seriously damaged,Agriculture
+8383,Survey,Surface Scatter,Annual agriculture,Annual agriculture,NA,150,,0,0 - No observation,Agriculture
+8384,Legacy verification,Burial Mound,Scrub,Pasture,NA,25,,2.5,2 - minor damage,Anthropogenic
+8385,Legacy verification,Burial Mound,Scrub,Scrub,NA,30,,3,2 - minor damage,Looting
+8155,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+8386,Legacy verification,Extinct Burial Mound,Scrub,Pasture,NA,30,,3,5 - extinct or near extinct,Urban development
+8156,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,0.8,4 - seriously damaged,Agriculture
+9586,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,45,,7,2 - minor damage,Looting
+9587,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,2,4 - seriously damaged,Agriculture
+9588,Legacy verification,Burial Mound,Pasture,Pasture,NA,45,,7,2 - minor damage,Looting
+8387,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,33,,2.8,2 - minor damage,Looting
+8157,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.8,4 - seriously damaged,Agriculture
+8388,Legacy verification,Uncertain Mound,Annual agriculture,Annual agriculture,NA,15,,0.4,4 - seriously damaged,Agriculture
+9589,Legacy verification,Burial Mound,Pasture,Pasture,NA,15,,1,2 - minor damage,Post-depositional
+8389,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,28,,1,3 - damaged,Agriculture
+9590,Legacy verification,Burial Mound,Pasture,Pasture,NA,19,,1.5,2 - minor damage,Post-depositional
+8390,Legacy verification,Burial Mound,Annual agriculture,Other,NA,32,,0.8,4 - seriously damaged,Road cut
+8391,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,1.5,3 - damaged,Agriculture
+9591,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1.5,2 - minor damage,Agriculture
+8158,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,1,1 - pristine,No observation
+9592,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,1.1,2 - minor damage,Agriculture
+9593,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,16,,0.9,3 - damaged,Agriculture
+8392,Legacy verification,Burial Mound,Annual agriculture,Other,NA,35,,1.2,4 - seriously damaged,Construction
+9594,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,17,,0.9,2 - minor damage,Agriculture
+9595,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,14,,0.8,2 - minor damage,Agriculture
+9596,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,17,,0.9,2 - minor damage,Agriculture
+8393,Legacy verification,Burial Mound,Annual agriculture,Other,NA,30,,1.2,4 - seriously damaged,Construction
+8159,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,35,,2.5,3 - damaged,Looting
+9597,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,24,,3.5,2 - minor damage,Agriculture
+8394,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.3,5 - extinct or near extinct,Agriculture
+9598,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,19,,1.6,2 - minor damage,Agriculture
+8395,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2.5,3 - damaged,Agriculture
+9599,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,29,,5,3 - damaged,Looting
+8396,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+8160,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,40,,3.5,2 - minor damage,Animal activity
+9600,Legacy verification,Burial Mound,Pasture,Pasture,NA,17,,1.6,3 - damaged,Agriculture
+8397,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,2.3,3 - damaged,Agriculture
+9601,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,24,,3.5,3 - damaged,Looting
+8161,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,50,,2,0 - No observation,No observation
+9602,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.4,3 - damaged,Agriculture
+9603,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.4,3 - damaged,Agriculture
+8398,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,27,,1.7,4 - seriously damaged,Agriculture
+8399,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.4,4 - seriously damaged,Agriculture
+8162,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,0.8,4 - seriously damaged,Looting
+8400,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,34,,2,3 - damaged,Agriculture
+9604,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,19,,1.6,3 - damaged,Agriculture
+9605,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,19,,1.5,3 - damaged,Agriculture
+9606,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,20,,1.9,2 - minor damage,Agriculture
+9607,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.8,2 - minor damage,Agriculture
+9608,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,26,,2,4 - seriously damaged,Looting
+8401,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.8,4 - seriously damaged,Agriculture
+9609,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,25,,2,3 - damaged,Looting
+8163,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,0.5,4 - seriously damaged,Agriculture
+9610,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,1.4,3 - damaged,Agriculture
+9611,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,27,,2.8,3 - damaged,Looting
+9612,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,23,,2,4 - seriously damaged,Looting
+9613,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,25,,2.1,2 - minor damage,Agriculture
+8165,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,50,,4.5,2 - minor damage,Animal activity
+8166,Survey,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Agriculture
+8167,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,2,3 - damaged,Agriculture
+8168,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,60,,5,2 - minor damage,Animal activity
+8169,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,2.5,2 - minor damage,Agriculture
+8170,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,45,,0.4,5 - extinct or near extinct,Agriculture
+9614,Legacy verification,Burial Mound,Pasture,Pasture,NA,18,,1.7,3 - damaged,Looting
+8171,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+9615,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,3.5,4 - seriously damaged,Looting
+8172,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+9616,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,0,,0,5 - extinct or near extinct,Other
+8173,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,40,,1,1 - pristine,No observation
+9617,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,3.1,4 - seriously damaged,Looting
+9338,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,1.2,4 - seriously damaged,Agriculture
+9071,Legacy verification,Burial Mound,Pasture,Pasture,NA,50,,1.5,4 - seriously damaged,Construction
+9618,Legacy verification,Uncertain Mound,Annual agriculture,Pasture,NA,15,,0.5,4 - seriously damaged,Looting
+9619,Legacy verification,Burial Mound,Scrub,Scrub,NA,25,,3.5,4 - seriously damaged,Looting
+9620,Legacy verification,Burial Mound,Scrub,Scrub,NA,14,,1.1,3 - damaged,Looting
+9621,Legacy verification,Extinct Burial Mound,Scrub,Scrub,NA,0,,0,0 - No observation,No observation
+8174,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.5,3 - damaged,Agriculture
+8175,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,2,3 - damaged,Agriculture
+9622,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,21,,1.4,3 - damaged,Agriculture
+8176,Survey,Burial Mound,Annual agriculture,Pasture,NA,45,,4.5,3 - damaged,Looting
+8177,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,55,,1.8,3 - damaged,Agriculture
+8178,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,1.5,3 - damaged,Agriculture
+8179,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,2.5,4 - seriously damaged,Agriculture
+8180,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+8181,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,45,,1.1,4 - seriously damaged,Agriculture
+8182,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,0,,0,5 - extinct or near extinct,Agriculture
+8183,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,4 - seriously damaged,Agriculture
+8184,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,0.9,4 - seriously damaged,Agriculture
+8185,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,55,,2.3,3 - damaged,Agriculture
+8186,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,1.2,4 - seriously damaged,Agriculture
+8187,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,28,,1.1,4 - seriously damaged,Agriculture
+9623,Legacy verification,Uncertain Mound,Scrub,Scrub,NA,0,,0,0 - No observation,No observation
+9624,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1.6,3 - damaged,Looting
+9625,Legacy verification,Burial Mound,Pasture,Pasture,NA,18,,1.5,3 - damaged,Looting
+8402,Legacy verification,Burial Mound,Scrub,Scrub,NA,28,,1.9,3 - damaged,Construction
+9626,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,50,,3,0 - No observation,Construction
+9627,Legacy verification,Burial Mound,Pasture,Pasture,NA,22,,1.2,4 - seriously damaged,Looting
+8403,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,35,,2.5,2 - minor damage,Looting
+9628,Legacy verification,Burial Mound,Pasture,Pasture,NA,24,,1.2,2 - minor damage,Looting
+8188,Legacy verification,Burial Mound,Annual agriculture,Other,NA,45,,0.8,3 - damaged,Agriculture
+8189,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,35,,0.8,5 - extinct or near extinct,Agriculture
+8190,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.8,5 - extinct or near extinct,Agriculture
+8191,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,40,,0.8,5 - extinct or near extinct,Agriculture
+8404,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,28,,1.5,4 - seriously damaged,Agriculture
+9629,Legacy verification,Burial Mound,Pasture,Pasture,NA,15,,1.75,4 - seriously damaged,Agriculture
+8192,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Agriculture
+9630,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,1.7,3 - damaged,Looting
+8405,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,16,,0.6,4 - seriously damaged,Agriculture
+9631,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,1.6,3 - damaged,Construction
+8193,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,45,,1.2,5 - extinct or near extinct,Agriculture
+8406,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,20,,1,4 - seriously damaged,Agriculture
+9632,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,1,4 - seriously damaged,Looting
+8194,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,1.3,5 - extinct or near extinct,Looting
+8195,Survey,Burial Mound,Pasture,Pasture,NA,35,,2,3 - damaged,Looting
+9633,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,2.7,3 - damaged,Looting
+9634,Legacy verification,Burial Mound,Pasture,Pasture,NA,28,,2.1,4 - seriously damaged,Looting
+8407,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,30,,1.75,4 - seriously damaged,Agriculture
+8196,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,55,,1.2,4 - seriously damaged,Agriculture
+9635,Legacy verification,Burial Mound,Pasture,Pasture,NA,25,,1.2,2 - minor damage,Post-depositional
+9636,Legacy verification,Burial Mound,Pasture,Pasture,NA,40,,3,3 - damaged,Looting
+9637,Legacy verification,Burial Mound,Pasture,Pasture,NA,24,,2.1,3 - damaged,Looting
+8197,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,NA,40,,1.2,4 - seriously damaged,Agriculture
+8408,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,36,,2.2,3 - damaged,Agriculture
+8409,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,17,,0.9,4 - seriously damaged,Agriculture
+8198,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,55,,7,4 - seriously damaged,Looting
+8199,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,2,4 - seriously damaged,Agriculture
+8410,Survey,Surface Scatter,Annual agriculture,Annual agriculture,NA,100,,0.5,3 - damaged,Agriculture
+8411,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.4,3 - damaged,Agriculture
+8412,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.3,5 - extinct or near extinct,Agriculture
+8413,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,15,,0.3,5 - extinct or near extinct,Agriculture
+8414,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.15,3 - damaged,Agriculture
+9400,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,55,,1.8,2 - minor damage,Agriculture
+9638,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,39,,1.6,4 - seriously damaged,Agriculture
+9639,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,100,,0,3 - damaged,Agriculture
+9640,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,NA,25,,0.8,3 - damaged,Agriculture
+8200,Legacy verification,Burial Mound,Forest,Forest,NA,10,,0.5,5 - extinct or near extinct,Looting
+8415,Legacy verification,Burial Mound,Pasture,Pasture,NA,13,,1.1,3 - damaged,Post-depositional
+8416,Legacy verification,Extinct Burial Mound,Other,Other,NA,0,,0,5 - extinct or near extinct,Excavation
+8417,Legacy verification,Extinct Burial Mound,Other,Other,NA,0,,0,5 - extinct or near extinct,Excavation
+8201,Legacy verification,Surface Scatter,Forest,Forest,NA,45,,8,2 - minor damage,Looting
+9641,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,43,,2.6,3 - damaged,Agriculture
+8202,Legacy verification,Burial Mound,Forest,Scrub,NA,45,,5,2 - minor damage,Looting
+8418,Legacy verification,Surface Scatter,Pasture,Pasture,NA,100,,1,2 - minor damage,Agriculture
+8203,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,1.8,4 - seriously damaged,Agriculture
+9642,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,100,,0,3 - damaged,Agriculture
+8204,Legacy verification,Burial Mound,Annual agriculture,Scrub,NA,30,,1.2,3 - damaged,Looting
+9643,Legacy verification,Uncertain Mound,Annual agriculture,Annual agriculture,NA,50,,1.5,3 - damaged,Agriculture
+8419,Survey,Surface Scatter,Annual agriculture,Annual agriculture,NA,100,,0,3 - damaged,Agriculture
+8205,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,20,,1.5,3 - damaged,Other
+8420,Legacy verification,Burial Mound,Scrub,Scrub,NA,20,,3.5,3 - damaged,Looting
+8421,Legacy verification,Burial Mound,Scrub,Pasture,NA,16,,2.2,4 - seriously damaged,Looting
+9644,Legacy verification,Uncertain Feature,Pasture,Pasture,NA,100,,5,3 - damaged,Construction
+8206,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,60,,2.3,2 - minor damage,Looting
+8422,Legacy verification,Burial Mound,Scrub,Pasture,NA,22,,2.5,4 - seriously damaged,Looting
+9645,Legacy verification,Uncertain Mound,Annual agriculture,Pasture,NA,30,,1.4,4 - seriously damaged,Construction
+8207,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,1.8,3 - damaged,Agriculture
+8423,Legacy verification,Burial Mound,Scrub,Pasture,NA,25,,2.3,3 - damaged,Looting
+8424,Legacy verification,Burial Mound,Pasture,Pasture,NA,8,,1,2 - minor damage,Post-depositional
+8208,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,60,,1.9,3 - damaged,Agriculture
+8425,Legacy verification,Surface Scatter,Pasture,Pasture,NA,100,,9,3 - damaged,Looting
+8209,Legacy verification,Burial Mound,Pasture,Pasture,NA,30,,3.5,3 - damaged,Construction
+8426,Legacy verification,Burial Mound,Scrub,Scrub,NA,20,,3,2 - minor damage,Looting
+8210,Legacy verification,Burial Mound,Pasture,Pasture,NA,20,,1.2,2 - minor damage,Looting
+8427,Legacy verification,Uncertain Mound,Scrub,Pasture,NA,14,,1.7,4 - seriously damaged,Construction
+8428,Legacy verification,Burial Mound,Pasture,Pasture,NA,18,,1.65,2 - minor damage,Construction
+8211,Legacy verification,Burial Mound,Scrub,Scrub,NA,25,,1.4,4 - seriously damaged,Looting
+8212,Legacy verification,Extinct Burial Mound,Other,Other,NA,0,,0,0 - No observation,Construction
+8213,Legacy verification,Burial Mound,Forest,Scrub,NA,25,,1.2,4 - seriously damaged,Looting
+8214,Legacy verification,Burial Mound,Forest,Forest,NA,40,,0.4,1 - pristine,No observation
+8215,Legacy verification,Extinct Burial Mound,Forest,Forest,NA,0,,0,5 - extinct or near extinct,No observation
+8216,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Agriculture
+8217,Legacy verification,Extinct Burial Mound,Pasture,Pasture,NA,20,,0.4,5 - extinct or near extinct,No observation
+8429,Legacy verification,Burial Mound,Pasture,Scrub,NA,25,,1.7,4 - seriously damaged,Excavation
+8430,Legacy verification,Burial Mound,Pasture,Pasture,NA,12,,0.8,5 - extinct or near extinct,Excavation
+8431,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,18,,0.5,4 - seriously damaged,Looting
+8432,Legacy verification,Burial Mound,Scrub,Scrub,NA,40,,3,3 - damaged,Excavation
+8433,Legacy verification,Extinct Burial Mound,Other,Other,NA,0,,0,5 - extinct or near extinct,Urban development
+8434,Legacy verification,Burial Mound,Annual agriculture,Pasture,NA,40,,5,1 - pristine,Looting
+8435,Legacy verification,Burial Mound,Pasture,Pasture,NA,35,,3.5,3 - damaged,Construction
+8436,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,25,,0.8,5 - extinct or near extinct,Agriculture
+8437,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,NA,20,,0.7,5 - extinct or near extinct,Agriculture
+8218,Survey,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Agriculture
+8219,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,45,,1.9,3 - damaged,Agriculture
+8220,Survey,Burial Mound,Annual agriculture,Annual agriculture,NA,50,,0.4,4 - seriously damaged,Agriculture
+8221,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,25,,1.2,3 - damaged,Agriculture
+8222,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,30,,0.8,4 - seriously damaged,Agriculture
+8223,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,34,,1,4 - seriously damaged,Agriculture
+8224,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,21,,0.6,4 - seriously damaged,Agriculture
+8225,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,51,,1.6,3 - damaged,Agriculture
+8226,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,NA,32,,1.3,4 - seriously damaged,Agriculture
+8227,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,NA,0,,0,0 - No observation,Agriculture
+8501,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-10,35,,5,2 - minor damage,Looting
+8502,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-10,45,,4,2 - minor damage,Looting
+8503,Legacy verification,Uncertain Feature,Pasture,Pasture,2018-09-10,0,,0,1 - pristine,No observation
+8504,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-10,45,,2,4 - seriously damaged,Agriculture
+8505,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-10,60,,6,2 - minor damage,Looting
+8506,Legacy verification,Burial Mound,Pasture,Other,2018-09-10,60,,4,4 - seriously damaged,Excavation
+8507,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-10,120,,15,4 - seriously damaged,Excavation
+8508,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-10,35,,1.5,4 - seriously damaged,Looting
+8509,Legacy verification,Burial Mound,Pasture,Annual agriculture,2018-09-10,80,,5,2 - minor damage,Looting
+8510,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-10,40,,4.5,2 - minor damage,Looting
+8230,Legacy verification,Uncertain Feature,Annual agriculture,Scrub,2018-09-11,18,,2,4 - seriously damaged,Construction
+8231,Legacy verification,Uncertain Feature,Pasture,Pasture,2018-09-11,100,,0.5,0 - No observation,No observation
+8511,Legacy verification,Other,Pasture,Pasture,2018-09-11,0,,0,0 - No observation,No observation
+8512,Legacy verification,Other,Other,Other,2018-09-11,0,,0,0 - No observation,No observation
+8232,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-11,16,,1,4 - seriously damaged,Agriculture
+8513,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-11,30,,2.5,3 - damaged,Urban development
+8233,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-11,17,,1.3,2 - minor damage,Agriculture
+8514,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-11,25,,2,1 - pristine,No observation
+8234,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-11,20,,1,3 - damaged,Construction
+8515,Legacy verification,Other,Scrub,Scrub,2018-09-11,0,,0,0 - No observation,Other
+8235,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-11,20,,1.2,3 - damaged,Agriculture
+8516,Legacy verification,Burial Mound,Forest,Scrub,2018-09-11,20?,,1.5,3 - damaged,Looting
+8236,Legacy verification,Other,Annual agriculture,Annual agriculture,2018-09-11,8,,0.4,4 - seriously damaged,Agriculture
+8517,Legacy verification,Other,Forest,Forest,2018-09-11,0,,0,0 - No observation,No observation
+8518,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-11,140,,0.8,4 - seriously damaged,Agriculture
+8237,Legacy verification,Other,Pasture,Other,2018-09-11,0,,0.5,5 - extinct or near extinct,Construction
+8238,Legacy verification,Burial Mound,Pasture,Annual agriculture,2018-09-11,32,,2,3 - damaged,Looting
+8239,Legacy verification,Other,Pasture,Pasture,2018-09-11,9,,0.2,5 - extinct or near extinct,Construction
+8240,Survey,Other,Annual agriculture,Pasture,2018-09-11,8,,0.4,4 - seriously damaged,Construction
+9646,Legacy verification,Surface Scatter,Pasture,Pasture,2018-09-11,500,,0,1 - pristine,No observation
+9647,Legacy verification,Surface Scatter,Scrub,Scrub,2018-09-11,300,,0,2 - minor damage,Looting
+9648,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-12,40,,1.5,4 - seriously damaged,Urban development
+9649,Legacy verification,Other,Annual agriculture,Scrub,2018-09-12,20,,1,0 - No observation,Agriculture
+9650,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-12,25,,2,4 - seriously damaged,Agriculture
+9651,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-12,35,,1.5,4 - seriously damaged,Agriculture
+9652,Legacy verification,Burial Mound,Forest,Forest,2018-09-12,35,,6,4 - seriously damaged,Looting
+8241,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-12,22,,2.7,1 - pristine,Agriculture
+9653,Serendipity,Uncertain Feature,Forest,Forest,2018-09-12,8,,1.3,0 - No observation,Other
+8242,Survey,Burial Mound,Pasture,Pasture,2018-09-12,20,,2.5,3 - damaged,Looting
+8243,Survey,Other,Pasture,Pasture,2018-09-12,8,,1.5,4 - seriously damaged,Other
+9654,Survey,Uncertain Feature,Forest,Forest,2018-09-12,12,,1.7,0 - No observation,Other
+8244,Survey,Other,Pasture,Pasture,2018-09-12,4,,2,4 - seriously damaged,Other
+9655,Survey,Other,Forest,Forest,2018-09-12,16,,3,0 - No observation,Other
+8245,Survey,Other,Pasture,Pasture,2018-09-12,6,,1,3 - damaged,Other
+9656,Survey,Other,Forest,Forest,2018-09-12,16,,2,0 - No observation,Other
+8246,Survey,Other,Pasture,Pasture,2018-09-12,6,,1.7,4 - seriously damaged,Other
+8247,Survey,Other,Pasture,Pasture,2018-09-12,6,,1,3 - damaged,Post-depositional
+9657,Legacy verification,Burial Mound,Forest,Scrub,2018-09-12,35,,8,4 - seriously damaged,Looting
+8248,Survey,Burial Mound,Pasture,Pasture,2018-09-12,12,,1.6,2 - minor damage,Other
+8249,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-12,25,,2.5,1 - pristine,Animal activity
+8250,Survey,Other,Pasture,Pasture,2018-09-12,6,,1.7,4 - seriously damaged,Other
+8251,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-12,15,,2,0 - No observation,Post-depositional
+8252,Survey,Other,Pasture,Pasture,2018-09-12,6,,1.5,5 - extinct or near extinct,Other
+9658,Survey,Uncertain Feature,Forest,Forest,2018-09-12,9,,1.4,0 - No observation,Other
+8253,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-12,30,,2,1 - pristine,Post-depositional
+9659,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-12,0,,0,0 - No observation,Agriculture
+8254,Survey,Burial Mound,Pasture,Pasture,2018-09-12,15,,1.9,1 - pristine,Animal activity
+9660,Survey,Uncertain Feature,Annual agriculture,Scrub,2018-09-12,35,,0.5,0 - No observation,Agriculture
+9661,Legacy verification,Burial Mound,Forest,Forest,2018-09-12,30,,2.5,4 - seriously damaged,Other
+8255,Survey,Other,Scrub,Pasture,2018-09-12,8,,1.5,3 - damaged,Other
+8256,Survey,Other,Pasture,Pasture,2018-09-12,10,,0.5,0 - No observation,Other
+8257,Survey,Other,Pasture,Pasture,2018-09-12,0,,0,0 - No observation,No observation
+9662,Survey,Other,Scrub,Scrub,2018-09-13,20,,2.2,0 - No observation,Other
+9663,Legacy verification,Other,Scrub,Scrub,2018-09-13,16,,2,0 - No observation,Other
+9664,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-13,30,,1.5,4 - seriously damaged,Agriculture
+8258,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-13,15,,1.5,1 - pristine,Animal activity
+9665,Survey,Burial Mound,Annual agriculture,Scrub,2018-09-13,22,,1.2,3 - damaged,Looting
+8519,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-13,35,,5,3 - damaged,Looting
+9800,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-13,"NA",,NA,0 - No observation,Agriculture
+8259,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-13,15,,1.4,2 - minor damage,Other
+9666,Survey,Uncertain Feature,Scrub,Scrub,2018-09-13,16,,1,0 - No observation,Other
+8520,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-13,45,,3.5,3 - damaged,Animal activity
+8260,Survey,Surface Scatter,Annual agriculture,Pasture,2018-09-13,30,,0,3 - damaged,Agriculture
+8521,Legacy verification,Burial Mound,Scrub,Annual agriculture,2018-09-13,45,,2,3 - damaged,Looting
+9801,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-13,"NA",,NA,0 - No observation,Anthropogenic
+9667,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-13,500,,0,0 - No observation,Agriculture
+8261,Survey,Burial Mound,Annual agriculture,Annual agriculture,2018-09-13,20,,0.5,4 - seriously damaged,Agriculture
+8522,Legacy verification,Other,Pasture,Pasture,2018-09-13,0,,0,0 - No observation,No observation
+9668,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-13,20,,2.5,2 - minor damage,Other
+8262,Legacy verification,Other,Annual agriculture,Annual agriculture,2018-09-13,0,,0,2 - minor damage,Other
+8263,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-13,25,,1,1 - pristine,Agriculture
+8523,Legacy verification,Extinct Burial Mound,Pasture,Scrub,2018-09-13,0,,2,5 - extinct or near extinct,Construction
+9669,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-13,25,,2,2 - minor damage,Construction
+8524,Legacy verification,Burial Mound,Forest,Scrub,2018-09-13,40,,3.5,4 - seriously damaged,Looting
+9670,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-13,25,,1,4 - seriously damaged,Looting
+8264,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-13,24,,1.6,2 - minor damage,Construction
+8265,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-13,15,,1.5,3 - damaged,Looting
+9671,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-13,20,,0.3,5 - extinct or near extinct,Agriculture
+8266,Survey,Other,Pasture,Scrub,2018-09-13,6,,0.7,4 - seriously damaged,Other
+8267,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-13,10,,1,2 - minor damage,Other
+8525,Legacy verification,Extinct Burial Mound,Annual agriculture,Pasture,2018-09-13,0,,1,5 - extinct or near extinct,Looting
+8526,Legacy verification,Extinct Burial Mound,Annual agriculture,Pasture,2018-09-13,0,,0,5 - extinct or near extinct,Construction
+9672,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-13,30,,1.5,3 - damaged,Agriculture
+9673,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-13,19,,0.5,3 - damaged,Agriculture
+9674,Survey,Other,Pasture,Pasture,2018-09-13,6,,1,0 - No observation,Other
+9675,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2018-09-14,10,,0.1,5 - extinct or near extinct,Agriculture
+9676,Survey,Burial Mound,Pasture,Scrub,2018-09-14,21,,0.5,2 - minor damage,Other
+8268,Survey,Uncertain Mound,Pasture,Pasture,2018-09-14,8,,1.2,0 - No observation,Anthropogenic
+9677,Survey,Uncertain Feature,Pasture,Scrub,2018-09-14,12,,0.5,4 - seriously damaged,Other
+8269,Survey,Other,Pasture,Pasture,2018-09-14,10,,0.8,0 - No observation,Anthropogenic
+9678,Survey,Extinct Burial Mound,Pasture,Scrub,2018-09-14,20,,0.1,5 - extinct or near extinct,Agriculture
+8270,Survey,Other,Pasture,Pasture,2018-09-14,20,,2.2,0 - No observation,Post-depositional
+8271,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-14,16,,2,5 - extinct or near extinct,Other
+9679,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-14,40,,2,3 - damaged,Looting
+8272,Survey,Other,Pasture,Pasture,2018-09-14,16,,2,0 - No observation,Other
+8527,Legacy verification,Burial Mound,Pasture,Forest,2018-09-14,50,,4,2 - minor damage,Looting
+8273,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-14,25,,4,2 - minor damage,Looting
+9680,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-14,20,,0.5,3 - damaged,Agriculture
+8274,Local informant,Burial Mound,Pasture,Pasture,2018-09-14,12,,1.1,2 - minor damage,Agriculture
+9681,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-14,25,,2.5,3 - damaged,Looting
+8275,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-14,20,,1.5,3 - damaged,Looting
+8276,Legacy verification,Extinct Burial Mound,Annual agriculture,Scrub,2018-09-14,12,,0.7,4 - seriously damaged,Agriculture
+8528,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-14,25,,2,3 - damaged,Looting
+9682,Survey,Uncertain Feature,Annual agriculture,Scrub,2018-09-14,5,,0.1,0 - No observation,No observation
+8277,Legacy verification,Burial Mound,Forest,Forest,2018-09-14,25,,2.7,4 - seriously damaged,Looting
+8529,Legacy verification,Other,Pasture,Pasture,2018-09-14,0,,0,0 - No observation,No observation
+9683,Survey,Burial Mound,Annual agriculture,Scrub,2018-09-14,30,,2.5,3 - damaged,Looting
+8530,Legacy verification,Burial Mound,Annual agriculture,Forest,2018-09-14,33,,2.5,3 - damaged,Looting
+9684,Survey,Uncertain Feature,Annual agriculture,Scrub,2018-09-14,10,,0.5,0 - No observation,Agriculture
+8278,Legacy verification,Other,Forest,Pasture,2018-09-14,5,,2.2,0 - No observation,Construction
+8279,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-14,8,,1.5,5 - extinct or near extinct,Looting
+9685,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-14,25,,0.5,2 - minor damage,Agriculture
+9686,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-14,40,,1.5,2 - minor damage,Agriculture
+9687,Survey,Uncertain Feature,Scrub,Scrub,2018-09-17,6,,0.5,0 - No observation,Other
+9688,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-17,24,,1.5,3 - damaged,Looting
+9689,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-17,30,,1.8,4 - seriously damaged,Other
+9690,Survey,Other,Scrub,Scrub,2018-09-17,14,,2,0 - No observation,Other
+8280,Survey,Other,Pasture,Pasture,2018-09-17,20,,3,5 - extinct or near extinct,Construction
+8531,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-17,0,,0,5 - extinct or near extinct,Construction
+8281,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-17,20,,1.5,5 - extinct or near extinct,Other
+9691,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-17,15,,1,4 - seriously damaged,Looting
+8282,Survey,Burial Mound,Pasture,Pasture,2018-09-17,16,,1,2 - minor damage,Other
+9692,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-17,40,,5,3 - damaged,Looting
+8283,Legacy verification,Burial Mound,Scrub,Forest,2018-09-17,18,,2,2 - minor damage,Looting
+8532,Legacy verification,Burial Mound,Pasture,Forest,2018-09-17,42,,3,3 - damaged,Looting
+8284,Survey,Burial Mound,Scrub,Pasture,2018-09-17,12,,0.6,2 - minor damage,Looting
+9693,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-17,50,,6,3 - damaged,Looting
+8285,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-17,20,,2.3,3 - damaged,Looting
+9694,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-17,20,,2,2 - minor damage,Looting
+8533,Legacy verification,Burial Mound,Scrub,Forest,2018-09-17,20,,1.4,2 - minor damage,Post-depositional
+8286,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-17,0,,0,0 - No observation,No observation
+8534,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-17,25,,1.5,1 - pristine,No observation
+8287,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-17,12,,0.8,3 - damaged,Agriculture
+8535,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-17,0,,0,5 - extinct or near extinct,Construction
+8536,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-17,30,,1.5,2 - minor damage,Agriculture
+9695,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-17,24,,1.5,4 - seriously damaged,Looting
+8537,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2018-09-18,26,,0.6,5 - extinct or near extinct,Agriculture
+8538,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2018-09-18,35,,1.2,5 - extinct or near extinct,Agriculture
+8288,Legacy verification,Burial Mound,Forest,Scrub,2018-09-18,12,,1.5,3 - damaged,Looting
+8539,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-18,35,,2,4 - seriously damaged,Looting
+8289,Survey,Other,Pasture,Scrub,2018-09-18,0 (extends throughout lower slope),,1,0 - No observation,Other
+8540,Legacy verification,Other,Annual agriculture,Annual agriculture,2018-09-18,0,,0,5 - extinct or near extinct,Agriculture
+8290,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-18,14,,2,4 - seriously damaged,Other
+8541,Legacy verification,Other,Scrub,Urban,2018-09-18,0,,0,5 - extinct or near extinct,Urban development
+8292,Legacy verification,Extinct Burial Mound,Forest,Pasture,2018-09-18,0,,0.2,5 - extinct or near extinct,Agriculture
+8293,Legacy verification,Other,Pasture,Pasture,2018-09-18,0,,0,0 - No observation,Other
+8294,Survey,Surface Scatter,Annual agriculture,Scrub,2018-09-19,100,,0,3 - damaged,Agriculture
+9696,Legacy verification,Uncertain Feature,Scrub,Scrub,2018-09-19,45,,1.5,5 - extinct or near extinct,Construction
+9697,Legacy verification,Burial Mound,Perennial agriculture,Scrub,2018-09-19,20,,1,3 - damaged,Looting
+8295,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-19,30,,2,4 - seriously damaged,Looting
+8296,Survey,Uncertain Feature,Annual agriculture,Scrub,2018-09-19,8,,0.5,5 - extinct or near extinct,Agriculture
+8297,Survey,Extinct Burial Mound,Annual agriculture,Pasture,2018-09-19,12,,0.5,5 - extinct or near extinct,Agriculture
+8298,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2018-09-19,8,,0.3,5 - extinct or near extinct,Agriculture
+9698,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-19,60,,5,3 - damaged,Looting
+8299,Legacy verification,Burial Mound,Annual agriculture,Forest,2018-09-19,30 (diameter obscured by trees)?,,5,2 - minor damage,Looting
+9699,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-19,30,,2.5,3 - damaged,Looting
+8700,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-19,30,,4,4 - seriously damaged,Looting
+9700,Survey,Surface Scatter,Annual agriculture,Pasture,2018-09-19,500,,0,0 - No observation,No observation
+9701,Local informant,Burial Mound,Pasture,Scrub,2018-09-19,20,,0,5 - extinct or near extinct,Looting
+8701,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-19,15,,1.2,3 - damaged,Looting
+9702,Survey,Uncertain Feature,Pasture,Scrub,2018-09-19,20,,1.5,3 - damaged,Post-depositional
+9703,Survey,Burial Mound,Annual agriculture,Scrub,2018-09-19,30,,0.5,2 - minor damage,Animal activity
+8702,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-19,20,,2,0 - No observation,Post-depositional
+8703,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-19,16,,1.7,1 - pristine,Post-depositional
+8704,Survey,Burial Mound,Annual agriculture,Scrub,2018-09-19,8,,1.1,2 - minor damage,Agriculture
+9704,Legacy verification,Extinct Burial Mound,Forest,Forest,2018-09-19,0,,0,5 - extinct or near extinct,Post-depositional
+9705,Legacy verification,Extinct Burial Mound,Scrub,Forest,2018-09-19,0,,0,5 - extinct or near extinct,Post-depositional
+8542,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-20,20,,2,3 - damaged,Looting
+9802,Survey,Tell,Annual agriculture,Annual agriculture,2018-09-20,"NA",,0.01,0 - No observation,Agriculture
+8543,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-20,30,,2.5,4 - seriously damaged,Looting
+9803,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-20,"NA",,NA,0 - No observation,Agriculture
+8544,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-20,30,,1,2 - minor damage,Agriculture
+8545,Survey,Extinct Burial Mound,Annual agriculture,Scrub,2018-09-20,20,,1,5 - extinct or near extinct,Agriculture
+9804,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-20,15,,1.5,1 - pristine,Post-depositional
+8546,Legacy verification,Burial Mound,Pasture,Forest,2018-09-20,10,,0.5,5 - extinct or near extinct,Looting
+9805,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-20,"NA",,0.01,0 - No observation,Agriculture
+8547,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-20,45,,3,4 - seriously damaged,Looting
+8548,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-20,45,,5,2 - minor damage,Construction
+8549,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-21,30,,1.6,3 - damaged,Looting
+8550,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-21,20,,0.5,4 - seriously damaged,Looting
+9806,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-21,"NA",,NA,0 - No observation,Anthropogenic
+8551,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-21,30,,1.5,4 - seriously damaged,Looting
+9807,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-21,"NA",,NA,0 - No observation,Anthropogenic
+8552,Legacy verification,Extinct Burial Mound,Forest,Forest,2018-09-21,0,,0,5 - extinct or near extinct,Construction
+8553,Legacy verification,Burial Mound,Forest,Forest,2018-09-21,20,,0,5 - extinct or near extinct,Looting
+9706,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-25,25,,1,3 - damaged,Agriculture
+8554,Legacy verification,Burial Mound,Forest,Forest,2018-09-25,30,,1.5,3 - damaged,Looting
+9707,Legacy verification,Burial Mound,Forest,Forest,2018-09-25,25,,2.5,3 - damaged,Looting
+8555,Legacy verification,Other,Forest,Forest,2018-09-25,0,,0,0 - No observation,No observation
+9708,Survey,Burial Mound,Annual agriculture,Annual agriculture,2018-09-25,20,,0.5,4 - seriously damaged,Agriculture
+8556,Legacy verification,Burial Mound,Forest,Forest,2018-09-25,15,,0.5,4 - seriously damaged,Looting
+9709,Survey,Burial Mound,Annual agriculture,Annual agriculture,2018-09-25,25,,0.5,4 - seriously damaged,Agriculture
+9710,Survey,Extinct Burial Mound,Scrub,Annual agriculture,2018-09-25,0,,0,5 - extinct or near extinct,Looting
+8557,Legacy verification,Burial Mound,Forest,Pasture,2018-09-25,45,,4,3 - damaged,Looting
+9711,Survey,Extinct Burial Mound,Annual agriculture,Scrub,2018-09-25,0,,0,5 - extinct or near extinct,Looting
+9712,Survey,Extinct Burial Mound,Annual agriculture,Scrub,2018-09-25,0,,0,5 - extinct or near extinct,Looting
+9713,Survey,Burial Mound,Forest,Annual agriculture,2018-09-25,25,,3,2 - minor damage,Animal activity
+9714,Legacy verification,Burial Mound,Forest,Forest,2018-09-25,20,,1,4 - seriously damaged,Looting
+9715,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-25,30,,1,3 - damaged,Agriculture
+8558,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-25,25,,1.8,2 - minor damage,Urban development
+9716,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-25,30,,0.5,4 - seriously damaged,Agriculture
+8559,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-25,26,,0.4,4 - seriously damaged,Agriculture
+9717,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-25,300,,0,0 - No observation,Agriculture
+9718,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-25,50,,4,4 - seriously damaged,Looting
+8560,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-25,30,,1.6,1 - pristine,Agriculture
+8561,Survey,Uncertain Feature,Pasture,Pasture,2018-09-25,25,,1,3 - damaged,Agriculture
+8562,Survey,Uncertain Feature,Pasture,Pasture,2018-09-25,25,,0.5,4 - seriously damaged,Agriculture
+8563,Survey,Uncertain Feature,Scrub,Pasture,2018-09-25,30,,0.4,4 - seriously damaged,Agriculture
+9719,Survey,Burial Mound,Pasture,Pasture,2018-09-25,35,,1,4 - seriously damaged,Looting
+9720,Survey,Burial Mound,Pasture,Pasture,2018-09-25,30,,1.5,2 - minor damage,Looting
+9808,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-25,"NA",,NA,0 - No observation,Anthropogenic
+9809,Survey,Surface Scatter,Scrub,Scrub,2018-09-25,"NA",,NA,0 - No observation,No observation
+9810,Survey,Surface Scatter,Scrub,Pasture,2018-09-25,"NA",,NA,0 - No observation,No observation
+9811,Legacy verification,Surface Scatter,Forest,Forest,2018-09-25,"NA",,NA,4 - seriously damaged,Anthropogenic
+9812,Survey,Surface Scatter,Pasture,Pasture,2018-09-25,"NA",,NA,0 - No observation,No observation
+9813,Survey,Surface Scatter,Other,Other,2018-09-25,"NA",,NA,0 - No observation,No observation
+9814,Survey,Surface Scatter,Other,Other,2018-09-25,"NA",,NA,0 - No observation,No observation
+9815,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-25,"NA",,NA,0 - No observation,Anthropogenic
+9816,Survey,Other,Pasture,Pasture,2018-09-25,"NA",,NA,0 - No observation,No observation
+9817,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-25,"NA",,NA,0 - No observation,No observation
+9818,Survey,Other,Forest,Forest,2018-09-25,"NA",,NA,0 - No observation,No observation
+9819,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-25,"NA",,NA,0 - No observation,Agriculture
+8705,Survey,Other,Pasture,Pasture,2018-09-26,0,,2,0 - No observation,No observation
+9721,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2018-09-26,0,,0,5 - extinct or near extinct,Other
+8706,Survey,Other,Pasture,Pasture,2018-09-26,0,,0.5,0 - No observation,Other
+8707,Survey,Other,Pasture,Pasture,2018-09-26,5,,1.5,0 - No observation,Other
+8708,Survey,Other,Pasture,Pasture,2018-09-26,6,,3,0 - No observation,Other
+8709,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-26,100,,2.2,5 - extinct or near extinct,Other
+8710,Survey,Other,Pasture,Pasture,2018-09-26,16,,0.5,0 - No observation,Other
+9722,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2018-09-26,0,,0,5 - extinct or near extinct,Looting
+8711,Survey,Other,Pasture,Pasture,2018-09-26,8,,2.2,0 - No observation,Other
+9723,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-26,20,,1,3 - damaged,Looting
+8712,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-26,8,,0.8,1 - pristine,Post-depositional
+9724,Legacy verification,Burial Mound,Scrub,Pasture,2018-09-26,35,,4,4 - seriously damaged,Looting
+9725,Survey,Burial Mound,Scrub,Scrub,2018-09-26,35,,3,4 - seriously damaged,Looting
+9726,Survey,Burial Mound,Scrub,Scrub,2018-09-26,20,,1,4 - seriously damaged,Looting
+9727,Legacy verification,Burial Mound,Scrub,Scrub,2018-09-26,15,,0.5,4 - seriously damaged,Looting
+9728,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-27,80,,1.5,4 - seriously damaged,Excavation
+9820,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-27,0,,0,0 - No observation,No observation
+9729,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-27,45,,2,2 - minor damage,Looting
+9730,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2018-09-27,0,,0,5 - extinct or near extinct,Construction
+9821,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-27,0,,0,0 - No observation,No observation
+9731,Legacy verification,Burial Mound,Forest,Forest,2018-09-27,15,,1,3 - damaged,Other
+9822,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-27,0,,0,0 - No observation,No observation
+9732,Legacy verification,Burial Mound,Scrub,Annual agriculture,2018-09-27,32,,4,4 - seriously damaged,Looting
+9823,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-27,0,,0,0 - No observation,No observation
+9733,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-27,17,,0.5,3 - damaged,Looting
+9824,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-27,0,,0,0 - No observation,No observation
+8713,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-28,25,,2.5,3 - damaged,Agriculture
+8714,Legacy verification,Burial Mound,Scrub,Pasture,2018-09-28,18,,1.7,2 - minor damage,Other
+8715,Survey,Burial Mound,Pasture,Pasture,2018-09-28,16,,1.2,4 - seriously damaged,Other
+8716,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-28,25,,3,3 - damaged,Looting
+9734,Legacy verification,Burial Mound,Pasture,Scrub,2018-09-28,10,,1,4 - seriously damaged,Looting
+8717,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-28,70,,2.5,1 - pristine,Post-depositional
+8718,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-28,12,,1.2,5 - extinct or near extinct,Looting
+8719,Survey,Burial Mound,Pasture,Pasture,2018-09-28,8,,1,2 - minor damage,Anthropogenic
+9735,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-28,50,,1,4 - seriously damaged,Construction
+8720,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-28,30,,8,2 - minor damage,Construction
+9736,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-28,30,,1,4 - seriously damaged,Looting
+8721,Survey,Extinct Burial Mound,Pasture,Scrub,2018-09-28,35,,2.5,4 - seriously damaged,Construction
+8722,Survey,Extinct Burial Mound,Pasture,Pasture,2018-09-28,11,,1,3 - damaged,Construction
+9737,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-28,40,,1,4 - seriously damaged,Anthropogenic
+8723,Legacy verification,Burial Mound,Pasture,Pasture,2018-09-28,35,,3.5,3 - damaged,Looting
+8724,Legacy verification,Extinct Burial Mound,Pasture,Pasture,2018-09-28,0,,0,5 - extinct or near extinct,No observation
+8725,Survey,Other,Pasture,Pasture,2018-09-28,15,,2,0 - No observation,No observation
+8726,Survey,Other,Pasture,Pasture,2018-09-28,12,,1,0 - No observation,Construction
+8727,Legacy verification,Burial Mound,Pasture,Other,2018-09-28,16,,2.2,4 - seriously damaged,Looting
+8728,Survey,Burial Mound,Pasture,Other,2018-09-28,18,,1.8,2 - minor damage,Looting
+8729,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2018-09-28,30,,2.4,2 - minor damage,Agriculture
+8730,Legacy verification,Burial Mound,Annual agriculture,Pasture,2018-09-28,25,,3,2 - minor damage,Other
+8731,Legacy verification,Burial Mound,Annual agriculture,Scrub,2018-09-28,30,,3.5,3 - damaged,Looting
+8732,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2018-09-28,200,,0,2 - minor damage,No observation
+8570,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-12,42,,0.5,4 - seriously damaged,Anthropogenic
+8733,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-12,35,,0.7,4 - seriously damaged,Agriculture
+8571,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-12,32,,0.2,5 - extinct or near extinct,Agriculture
+8734,Survey,Burial Mound,Annual agriculture,Annual agriculture,2022-09-12,25,,1.1,3 - damaged,Agriculture
+8572,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-12,41,,2.2,2 - minor damage,Post-depositional
+8735,Legacy verification,Burial Mound,Forest,Forest,2022-09-12,40,,6,3 - damaged,Looting
+8573,Survey,Burial Mound,Scrub,Pasture,2022-09-12,33,,4,4 - seriously damaged,Looting
+8736,Legacy verification,Burial Mound,Forest,Forest,2022-09-12,20,,0.5,5 - extinct or near extinct,Looting?
+8574,Survey,Burial Mound,Scrub,Pasture,2022-09-12,36,,4.5,4 - seriously damaged,Looting
+8737,Legacy verification,Burial Mound,Forest,Scrub,2022-09-12,50,,6,2 - minor damage,Looting
+8575,Survey,Uncertain Feature,Annual agriculture,Pasture,2022-09-12,21,,0.3,3 - damaged,Agriculture
+8576,Survey,Extinct Burial Mound,Pasture,Pasture,2022-09-12,15,,0.3,5 - extinct or near extinct,Erosion
+8577,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-12,35,,3,3 - damaged,Looting
+8738,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-12,25,,4,2 - minor damage,Looting
+8739,Survey,Uncertain Feature,Annual agriculture,Annual agriculture,2022-09-12,70,,2,3 - damaged,Agriculture
+8578,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-12,26,,1,4 - seriously damaged,Looting
+8740,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-12,28,,4,3 - damaged,Other (military)
+8579,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-12,36,,1.2,3 - damaged,Agriculture
+8741,Survey,Uncertain Mound,Annual agriculture,Scrub,2022-09-12,35,,2,3 - damaged,Looting
+8580,Survey,Burial Mound,Pasture,Scrub,2022-09-12,17,,0.5,3 - damaged,Animal activity
+9740,Survey,Burial Mound,Annual agriculture,Scrub,2022-09-12,25,,2.5,3 - damaged,Other (Military activity)
+9825,Legacy verification,Tell,Pasture,Pasture,2022-09-13,100,,7,2 - minor damage,Excavation?
+8581,Legacy verification,Burial Mound,Forest,Scrub,2022-09-13,25,,1.7,3 - damaged,Looting
+8582,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-13,30,,1.7,3 - damaged,Looting
+9827,Legacy verification,Extinct Burial Mound,Forest,Pasture,2022-09-13,30,,1,5 - extinct or near extinct,Other (Cut made by a machine. Soil moved to the north and south east. )
+8583,Legacy verification,Burial Mound,Pasture,Annual agriculture,2022-09-13,40,,5,3 - damaged,Looting
+8584,Legacy verification,Burial Mound,Forest,Scrub,2022-09-13,30,,4,4 - seriously damaged,Looting
+8585,Legacy verification,Burial Mound,Forest,Forest,2022-09-13,18,,1.5,3 - damaged,Looting
+8586,Legacy verification,Burial Mound,Forest,Forest,2022-09-13,36,,4,3 - damaged,Looting
+8587,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-13,0,,0,0 - No observation,Agriculture
+9828,Legacy verification,Uncertain Feature,Forest,Pasture,2022-09-13,14,,2.5,3 - damaged,Looting (Probably treasure hunters trench)
+8588,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-13,25,,0.5,4 - seriously damaged,Agriculture
+8589,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-13,0,,0,0 - No observation,Agriculture
+8590,Legacy verification,Burial Mound,Forest,Forest,2022-09-13,20,,2.5,4 - seriously damaged,Looting
+9744,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-13,90,,0.5,3 - damaged,Agriculture
+8742,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-14,40,,1.8,3 - damaged,Looting
+8743,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-14,25,,4.5,3 - damaged (01 trench is minor damage. the geodetic marker also creates damage ),Looting
+8591,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-14,30,,2.5,3 - damaged,Looting
+8744,Survey,Uncertain Mound,Scrub,Pasture,2022-09-14,15,,1.2,3 - damaged,Looting
+8592,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-14,25,,1.7,3 - damaged,Construction
+8745,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-14,16,,3,2 - minor damage,Looting
+8746,Survey,Uncertain Feature,Scrub,Pasture,2022-09-14,12,,0.7,5 - extinct or near extinct,Looting
+8593,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-14,20,,1.5,2 - minor damage,Animal activity
+8594,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-14,15,,0.5,2 - minor damage,Animal activity
+8747,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-14,14,,1.2,2 - minor damage,Other (Geodetic marker on top of the mound )
+8595,Legacy verification,Other,Scrub,Scrub,2022-09-14,5,,3,2 - minor damage,Erosion
+8748,Survey,Other,Scrub,Pasture,2022-09-14,14,,2,1 - pristine,Other (military and vegetation )
+8596,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2022-09-14,10,,0,0 - No observation,Natural
+8749,Legacy verification,Burial Mound,Pasture,Scrub,2022-09-14,25,,4.5,4 - seriously damaged,Looting
+8750,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-14,15,,4,2 - minor damage,Road cut
+8751,Legacy verification,Other,Perennial agriculture,Pasture,2022-09-14,14,,1.2,2 - minor damage,Other (geodetic marker)
+8597,Legacy verification,Other,Forest,Forest,2022-09-14,0,,0,0 - No observation,No observation
+8752,Legacy verification,Other,Perennial agriculture,Perennial agriculture,2022-09-14,0,,0,0 - No observation,No observation
+8598,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-15,27,,3,2 - minor damage,Animal activity
+8599,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-15,40,,4,3 - damaged,Looting
+9745,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-15,0,,0,0 - No observation,Agriculture
+9829,Legacy verification,Other,Pasture,Pasture,2022-09-15,22,,2.5,1 - pristine,Other (Military construction and geodetic marker)
+8600,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-15,80,,0,0 - No observation,Agriculture
+8601,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-15,40,,2,4 - seriously damaged,Agriculture
+9830,Survey,Burial Mound,Scrub,Pasture,2022-09-15,25,,1.5,4 - seriously damaged,Other (Military activity )
+8602,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-15,36,,2.5,3 - damaged,Looting
+8603,Legacy verification,Extinct Burial Mound,Annual agriculture,Pasture,2022-09-15,0,,0,5 - extinct or near extinct,Agriculture
+9831,Legacy verification,Other,Annual agriculture,Scrub,2022-09-15,10,,0,1 - pristine,Other (Geodetic point )
+9832,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-15,0,,0,2 - minor damage,Agriculture
+8604,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-15,45,,2,4 - seriously damaged,Agriculture
+8605,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-15,45,,2,4 - seriously damaged,Agriculture
+9833,Survey,Uncertain Feature,Annual agriculture,Scrub,2022-09-15,14,,1.8,1 - pristine,Agriculture
+8606,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-15,25,,0.4,4 - seriously damaged,Agriculture
+9834,Survey,Uncertain Feature,Annual agriculture,Scrub,2022-09-15,5,,1.6,2 - minor damage (Animal holes),Agriculture
+9835,Survey,Uncertain Feature,Annual agriculture,Scrub,2022-09-15,14,,1.7,2 - minor damage,Agriculture
+9836,Legacy verification,Other,Annual agriculture,Scrub,2022-09-15,40,,3,2 - minor damage (On the entrance on the north west side of the bunker. As a military structure it is in good condition. ),Other (Military activity )
+9837,Legacy verification,Other,Annual agriculture,Scrub,2022-09-15,2,,1,2 - minor damage (Entrance damaged ),Other (Military construction )
+9838,Legacy verification,Uncertain Mound,Annual agriculture,Annual agriculture,2022-09-15,30,,0.4,5 - extinct or near extinct,Agriculture
+9839,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-15,25,,0.5,5 - extinct or near extinct,Agriculture
+9840,Survey,Other,Annual agriculture,Scrub,2022-09-15,11,,0.3,3 - damaged,Erosion
+9841,Survey,Other,Annual agriculture,Scrub,2022-09-15,20,,1.5,1 - pristine,Erosion
+9842,Legacy verification,Other,Annual agriculture,Scrub,2022-09-15,7,,1,1 - pristine,Other (geodetic marker )
+9843,Survey,Other,Annual agriculture,Scrub,2022-09-15,6,,0,5 - extinct or near extinct,Other (Collapsed and poorly made)
+8607,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-16,30,,1,3 - damaged,Looting
+8608,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-16,15,,0.3,5 - extinct or near extinct,Agriculture
+9844,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2022-09-16,0,,0,5 - extinct or near extinct,Agriculture
+9845,Legacy verification,Other,Pasture,Pasture,2022-09-16,15,,1.7,2 - minor damage,Erosion
+8609,Legacy verification,Other,Pasture,Pasture,2022-09-16,38,,3,0 - No observation,Construction
+8610,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-16,45,,2.5,2 - minor damage,Post-depositional
+9846,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-16,18,,2.5,3 - damaged,Looting
+9847,Legacy verification,Uncertain Mound,Pasture,Forest,2022-09-16,15,,3,2 - minor damage,Agriculture
+8611,Legacy verification,Uncertain Feature,Scrub,Pasture,2022-09-16,20,,0.5,4 - seriously damaged,Construction
+8753,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-16,30,,3,2 - minor damage,Animal activity
+9848,Legacy verification,Burial Mound,Scrub,Forest,2022-09-16,35,,4.5,2 - minor damage,Erosion
+8612,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-16,50,,6,3 - damaged,Agriculture
+8754,Survey,Other,Scrub,Pasture,2022-09-16,8,,2.5,0 - No observation,Other
+9746,Survey,Burial Mound,Urban,Pasture,2022-09-17,40,,4,1 - pristine,No observation
+8614,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-19,22,,3,2 - minor damage,Animal activity
+9849,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-19,30,,2,2 - minor damage,Agriculture
+8755,Survey,Uncertain Mound,Forest,Scrub,2022-09-19,12,,0.6,2 - minor damage,Post-depositional
+8615,Legacy verification,Burial Mound,Pasture,Scrub,2022-09-19,20,,2.5,3 - damaged,Looting
+9850,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-19,30,,2,2 - minor damage,Agriculture
+8756,Survey,Uncertain Mound,Forest,Forest,2022-09-19,10,,0.5,3 - damaged,Looting?
+9747,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-19,120,,0,2 - minor damage,Agriculture
+9851,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-19,0,,0,3 - damaged,Agriculture
+8616,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-19,22,,2,3 - damaged,Animal activity
+8757,Legacy verification,Extinct Burial Mound,Forest,Forest,2022-09-19,0,,0,5 - extinct or near extinct,"Other (specify in Annotation) (Mound is not here, but we were unable to establish the reason why.)"
+8617,Legacy verification,Burial Mound,Scrub,Forest,2022-09-19,22,,1.7,3 - damaged,Looting
+8618,Legacy verification,Burial Mound,Pasture,Forest,2022-09-19,28,,1.5,4 - seriously damaged,Looting
+8758,Survey,Uncertain Mound,Pasture,Pasture,2022-09-19,10,,0.8,3 - damaged,Looting
+9852,Legacy verification,Uncertain Mound,Perennial agriculture,Scrub,2022-09-19,12,,2,1 - pristine,Erosion
+8619,Legacy verification,Other,Scrub,Pasture,2022-09-19,50,,3,0 - No observation,Construction
+8759,Legacy verification,Burial Mound,Pasture,Forest,2022-09-19,17,,2.4,3 - damaged,Looting
+9853,Legacy verification,Burial Mound,Forest,Forest,2022-09-19,20,,1,4 - seriously damaged,Looting
+8760,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-19,18,,2.5,2 - minor damage,Erosion
+9854,Survey,Uncertain Mound,Scrub,Scrub,2022-09-19,20,,1.6,3 - damaged,Other (Military trench)
+9855,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-19,20,,2,2 - minor damage,Agriculture
+9856,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2022-09-19,0,,0,0 - No observation,No observation
+8623,Survey,Uncertain Feature,Annual agriculture,Scrub,2022-09-20,12,,0.7,0 - No observation,Agriculture
+8624,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-20,18,,1,3 - damaged,Agriculture
+9857,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-20,11,,0.5,3 - damaged,Agriculture
+8761,Legacy verification,Burial Mound,Forest,Forest,2022-09-20,20,,2.5,4 - seriously damaged,Looting
+9858,Legacy verification,Burial Mound,Pasture,Forest,2022-09-20,25,,1.5,2 - minor damage,Erosion
+8625,Survey,Uncertain Feature,Scrub,Pasture,2022-09-20,16,,0.6,3 - damaged,Animal activity
+8626,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-20,35,,3.5,2 - minor damage,Animal activity
+9859,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-20,30,,4,3 - damaged,Looting
+9860,Survey,Uncertain Mound,Annual agriculture,Scrub,2022-09-20,16,,1,3 - damaged,Looting
+8627,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-20,20,,1.5,3 - damaged,Erosion
+8762,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-20,40,,2.4,3 - damaged,Agriculture
+9861,Survey,Burial Mound,Annual agriculture,Annual agriculture,2022-09-20,"0 (unknown due to the ploughed field, that had made it very flat)",,0.2,5 - extinct or near extinct,Agriculture
+8628,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2022-09-20,0,,0,0 - No observation,No observation
+8629,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-20,35,,4,3 - damaged,Erosion
+9862,Legacy verification,Burial Mound,Forest,Forest,2022-09-20,40,,4,4 - seriously damaged,Looting
+8630,Survey,Burial Mound,Scrub,Scrub,2022-09-20,22,,1.2,2 - minor damage,Animal activity
+8763,Survey,Burial Mound,Annual agriculture,Scrub,2022-09-20,17,,2,2 - minor damage,Agriculture
+8764,Legacy verification,Uncertain Mound,Annual agriculture,Pasture,2022-09-20,20,,0.3,5 - extinct or near extinct,Agriculture
+8631,Survey,Other,Scrub,Scrub,2022-09-20,40,,2,4 - seriously damaged,Construction
+8765,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-20,25,,3.5,2 - minor damage,Looting
+8766,Legacy verification,Uncertain Mound,Annual agriculture,Pasture,2022-09-20,40,,2.7,3 - damaged,Agriculture
+8632,Legacy verification,Burial Mound,Scrub,Scrub,2022-09-20,20,,1.2,3 - damaged,Erosion
+8633,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-20,20,,1.5,3 - damaged,Agriculture
+9863,Legacy verification,Burial Mound,Forest,Forest,2022-09-20,8,,1.5,3 - damaged,Looting
+8767,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-20,25,,1.7,3 - damaged,Agriculture
+9864,Survey,Burial Mound,Forest,Forest,2022-09-20,20,,1,2 - minor damage,Looting
+8634,Legacy verification,Burial Mound,Perennial agriculture,Pasture,2022-09-20,15,,1.5,3 - damaged,Agriculture
+9865,Survey,Burial Mound,Scrub,Scrub,2022-09-21,20,,1.2,3 - damaged,Looting
+9866,Legacy verification,Burial Mound,Pasture,Scrub,2022-09-21,25,,2.5,4 - seriously damaged,Looting
+9867,Legacy verification,Extinct Burial Mound,Forest,Other,2022-09-21,0,,0,0 - No observation,No observation
+9868,Survey,Uncertain Mound,Scrub,Scrub,2022-09-21,8,,0.5,3 - damaged,Looting
+9869,Survey,Burial Mound,Scrub,Scrub,2022-09-21,18,,2.3,1 - pristine,Animal activity
+9870,Survey,Burial Mound,Pasture,Scrub,2022-09-21,20,,3,2 - minor damage,Looting
+8635,Legacy verification,Burial Mound,Annual agriculture,Forest,2022-09-21,46,,3.5,2 - minor damage,Agriculture
+8768,Legacy verification,Extinct Burial Mound,Scrub,Scrub,2022-09-21,20,,1.7,5 - extinct or near extinct,Looting (maybe excavated )??
+8636,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-21,100,,0,3 - damaged,Agriculture
+8637,Survey,Burial Mound,Forest,Pasture,2022-09-21,35,,3.5,4 - seriously damaged,Looting
+8769,Survey,Other,Scrub,Scrub,2022-09-21,10,,2.2,0 - No observation,Other (military)
+8638,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-21,48,,6,3 - damaged,Looting
+8770,Legacy verification,Uncertain Mound,Annual agriculture,Forest,2022-09-21,8,,0.8,5 - extinct or near extinct,Post-depositional
+8639,Legacy verification,Uncertain Feature,Urban,Scrub,2022-09-21,35,,6,3 - damaged,Urban development
+8771,Legacy verification,Extinct Burial Mound,Forest,Scrub,2022-09-21,0,,0,0 - No observation,No observation
+8640,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-21,19,,1.1,3 - damaged,Agriculture
+8641,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-21,19,,1.1,3 - damaged,Agriculture
+8642,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-21,22,,0.5,3 - damaged,Agriculture
+8643,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-21,0,,0,4 - seriously damaged,Agriculture
+8772,Legacy verification,Extinct Burial Mound?,Forest,Scrub,2022-09-21,5,,0.3,5 - extinct or near extinct,Other (specify in Annotation)
+8773,Legacy verification,Extinct Burial Mound,Forest,Forest,2022-09-21,0,,0,0 - No observation,No observation
+8644,Legacy verification,Other,Forest,Scrub,2022-09-21,20,,1,0 - No observation,Other (military activity and geodetic marker )
+8774,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-21,20,,0.5,4 - seriously damaged,Agriculture
+8645,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-21,100,,0,3 - damaged,Agriculture
+8775,Legacy verification,Extinct Burial Mound?,Pasture,Pasture,2022-09-21,0,,0,0 - No observation,No observation
+8646,Legacy verification,Burial Mound,Forest,Scrub,2022-09-21,24,,1.7,3 - damaged,Looting
+8776,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-21,16,,1.7,4 - seriously damaged,Looting
+8647,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-22,28,,2.5,3 - damaged,Looting
+9871,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-22,20,,2,2 - minor damage,Agriculture
+9872,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-22,14,,1.8,4 - seriously damaged,Looting
+8777,Legacy verification,Tell?,Annual agriculture,Pasture,2022-09-22,100,,5,2 - minor damage,Animal activity
+8778,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-22,100,,0,1 - pristine,Agriculture
+9873,Legacy verification,Burial Mound,Forest,Scrub,2022-09-22,17,,1.8,2 - minor damage,Excavation (Trench may be of military origin. Angel considers it very unlikely to be a robbers trench due to location and depth in mound.)
+8648,Legacy verification,Uncertain Feature?,Forest,Forest,2022-09-22,40,,5,4 - seriously damaged (We do not know if this is looting due to the uncertainty of the type of feature)?,Other
+8779,Survey,Other,Annual agriculture,Annual agriculture,2022-09-22,0,,0,0 - No observation,Post-depositional
+8780,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-22,25,,5,1 - pristine,Looting
+9874,Legacy verification,Burial Mound,Pasture,Forest,2022-09-22,25,,3.5,2 - minor damage,Looting
+8781,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-22,20,,2,2 - minor damage,Agriculture
+8782,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-22,13,,1.6,1 - pristine,Agriculture
+9875,Legacy verification,Burial Mound,Forest,Forest,2022-09-22,15,,1.8,2 - minor damage,Other
+9876,Legacy verification,Burial Mound,Forest,Forest,2022-09-22,20,,1.8,1 - pristine,No observation
+8783,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-22,20,,0.5,4 - seriously damaged,Agriculture
+9877,Legacy verification,Burial Mound,Forest,Forest,2022-09-22,35,,4.5,3 - damaged,Looting
+8784,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-22,25,,1,5 - extinct or near extinct,Agriculture
+9878,Legacy verification,Burial Mound,Annual agriculture,Forest,2022-09-22,16,,0.4,4 - seriously damaged,Agriculture
+8785,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,40,,1.4,3 - damaged,Agriculture
+8786,Legacy verification,Burial Mound,Perennial agriculture,Pasture,2022-09-23,32,,3,2 - minor damage,Animal activity
+9879,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-23,16,,0.4,4 - seriously damaged,Agriculture
+8787,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,28,,0.5,5 - extinct or near extinct,Anthropogenic
+9880,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-23,16,,0.5,4 - seriously damaged,Agriculture
+8788,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,28,,0.4,5 - extinct or near extinct,Agriculture
+8789,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,30,,1.1,4 - seriously damaged,Agriculture
+9881,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-23,300 (Surface scatter extends along the bank of Kavak Dere River for an uncertain length and extends approx 100m uphill from the bank at minimum. The scatter is on both sides of the bank.)??,,0,3 - damaged,Agriculture
+8790,Survey,Uncertain Feature,Annual agriculture,Annual agriculture,2022-09-23,12,,0.2,5 - extinct or near extinct,Agriculture
+8791,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,24,,0.7,4 - seriously damaged,Agriculture
+8792,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,25,,0.8,4 - seriously damaged,Agriculture
+8793,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,35,,1.4,3 - damaged,Agriculture
+9882,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,35,,2,4 - seriously damaged,Agriculture
+8794,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,25,,1.1,3 - damaged,Agriculture
+9883,Legacy verification,Extinct Burial Mound?,Annual agriculture,Annual agriculture,2022-09-23,20,,0.15,5 - extinct or near extinct,Agriculture
+8795,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-23,20,,2.2,4 - seriously damaged,Excavation
+9884,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,22,,0.5,3 - damaged,Agriculture
+9885,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,20,,0.2,5 - extinct or near extinct,Agriculture
+9886,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,40,,2,3 - damaged,Agriculture
+9887,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-23,15,,0.1,5 - extinct or near extinct,Agriculture
+8796,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-26,15,,3.5,3 - damaged,Other (military trenches)
+8649,Survey,Burial Mound,Pasture,Pasture,2022-09-26,40,,2.5,3 - damaged,Looting
+8650,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-26,35,,4.5,3 - damaged,Looting
+8651,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-26,20,,2.5,2 - minor damage,Road cut
+8797,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-26,18,,1.7,1 - pristine,Agriculture (ploughing on the east side)
+8652,Legacy verification,Uncertain Feature,Annual agriculture,Scrub,2022-09-26,95,,3.5,0 - No observation,Erosion (could be military activity )
+8798,Legacy verification,Extinct Burial Mound,Annual agriculture,Scrub,2022-09-26,40,,1.5,5 - extinct or near extinct,Other (bunker and trenches)
+8799,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-26,45,,1.5,0 - No observation (indeterminable due to scrub. possibly prestine)??,Post-depositional (vegetation )
+8653,Legacy verification,Burial Mound,Forest,Forest,2022-09-26,25,,1,1 - pristine,Erosion
+9950,Survey,Extinct Burial Mound?,Annual agriculture,Annual agriculture,2022-09-27,24,,0.3,5 - extinct or near extinct,Agriculture
+9888,Survey,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,24,,1,3 - damaged,Agriculture
+9951,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,24,,0.8,4 - seriously damaged,Agriculture
+9889,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-27,40,,4,2 - minor damage,Looting
+9952,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-27,36,,2.2,2 - minor damage,Animal activity
+9953,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,25,,2,3 - damaged,Agriculture
+8654,Legacy verification,Extinct Burial Mound,Annual agriculture,Pasture,2022-09-27,10,,0,5 - extinct or near extinct,Agriculture
+9890,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,16,,1,4 - seriously damaged,Agriculture
+9891,Survey,Burial Mound,Annual agriculture,Scrub,2022-09-27,34,,3,3 - damaged,Looting
+9954,Survey,Uncertain Mound,Annual agriculture,Annual agriculture,2022-09-27,18,,0.9,4 - seriously damaged,Agriculture
+9892,Survey,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,46,,0.5,5 - extinct or near extinct,Agriculture
+9955,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-27,60,,1.5,4 - seriously damaged,Excavation?
+9893,Survey,Burial Mound,Annual agriculture,Scrub,2022-09-27,39,,2.5,2 - minor damage,Agriculture
+8655,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-27,22,,2,3 - damaged,Agriculture
+9894,Survey,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,27,,1.8,4 - seriously damaged,Agriculture
+9895,Survey,Other,Annual agriculture,Scrub,2022-09-27,0,,3,2 - minor damage,Post-depositional
+8656,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,30,,1.5,4 - seriously damaged,Agriculture
+9956,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,25,,1,4 - seriously damaged,Agriculture
+9896,Survey,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,22,,1,3 - damaged,Agriculture
+8657,Legacy verification,Uncertain Feature,Pasture,Pasture,2022-09-27,0,,0,5 - extinct or near extinct,Construction
+9897,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,24,,1.8,3 - damaged,Agriculture
+9957,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-27,22,,2.5,1 - pristine,Animal activity
+8658,Legacy verification,Burial Mound,Pasture,Forest,2022-09-27,31,,1.8,4 - seriously damaged,Urban development
+8659,Legacy verification,Burial Mound,Forest,Scrub,2022-09-27,30,,3,4 - seriously damaged,Looting
+9898,Survey,Uncertain Mound,Annual agriculture,Scrub,2022-09-27,16,,0.5,4 - seriously damaged,Agriculture
+9958,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-27,22,,2.7,3 - damaged,Looting
+8660,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,30,,1.5,4 - seriously damaged,Agriculture
+9899,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-27,17,,1.8,2 - minor damage,Animal activity
+8661,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,20,,0.5,4 - seriously damaged,Agriculture
+8662,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,22,,1.6,4 - seriously damaged,Agriculture
+9959,Legacy verification,Extinct Burial Mound,Annual agriculture,Scrub,2022-09-27,100,,1.5,5 - extinct or near extinct,Agriculture
+8663,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-27,35,,4,2 - minor damage,Looting
+9960,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,24,,1.8,3 - damaged,Agriculture
+9961,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,24,,1.4,3 - damaged,Agriculture
+9962,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-27,24,,3.2,3 - damaged,Looting
+8664,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,0,,0,5 - extinct or near extinct,Agriculture
+9900,Legacy verification,Burial Mound,Perennial agriculture,Pasture,2022-09-27,26,,1.7,2 - minor damage,Agriculture
+8665,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-27,200,,0,3 - damaged,Agriculture
+9963,Survey,Burial Mound,Scrub,Pasture,2022-09-27,16,,2.1,4 - seriously damaged,Looting
+8666,Legacy verification,Other,Annual agriculture,Scrub,2022-09-27,30,,3,3 - damaged,Construction
+9964,Legacy verification,Burial Mound,Pasture,Scrub,2022-09-27,20,,4,3 - damaged,Looting
+9901,Legacy verification,Burial Mound,Perennial agriculture,Annual agriculture,2022-09-27,25,,1,4 - seriously damaged,Agriculture
+8667,Legacy verification,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-27,150,,0,3 - damaged,Agriculture
+9902,Legacy verification,Uncertain Feature,Annual agriculture,Scrub,2022-09-27,0,,0,0 - No observation,No observation
+9965,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,24,,1,3 - damaged,Agriculture
+9966,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,32,,1.4,3 - damaged,Agriculture
+8668,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,40,,2,4 - seriously damaged,Agriculture
+9967,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-27,30,,1.7,2 - minor damage,Agriculture
+8669,Legacy verification,Burial Mound,Annual agriculture,Scrub,2022-09-28,45,,4,2 - minor damage,Animal activity
+9903,Legacy verification,Extinct Burial Mound,Annual agriculture,Pasture,2022-09-28,0,,0,5 - extinct or near extinct,Agriculture
+8670,Legacy verification,Other,Scrub,Pasture,2022-09-28,25,,2,0 - No observation,Construction
+9904,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-28,29,,1,5 - extinct or near extinct,Looting (As well as agriculture.)
+9905,Survey,Uncertain Mound,Pasture,Pasture,2022-09-28,12,,1.7,2 - minor damage,Post-depositional
+8671,Legacy verification,Other,Forest,Forest,2022-09-28,0,,0,0 - No observation,No observation
+9906,Survey,Uncertain Mound,Pasture,Pasture,2022-09-28,10,,1,2 - minor damage,Post-depositional
+9907,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-28,12,,1.6,2 - minor damage,Excavation (military trench )
+9908,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-28,22,,1,3 - damaged,Agriculture
+8672,Legacy verification,Burial Mound,Forest,Forest,2022-09-28,42,,9,4 - seriously damaged,Looting
+9909,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-28,30,,2,4 - seriously damaged,Looting (And agricultural activity)
+9910,Legacy verification,Uncertain Mound,Annual agriculture,Annual agriculture,2022-09-28,6,,0.3,5 - extinct or near extinct,Agriculture
+9911,Legacy verification,Uncertain Mound,Forest,Forest,2022-09-28,0,,0.3,4 - seriously damaged,Looting
+9912,Legacy verification,Burial Mound,Forest,Annual agriculture,2022-09-28,28,,1,4 - seriously damaged,Looting
+9913,Legacy verification,Extinct Burial Mound,Forest,Pasture,2022-09-28,0,,0,5 - extinct or near extinct,Agriculture
+9914,Legacy verification,Tell,Perennial agriculture,Forest,2022-09-28,100,,10,1 - pristine,Looting
+9968,Legacy verification,Extinct Burial Mound,Perennial agriculture,Perennial agriculture,2022-09-29,100,,0.5,5 - extinct or near extinct,Agriculture
+8673,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-29,35,,4,4 - seriously damaged,Looting
+8674,Legacy verification,Burial Mound,Perennial agriculture,Perennial agriculture,2022-09-29,34,,1.8,3 - damaged,Agriculture
+9969,Legacy verification,Burial Mound,Perennial agriculture,Pasture,2022-09-29,50,,3,4 - seriously damaged,Road cut
+9970,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,60,,3,3 - damaged,Agriculture
+8675,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,20,,0.7,4 - seriously damaged,Agriculture
+9971,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,40,,1.4,3 - damaged,Agriculture
+8677,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-29,30,,2,3 - damaged,Looting
+9972,Survey,Surface Scatter,Annual agriculture,Annual agriculture,2022-09-29,250,,0,0 - No observation,No observation
+8678,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-29,40,,3,3 - damaged,Looting
+8679,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-29,28,,1.5,4 - seriously damaged,Looting
+9973,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,50,,5,3 - damaged,Agriculture
+8681,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-29,37,,2,4 - seriously damaged,Looting
+9974,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-29,48,,7,3 - damaged,Looting
+8682,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-29,46,,5,3 - damaged,Construction
+8683,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-29,49,,4,4 - seriously damaged,Looting
+8684,Legacy verification,Burial Mound,Pasture,Pasture,2022-09-29,41,,3,3 - damaged,Looting
+9975,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-29,27,,5,3 - damaged,Looting
+9976,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-29,40,,4.5,1 - pristine,Post-depositional
+8685,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,27,,1,4 - seriously damaged,Agriculture
+9977,Legacy verification,Burial Mound,Scrub,Pasture,2022-09-29,32,,3.6,1 - pristine,Post-depositional
+9978,Legacy verification,Burial Mound,Annual agriculture,Pasture,2022-09-29,28,,3.7,2 - minor damage,Animal activity
+9979,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,40,,0.4,5 - extinct or near extinct,Agriculture
+8686,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,39,,1.5,3 - damaged,Agriculture
+9980,Survey,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,30,,1.1,5 - extinct or near extinct,Agriculture
+8687,Legacy verification,Extinct Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,15,,0.3,5 - extinct or near extinct,Agriculture
+9981,Survey,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,20,,1.1,4 - seriously damaged,Agriculture
+9982,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,28,,1.3,4 - seriously damaged,Agriculture
+9983,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,38,,0.9,4 - seriously damaged,Agriculture
+8688,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,65,,3,4 - seriously damaged,Agriculture
+8689,Legacy verification,Uncertain Feature,Perennial agriculture,Scrub,2022-09-29,57,,3,2 - minor damage,Agriculture
+9984,Legacy verification,Burial Mound,Annual agriculture,Annual agriculture,2022-09-29,32,,1.5,4 - seriously damaged,Agriculture

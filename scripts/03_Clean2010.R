@@ -17,7 +17,7 @@ library(tidyverse)
 library(lubridate)
 
 # Load the inputs
-df_name <- c("mnd2010")
+df_name <- "mnd2010"
 if (exists(df_name)){
   is.data.frame(get(df_name))
 }  else source("scripts/02_2010dataTRAP.R")
@@ -55,11 +55,10 @@ m2010 <- m2010 %>%
 problem2010TopoID <- which(!m2010$TopoID.x%in%m2010$TopoID.y)  # 35 discrepancies in Topo IDs btw adela and bara
 m2010$TopoID.y[problem2010TopoID] # most are zeroes in Bara, only 200244 a problem, which is perhaps a typo?? CHECK IN GE
 
-# Fix Dates
+# Fix Dates: Dates in m2010 are dates of 2010 data streamlining. Write a shortcut to 2010 season as 2010-10-30
 m2010 <- m2010 %>%
-  mutate(Date=paste(mnd2010$Date, sep="-","2010")) %>%
-  mutate(Date=dmy(Date)) %>%
-  glimpse()
+  mutate(Date = "2010-10-30") %>% 
+  mutate(Date = as.Date(Date))
 
 # length(which(is.na(m2010$Date))) # ok 73 don't have a date
 
@@ -185,11 +184,12 @@ m2010 %>%
 # Remove temps
 rm(mounds, ext, unc, remnants, temp, heightissue)
 rm(problem2010TopoID)
+rm(ab2010, mounds_adela, mounds_bara)
 
 # Create clean 2010
 head(m2010,2)
-
-
+m2010$HeightMax <- as.numeric(m2010$HeightMax)
+glimpse(m2010)
 
 # Further Type classification vs Dimension checks - this applies to the entire master dataset,
 # but is worth investigating at campaign-level as well to detect inter-annual shift in classification

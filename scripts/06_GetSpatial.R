@@ -49,7 +49,10 @@ library(tidyverse)
 library(raster)
 library(rgdal)
 library(FSA)
+##################################    LOAD SPATIAL DATA
 
+master <- readRDS("output_data/mergedcleanfeatures2023.rds")
+glimpse(master)
 ##################################    LOAD SPATIAL DATA
 
 # load mound/feature shapefile created in ArcGIS (1240 features, 1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
@@ -64,7 +67,13 @@ plot(mnd_shpmin$geometry, pch = 17, add =TRUE)
 
 # As simple features don't advertise coordinates (X, Y), I extract them and print them into two separate columns 
 mnd_sp32635 <- cbind(mnd_shp, X = st_coordinates(mnd_shp)[,1], Y =st_coordinates(mnd_shp)[,2]) 
+mnd_sp32635 %>% 
+  st_drop_geometry() %>% 
+  glimpse()
 
+# We add 2022 features' spatial data
+mnd_sp32635 <- rbind(st_drop_geometry(mnd_sp32635), data.frame(TopoID = m2022$uuid, Note= m2022$AllNotes, TRAP = m2022$TRAP, 
+                                X = m2022$Easting, Y =m2022$Northing))
 # # After the extraction of X and Y in 32635 EPSG, I want also a spatial object in 4326 EPSG for web visualisation
 # # converting to Web Mercator, GSC in order to have Lat Long in addition to X, Y
 # mnd_sp4326 <- mnd_shp %>% 
@@ -73,19 +82,22 @@ mnd_sp32635 <- cbind(mnd_shp, X = st_coordinates(mnd_shp)[,1], Y =st_coordinates
 # 
 # mnd_sp4326
 
-
 ##################################    MERGE ATTRIBUTE AND SPATIAL DATA INTO MASTER_SP SF OBJECT
 
 # Full join between simple features and attributes, resulting in sf object
-master_sp <- mnd_sp32635 %>% inner_join(master, c=by("TRAP"="TRAP")) # 1174 records
-plot(master_sp$geometry)
+master_sp <- mnd_sp32635 %>% inner_join(master, c=by("TRAP"="TRAP")) # 1174 records in 2020, 1550 in 2022
+master_sp <- master_sp %>% 
+  select(-DiameterMin) %>% 
+  st_as_sf(coords = c("X", "Y"), crs = 32635)
+
 
 # looks ok? 
-ggplot(master_sp, aes(X, Y))+
-  geom_sf(colour = "red")
+plot(master_sp$geometry)
 
-
+# check attributes
 master_sp %>% 
   filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") %>% 
-  plot()
+  ggplot()+
+  geom_sf(aes(color = HeightMax))
+
 

@@ -10,14 +10,14 @@
 # vulnerability assessment to temporal prediction and RS feasibility
 
 # Prerequisites 
-# 1) previously cleaned merging-ready datasets from 2009-2018 with shared column names
-# 2) spatial data from GIS that contains TRAP IDs 
+# 1) previously cleaned merging-ready datasets from 2009-2022 with shared column names
+# 2) spatial data from GIS that contains TRAP IDs for 2009-2010 data
 # 3) consistent but not necessarily perfect column content in 1 and 2
 
 # Process 
-# 1) load previously cleaned merging-ready datasets from 2009-2018 with shared column names
-# 2) merge to create 2009-2018 master dataset with at least 10 essential columns  
-# 3) merge to create 2017-2018 FAIMS master dataset with all consistent columns
+# 1) load previously cleaned merging-ready datasets from 2009-2022 with shared column names
+# 2) merge to create 2009-2022 master dataset with at least 10 essential columns  
+# 3) merge to create 2017-2022 FAIMS master dataset with all consistent columns
 # 4) do basic streamlining
 
 
@@ -29,40 +29,41 @@ library(here)
 ################################## LOAD DATA ######################################################
 
 # Load the inputs
-df_name <- c("m2009","m2010","m2017","m2018")
-script <- c("03_Clean2009.R","03_Clean2010.R","03_Clean2017.R","03_Clean2018.R")
+df_name <- c("m2009","m2010","m2017","m2018", "m2022")
+script <- c("03_Clean2009.R","03_Clean2010.R","03_Clean2017.R","03_Clean2018.R","03_Clean2022.R")
 for (i in df_name){
-  if (exists(df_name[i])){
-    get(df_name[i])
+   if (exists(i)){
+    is.data.frame(get(i))
   }  else {
     source(paste0("scripts/",(script[contains(gsub("m","", i), vars = script)])))
   }
 }
 
 ## Inputs - check what they look like at this point
-colnames(m2009)  # 2009 dateset cleaned in GoogleDocs
+colnames(m2009)  # 2009 dataset cleaned in GoogleDocs
 colnames(m2010) # 2010 only mounds (n=406) based on TRAP number and left join to adela:  conservative dataset
-colnames(m2017)  # 2017 mounds (413)
+colnames(m2017)  # 2017 FAIMS-collected features (413)
 colnames(m2018)  # 2018 mounds (282)
-
+colnames(m2022)  # 2022 FAIMS-collected features (310), 47 columns
 
 #################################  REVIEW DATA AND GET SHARED COLUMNS ########################################################m2009
  
 # There are 12 shared columns between 2010 and 2009 
-dim(m2010) # 31 columns in 2010 dataset
-names(m2009)[which(names(m2009)%in%names(m2010))] # TopoID is extra in 2010
+dim(m2010) # 30 columns in 2010 dataset
+names(m2009)[which(names(m2009)%nin%names(m2010))] # which are not shared?
+m2009$TopoID 
 
 # There are 11 shared columns between 2018 and 2009 
 dim(m2018) # 40 columns in 2018 dataset
-names(m2009)[which(names(m2009)%in%names(m2018))]
+names(m2009)[which(names(m2009)%nin%names(m2018))]  # which are not shared?
 
 # There are 11 shared columns between 2017 and 2009 
 dim(m2017) # 38 columns
 
 # There are 36 shared columns between 2018 and 2017 
 dim(m2018) # 40 columns in 2018 dataset
-dim(m2017) # 38 columns in 2017 dataset
-names(m2018)[which(names(m2018)%in%names(m2017))]
+dim(m2017) # 37 columns in 2017 dataset
+names(m2018)[which(names(m2018)%nin%names(m2017))]
 
 names_all <- names(m2009)[which(names(m2009)%in%names(m2017))]  # 11 shared columns (essential ones in there)
 names_manual <- names(m2009)[which(names(m2009)%in%names(m2010))] # 12 shared in 2009-2010, (TopoID being extra)
@@ -75,22 +76,28 @@ m2018[, names_all]
 ## MASTER DATASET - conservative selection of mostly mounds in 2009-2010, liberal features in 2017-2018
 
 m = NULL
-m <- rbind(m2009[, names_all], m2010[, names_all], m2017[, names_all], m2018[, names_all])
+m <- rbind(m2022[, names_all], m2010[, names_all], m2017[, names_all], m2018[, names_all],m2009[, names_all])
 dim(m)
 
-write.csv(m, "output_data/merged.csv")
+glimpse(m)
+glimpse(m2009)
+glimpse(m2010[, names_all])
+glimpse(m2017[, names_all])
+glimpse(m2018[, names_all])
+glimpse(m2022[, names_all])
+#write_csv(m, "output_data/merged2023.csv") # through 2022; previous merged.csv was for 2009-18
 
-# 1181 records in the master dataset with 11 variables
-
+# 1181 records in the 2009-2018 master dataset with 11 variables
+# 1491 records in the 2009-2022 master dataset
 ####################################  MASTER M_FAIMS DATASET FOR FAIMS SEASONS 2017 - 2018 #####################################
 
 # MASTER DATASET FOR FAIMS YEARS
 
 m_Faims <- NULL
-m_Faims <- rbind(m2017[, names_faims], m2018[, names_faims])
-dim(m_Faims)
-
-write.csv(m_Faims, "output_data/mergedfaims.csv")
+m_Faims <- rbind(m2017[, names_faims], m2018[, names_faims],m2022[, names_faims])
+dim(m_Faims)  # 1005 records and 36 cols in 2022
+glimpse(m_Faims)
+write_csv(m_Faims, "output_data/mergedfaims2023.csv") 
 
 ####################################  STREAMLINE M INTO MASTER FOR ALL SEASONS ##################################################
 
@@ -101,7 +108,7 @@ master <- m
 
 ## Streamline Type
 levels(as.factor(master$Type))
-master$Type[master$Type=="Burial Mound?"] <- "Uncertain Mound"
+master$Type[master$Type=="Uncertain Mound"] <- "Burial Mound?"
 
 ## Streamline Landuse 
 master %>% 
@@ -198,15 +205,17 @@ master <- master %>%
 
 
 # Review Landuse: there should be no "Nodata" or NA's as it was replaced with RS data, where it exists. 
+
 master %>% 
   group_by(LU_Top) %>% 
   tally()
 master %>% 
   group_by(LU_Around) %>% 
   tally() %>% 
-  mutate(perc = n/sum(n)*100)
+  mutate(perc = round(n/sum(n)*100,2)) %>% 
+  arrange(perc)
 
- #
+ 
 ###  Eliminate duplicates (revisited mounds)
 
 # Find duplicate TRAP ids
@@ -235,34 +244,9 @@ rm(dupl_rows)
 # STREAMLINE CONDITION
 unique(master$Condition)
 # view suggested fix
-master %>%
+master <- master %>%
   mutate(Condition = str_extract(Condition, "\\d")) %>%
   mutate(Condition = case_when(Condition == 0 ~ "NA",
                                Condition == 6 ~ "5",
-                               Condition != 0 ~ Condition)) %>%
+                               Condition != 0 ~ Condition)) # %>%
   distinct(Condition)
-
-# Output the cleaned master dataset
-write.csv(master, "output_data/mergedclean.csv")
-
-####################################  NEXT STEPS #############################################
-
-# NEXT STEPS: Streamline m_Faims
-# NEXT STEPS: ADD SPATIAL DATA > NEW SCRIPT 06
-# NEXT STEPS: CONTINUE THINKING: WHAT OTHER COLUMNS DO I NEED IN MASTER? OR WHAT CHECKS ARE NEEDED?
-
-# - geospatial can be extracted from GIS
-# - TopoID can be extracted from GIS (but exists in 2009-2010)
-# BEWARE: 9313 geospatial info in m2010 may be wrong as is inconsistent with image (road on image, none in GE)
-
-
-
-# REVIEW DIMENSIONS AND TYPE CONCORDANCE
-# mXXXX %>%
-#   select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>%
-#   filter(HeightMax<0.6 | DiameterMax <15 | DiameterMin < 15) %>%
-#   tail(13)
-# mutate(Type = "Extinct Burial Mound") %>%
-#   filter(HeightMax == 0) %>%
-#   mutate(Type = "Uncertain Mound")
-# 

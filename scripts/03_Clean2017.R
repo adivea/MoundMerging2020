@@ -31,20 +31,23 @@ m2017 <- mnd2017 %>%
   rename(TRAP=identifier, LU_Around = LanduseAroundMound, LU_Top=LanduseOnTopOfMound)   
 
 # Clean up the Date which currently only contains day and month and needs appending 2017 to it
-dmy(m2017$Date) 
-
+glimpse(m2017)
 # Implement with paste() function
 m2017 <- m2017 %>% 
-  mutate(Date=paste(m2017$Date, sep="-","2017"))
+  mutate(nDate = paste(m2017$Date, sep="-","2017")) %>% 
+  mutate(Date= gsub("Sep","09", nDate)) %>% 
+  select(-nDate) 
+
+m2017$Date 
 
 # Shape the date in ymd format
 m2017 %>% 
-  mutate(Date=ymd(Date)) %>% 
+  mutate(Date=as.Date(Date, "%d-%m-%Y")) %>% 
+  #mutate(Date=ymd(Date)) %>% 
   glimpse()
 
 m2017 <- m2017 %>% 
-  mutate(Date=ymd(Date))
-
+  mutate(Date=as.Date(Date, "%d-%m-%Y")) 
 
 # Aggregate notes to two columns (using https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr)
 # Look where annotations and notes are distributed >> 7 columns
@@ -64,4 +67,4 @@ m2017$DamageNotes  # we have reduced the initial 46 to 37 variables
 levels(as.factor(m2017$Type))
 
 # Finished cleaning 2017
-dim(m2017)
+glimpse(m2017)
