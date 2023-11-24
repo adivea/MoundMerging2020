@@ -29,10 +29,14 @@ library(here)
 ################################## LOAD DATA ######################################################
 
 # Load the inputs
-
+<<<<<<< HEAD:scripts/05_MergeToMasterA.R
 df_name <- c("m2009","m2010","m2017","m2018", "m2022")
 script <- c("03_Clean2009.R","03_Clean2010.R","03_Clean2017.R","03_Clean2018.R","03_Clean2022.R")
-gs4_auth(email = adela@faims.edu.au) # select Google account with which you are downloading data or use gs4_deauth()
+=======
+gs4_auth(email = adela@faims.edu.au) # select Google account with which you are downloading data
+df_name <- c("m2009","m2010","m2017","m2018")
+script <- c("03_Clean2009.R","03_Clean2010.R","03_Clean2017.R","03_Clean2018.R")
+>>>>>>> 8571bf5677c420dec659bc30fe53c19d61118a7e:scripts/05_MergeToMaster.R
 for (i in df_name){
    if (exists(i)){
     is.data.frame(get(i))
