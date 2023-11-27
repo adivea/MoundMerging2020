@@ -72,7 +72,7 @@ ableftj <- left_join(mounds_adela, mounds_bara,
 # How many non-map features were encountered in 2010 and what were they?
 ableftj%>% 
   filter(TopoID.x==0) %>%   # 
-  select(TRAP, SomethingPresentOntheGround, TopoID.x, TopoID.y, Width.x, Width.y) %>% 
+  dplyr::select(TRAP, SomethingPresentOntheGround, TopoID.x, TopoID.y, Width.x, Width.y) %>% 
   group_by(SomethingPresentOntheGround) %>% 
   tally()
 # 444 features have received TRAP ID in 2010; 292 of adela's them have Topo ID, an equivalent in the map. 
@@ -142,14 +142,14 @@ ab2010%>%
   filter(SomethingPresentOntheGround == "mound") # same 406 records same as in conservative mnd2010 above
 
 ab2010 %>% 
-  select(TRAP, TopoID.x, TopoID.y, SomethingPresentOntheGround, Type, Height.x, Height.y, Length.x,Length.y) %>% 
+  dplyr::select(TRAP, TopoID.x, TopoID.y, SomethingPresentOntheGround, Type, Height.x, Height.y, Length.x,Length.y) %>% 
   group_by(Type, SomethingPresentOntheGround) %>% 
   tally()
 # 50 additional features in Bara's record are mostly GC failed, nothing and other features. There are only 10 moundlike records. 
 # Lets' look at them more closely.
 
 ab2010 %>% 
-  select(TRAP, TopoID.x, TopoID.y, SomethingPresentOntheGround, Type, Height.x, Height.y, Length.x,Length.y) %>% 
+  dplyr::select(TRAP, TopoID.x, TopoID.y, SomethingPresentOntheGround, Type, Height.x, Height.y, Length.x,Length.y) %>% 
   filter(is.na(SomethingPresentOntheGround)) %>% 
   filter(grepl("Mound",Type)) 
 

@@ -34,10 +34,10 @@ library(sf)
 
 ################################# LOAD INPUTS   ###########################################################################
 
-df_name <- c("master_sp")
-if (exists(df_name)){
+input <- "master_sp"
+if (exists(input)){
   print("file exists")
-  get(df_name)
+  get(input)
 }  else source("scripts/06_GetSpatial.R")
 
 

@@ -48,11 +48,11 @@ m2022 <- m2022 %>%
 ### Merge notes into one or two columns
 
 m2022 <- m2022 %>% 
-  select(-NotesAndPhotoID) %>% 
-  select(-'...1')
+  dplyr::select(-NotesAndPhotoID) %>% 
+  dplyr::select(-'...1')
 
 m2022 %>% 
-  select(grep(" 2",names(m2022)), grep("Note",names(m2022))) 
+  dplyr::select(grep(" 2",names(m2022)), grep("Note",names(m2022))) 
 
 
 # Unite them into two columns for damage and generate with unite(x, y, sep = ",", remove = TRUE, na.rm = TRUE) function

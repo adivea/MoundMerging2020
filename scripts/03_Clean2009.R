@@ -29,7 +29,7 @@ colnames(mnd2009)  # 2009 dataset of survey and RS mound features collated in Go
 # Drop a few needless columns.
 
 m2009 <- mnd2009 %>% 
-  select(-one_of("LUCheckedinGE", "Year", "Mo", "Day", "Lat", "Long")) %>% 
+  dplyr::select(-one_of("LUCheckedinGE", "Year", "Mo", "Day", "Lat", "Long")) %>% 
   filter(!grepl("*GE*", Type))
 # got 15 columns, 80 observations now
 

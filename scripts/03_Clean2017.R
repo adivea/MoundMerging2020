@@ -27,7 +27,7 @@ if (exists(df_name)){
 
 # Drop and rename columns
 m2017 <- mnd2017 %>% 
-  select(-one_of("uuid","HandheldGPSPoint", "Elevation", "Photo")) %>%  # Uuid is corrupted by excel, and other fields are managerial mostly (refer to sqlite)
+  dplyr::select(-one_of("uuid","HandheldGPSPoint", "Elevation", "Photo")) %>%  # Uuid is corrupted by excel, and other fields are managerial mostly (refer to sqlite)
   rename(TRAP=identifier, LU_Around = LanduseAroundMound, LU_Top=LanduseOnTopOfMound)   
 
 # Clean up the Date which currently only contains day and month and needs appending 2017 to it
@@ -36,7 +36,7 @@ glimpse(m2017)
 m2017 <- m2017 %>% 
   mutate(nDate = paste(m2017$Date, sep="-","2017")) %>% 
   mutate(Date= gsub("Sep","09", nDate)) %>% 
-  select(-nDate) 
+  dplyr::select(-nDate) 
 
 m2017$Date 
 
@@ -52,7 +52,7 @@ m2017 <- m2017 %>%
 # Aggregate notes to two columns (using https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr)
 # Look where annotations and notes are distributed >> 7 columns
 m2017 %>% 
-  select(grep(" 2",names(m2017)), grep("[Nn]ote",names(m2017)))
+  dplyr::select(grep(" 2",names(m2017)), grep("[Nn]ote",names(m2017)))
 
 # Unite them into two columns for damage and generate with unite(x, y, sep = ",", remove = TRUE, na.rm = TRUE) function
 m2017 <- m2017 %>% 

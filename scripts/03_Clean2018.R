@@ -23,25 +23,24 @@ if (exists(df_name)){
 }  else source("scripts/01_LoadDataG.R")
 
 ############################################################################################################
-####              2018 DATASET 
-
-names(mnd2018)
+############# 2018 DATASET 
 
 # Drop and rename columns
 m2018 <- mnd2018 %>% 
-  select(-one_of("File","uuid", "HandheldGPSPoint", "Elevation", "Photo", "modifiedBy", "modifiedAtGMT", "BurialMoundAuthor")) %>% 
-  rename(TRAP=identifier, Timestamp=createdAtGMT, Type=Type_Adela, LU_Around = LanduseAroundMound, LU_Top=LanduseOnTopOfMound)# Uuid is corrupted by excel, and other fields are managerial mostly (refer to sqlite)
+  dplyr::select(-one_of("File","uuid", "HandheldGPSPoint", "Elevation", "Photo", "modifiedBy", "modifiedAtGMT", "BurialMoundAuthor")) %>% 
+  rename(TRAP=identifier, Timestamp=createdAtGMT, Type=Type_Adela, 
+         LU_Around = LanduseAroundMound, LU_Top=LanduseOnTopOfMound) # Uuid is corrupted by excel, and other fields are managerial mostly (refer to sqlite)
 
 # Fix date
 m2018 <- m2018 %>% 
-  mutate(Date = date(Timestamp)) %>% 
-  mutate(Date = ymd(Date))
-
+  mutate(Date = date(Timestamp)) #%>% 
+  #mutate(Date = ymd(Date))
+glimpse(m2018)
 # Aggregate notes to a single column (using https://stackoverflow.com/questions/50845474/concatenating-two-text-columns-in-dplyr)
 
 # Look where notes are distributed > 12 notes columns here
 m2018 %>% 
-  select(grep("[Nn]ote",names(m2018)))
+  dplyr::select(grep("[Nn]ote",names(m2018)))
 
 # I wish to distinguish between generic notes and damage comments
 allnotes <- names(m2018[grep("[Nn]ote",names(m2018))])[c(1,6,2,3,4,5,7)] # generic notes reordered

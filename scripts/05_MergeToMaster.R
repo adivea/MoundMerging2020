@@ -25,18 +25,16 @@
 library(tidyverse)
 library(lubridate)
 library(here)
+library(googlesheets4)
+gs4_deauth()
+#gs4_auth(email = adela@faims.edu.au) # select Google account with which you are downloading data or use gs4_deauth()
 
 ################################## LOAD DATA ######################################################
 
 # Load the inputs
-<<<<<<< HEAD:scripts/05_MergeToMasterA.R
+
 df_name <- c("m2009","m2010","m2017","m2018", "m2022")
 script <- c("03_Clean2009.R","03_Clean2010.R","03_Clean2017.R","03_Clean2018.R","03_Clean2022.R")
-=======
-gs4_auth(email = adela@faims.edu.au) # select Google account with which you are downloading data
-df_name <- c("m2009","m2010","m2017","m2018")
-script <- c("03_Clean2009.R","03_Clean2010.R","03_Clean2017.R","03_Clean2018.R")
->>>>>>> 8571bf5677c420dec659bc30fe53c19d61118a7e:scripts/05_MergeToMaster.R
 for (i in df_name){
    if (exists(i)){
     is.data.frame(get(i))
@@ -148,43 +146,23 @@ master %>%
 # lets see where LU is missing
 LUmissing <- master %>% 
   filter(is.na(LU_Around)) %>% 
-  select(TRAP)
+  dplyr::select(TRAP)
 
 LUTmissing <- master %>% 
   filter(is.na(LU_Top)) %>% 
-  select(TRAP)
+  dplyr::select(TRAP)
 
 LUmissing$TRAP%in%LUTmissing$TRAP
 
 LUmiss_subs <- m2010 %>% 
   filter(TRAP %in% LUmissing$TRAP) %>% 
-  select(TRAP, LU_AroundRS, LU_TopRS) %>% 
+  dplyr::select(TRAP, LU_AroundRS, LU_TopRS) %>% 
   rename(LU_Around =LU_AroundRS,LU_Top=LU_TopRS)
  
-# # DOES NOT WORK YET: Apply rows_patch(x,y) to update/change NA values in LU_Around and LU_Top in master dataset
-# ?rows_update
-# 
-# # select the rows from master dataset which contain the NAs
-# names(master[which(is.na(master$LU_Around)),c(1,4,5)])
-# master[which(master$TRAP%in%LUTmissing$TRAP),c(4)]
-# # confirm the column names in both datasets are identical
-# names(LUmiss_subs)%in%names(master[which(is.na(master$LU_Around)),c(1,4,5)])
-# 
-# # rows_patch() is not working
-# # master %>% 
-# #   rows_patch(tibble(
-# #     a = master[which(is.na(master$LU_Around)),c(1,4,5)],  
-# #     b = LUmiss_subs), )
-# #     #by = c("TRAP","TRAP")) # R complains so I hid the by =
-# #                     # R complains that columns in y are not contained in x (they are)
-# End of row_patch experiment
-
-# Use case_when to update specific values by TRAP IDs, 
-
 # add also "Nodata" TRAPids to the LUmiss_subs vector with NA TRAP ids
 ableftj %>% 
   filter(LandUseAround == "Nodata") %>% 
-  select(TRAP, LandUseAround,Landuse_AroundRS, Landuse_TopRS)
+  dplyr::select(TRAP, LandUseAround,Landuse_AroundRS, Landuse_TopRS)
 
 # in LU Around  
 LUmiss_subs$LU_Around
@@ -222,7 +200,7 @@ master %>%
   arrange(perc)
 
  
-###  Eliminate duplicates (revisited mounds)
+###  Eliminate ID duplicates (revisited mounds). For spatial duplicates, see spatial scripts 06
 
 # Find duplicate TRAP ids
 master$TRAP[duplicated(master$TRAP)] 
@@ -255,17 +233,40 @@ rm(dupl_rows)
 unique(master$Condition)
 
 # Clean the Condition to numbers only
-master <- master %>%
-  mutate(Condition = str_extract(Condition, "\\d")) %>%
-  mutate(Condition = case_when(Condition == 0 ~ NA,
-                               Condition == 6 ~ "5",
-                               Condition != 0 ~ Condition)) #%>%
-  #distinct(Condition)
-
-master$Condition <- factor(master$Condition, levels = c("1","2","3","4","5","NA"))
-hist(as.numeric(master$Condition))
-master$Condition[master$Condition=="NA"] <- NA
+master <-  master %>%
+   mutate(Condition = str_extract(Condition, "\\d")) #%>% 
+#   mutate(nCondition = case_when(Condition == 0 ~ NA,
+#                                Condition == 6 ~ "5",
+#                                Condition != 0 ~ Condition)) %>% distinct(nCondition) 
+#   
+# 
+# master$Condition <- factor(master$Condition, levels = c("1","2","3","4","5","NA"))
+# hist(as.numeric(master$Condition))
+# master$Condition[master$Condition=="NA"] <- NA
 
 head(master$Condition)
 
-#
+# write_csv(master, "output_data/Master0923.csv") # 1487 rows
+# write_csv(master, "output_data/mergedclean2023.csv")
+saveRDS(master, "output_data/mergedcleanfeatures2023.rds")
+
+####################################  NEXT STEPS #############################################
+
+# NEXT STEPS: Streamline m_Faims
+# NEXT STEPS: ADD SPATIAL DATA > NEW SCRIPT 06
+# NEXT STEPS: CONTINUE THINKING: WHAT OTHER COLUMNS DO I NEED IN MASTER? OR WHAT CHECKS ARE NEEDED?
+
+# - geospatial can be extracted from GIS
+# - TopoID can be extracted from GIS (but exists in 2009-2010)
+# BEWARE: 9313 geospatial info in m2010 may be wrong as is inconsistent with image (road on image, none in GE)
+
+
+
+# REVIEW DIMENSIONS AND TYPE CONCORDANCE
+# mXXXX %>%
+#   select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>%
+#   filter(HeightMax<0.6 | DiameterMax <15 | DiameterMin < 15) %>%
+#   tail(13)
+# mutate(Type = "Extinct Burial Mound") %>%
+#   filter(HeightMax == 0) %>%
+#   mutate(Type = "Uncertain Mound")

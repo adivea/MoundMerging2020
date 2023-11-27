@@ -9,6 +9,7 @@
 # Have both attribute and spatial data for verified features and mounds - conservative and liberal, in Yambol and everywhere.
 # Verify that we are catching all salvageable features by merging an attribute workflow from Excel and Open Refine with ArcGIS work; 
 # these two workflows had been separate, which can contribute to error.
+# Deduplicate spatial duplicates (features re-visited in different seasons and given different ID)
 
 # Inputs
 # 1) Attributes
@@ -21,6 +22,7 @@
 # with Sliven mounds added, as well as Malomirovo mounds from day 1 cut off, etc. 
 # These datasets are 1033 long, and collate Baras verified data with my additions (all of 2010 or only a section>>)
 # plus 2017 Sliven section of Elenovo dataset. It is on the conservative side when it comes to feature type.
+# In addition, errors discovered in location (e.g. 8142) are fixed before spatialization
 
 # SMALLER: Spatially conservative and permit-covered shapefile
 # 20092010VerifiedMounds (n = 887) [check that name has not changed?] - represents a bara's strictly in-Yambol dataset 2009-2018 
@@ -38,9 +40,10 @@
 
 # Process 
 # 1) load master attribute dataset and large shapefile
-# 2) design merging workflow
+# 2) design merging workflow and clean up coordinates where known as wrong
 # 3) compare TRAP IDs and see the extent of mismatch between shapefile and attribute - is there anything we can salvage>
-# 4) do basic streamlining
+# 4) deduplicate places visited repeatedly (same/nearby points with different IDs) 
+# 5) do  basic streamlining
 
 
 # Library
@@ -49,45 +52,71 @@ library(tidyverse)
 library(raster)
 library(rgdal)
 library(FSA)
-##################################    LOAD SPATIAL DATA
 
-master <- readRDS("output_data/mergedcleanfeatures2023.rds")
-glimpse(master)
 ##################################    LOAD SPATIAL DATA
+input <- "master"
+if (exists(input)){
+  print("file exists")
+  get(input)
+}  else  {
+  print("file doesnot exist")
+  print("so we load it from rds")
+  master <- readRDS("output_data/mergedcleanfeatures2023.rds")
+}
 
-# load mound/feature shapefile created in ArcGIS (1240 features, 1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
+#}  else source("scripts/05_MergeToMaster.R")
+
+#glimpse(master)
+
+##################################    LOAD SPATIAL DATA from 2009-2018. 2022 comes later
+
+# load mound/feature shapefile created in ArcGIS (1240 features from 2009-2018, 1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
 mnd_shp <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMax.shp") # large file compiled by Adela
 plot(mnd_shp$geometry, col = "red")
 plot(mnd_shp$geometry[which(mnd_shp$TRAP%in%master$TRAP)]) # difference of ca 60 points which lack dimensions
-mnd_shpmin <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMinYam.shp") # conservative file from Bara
-plot(mnd_shpmin$geometry, pch = 17, add =TRUE)
 
+# mnd_shpmin <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMinYam.shp") # conservative file from Bara
+# plot(mnd_shpmin$geometry, pch = 17, add =TRUE)
 
-##################################    EXTRACT COORDINATES FROM SPATIAL DATA AND ADD THEM TO OBJECTS
+##################################    EXTRACT COORDINATES FROM SPATIAL 09-18 DATA 
 
 # As simple features don't advertise coordinates (X, Y), I extract them and print them into two separate columns 
-mnd_sp32635 <- cbind(mnd_shp, X = st_coordinates(mnd_shp)[,1], Y =st_coordinates(mnd_shp)[,2]) 
+mnd_sp32635 <- cbind(mnd_shp, X = st_coordinates(mnd_shp)[,1], Y=st_coordinates(mnd_shp)[,2]) 
 mnd_sp32635 %>% 
   st_drop_geometry() %>% 
   glimpse()
 
 # We add 2022 features' spatial data
-mnd_sp32635 <- rbind(st_drop_geometry(mnd_sp32635), data.frame(TopoID = m2022$uuid, Note= m2022$AllNotes, TRAP = m2022$TRAP, 
+mnd_sp32635 <- rbind(st_drop_geometry(mnd_sp32635), 
+                     data.frame(TopoID = m2022$uuid, Note= m2022$AllNotes, TRAP = m2022$TRAP, 
                                 X = m2022$Easting, Y =m2022$Northing))
-# # After the extraction of X and Y in 32635 EPSG, I want also a spatial object in 4326 EPSG for web visualisation
-# # converting to Web Mercator, GSC in order to have Lat Long in addition to X, Y
-# mnd_sp4326 <- mnd_shp %>% 
-#   st_transform(crs = 4326) %>% 
-#   cbind(Lat = st_coordinates(mnd_shp)[,1], Long =st_coordinates(mnd_shp)[,2])
-# 
-# mnd_sp4326
 
-##################################    MERGE ATTRIBUTE AND SPATIAL DATA INTO MASTER_SP SF OBJECT
+##################################    SPATIAL FIXES (FOR WRONG LOCATIONS)
+
+# Fix location of 8142 which is 300 m off its location (actually under a windmill)
+
+m8142 <-data.frame(TopoID = 200562, Note = "poorly geocoded TopoID200562", TRAP = 8142, X = 467040.37, Y = 4698768.43) 
+
+sort(mnd_sp32635$TRAP)
+
+mnd_sp32635 %>% 
+  filter(TRAP == 8142)
+mnd_sp32635[mnd_sp32635$TRAP == 8142,]
+
+
+m_sp <- rows_update(
+  mnd_sp32635,
+  m8142,
+  by = "TRAP")
+
+m_sp[m_sp$TRAP == 8142,]
+
+##################################    MERGE ATTRIBUTE AND RE-SPATIALIZE INTO MASTER_SP SF OBJECT
 
 # Full join between simple features and attributes, resulting in sf object
-master_sp <- mnd_sp32635 %>% inner_join(master, c=by("TRAP"="TRAP")) # 1174 records in 2020, 1550 in 2022
+master_sp <- m_sp %>% inner_join(master, c=by("TRAP"="TRAP")) # 1174 records in 2020, 1550 in 2022
 master_sp <- master_sp %>% 
-  select(-DiameterMin) %>% 
+  dplyr::select(-DiameterMin) %>% 
   st_as_sf(coords = c("X", "Y"), crs = 32635)
 
 
@@ -100,4 +129,54 @@ master_sp %>%
   ggplot()+
   geom_sf(aes(color = HeightMax))
 
+
+##################################      DEDUPLICATE SPATIALLY
+
+# Duplicates and triplicates were identified in January 2023. 
+# The two lists below provide matching TRAP IDs for 2009-2010 mounds and their post-2010 duplicates.
+
+# Early records
+upto2010 <- c(6011,8022:8025, 8028,8029,8030, 8035, 8350:8353, 8357,8359, 8434,8669, 9077)
+
+# Later records
+post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358, 8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
+
+# to see the pairs, they are collated in output data folder
+read.csv("output_data/duplicates_final.txt", sep = " ")
+
+# Eliminate either set of duplicates
+`%nin%` = Negate(`%in%`)
+
+# To keep early records (more likely in AKB)
+early <- master_sp %>% 
+  filter(TRAP%nin%post2010)
+
+# To keep later/newer records (may not be in AKB)
+later <- master_sp %>% 
+  filter(TRAP%nin%upto2010)
+
+# Check mound overviews
+early %>% 
+  group_by(Type) %>% 
+  tally()
+later %>% 
+  group_by(Type) %>% 
+  tally()
+
+
+
+# Export semi-clean features (de-duplication was done 27 Dec 2022)
+if (file.exists("output_data/features_dd_later.rds")){
+  print("file exists in outputs")
+} else {
+  print("writing features_dd_later file to outputs")
+  write_rds(later, "output_data/features_dd_later.rds")  
+}
+ 
+if (file.exists("output_data/features_dd_early.rds")){
+  print("file exists in outputs")
+} else {
+  print("writing features_dd_later file to outputs")
+  write_rds(early, "output_data/features_dd_early.rds")  
+}
 

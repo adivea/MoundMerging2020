@@ -1,8 +1,9 @@
 ######################################################## STREAMLINE HEIGHT
 
-# FOR MAXIMUM HEIGHTS (INCL MAP-BASED ONES) NEEDS WORK!!!
+# FOR MAXIMUM HEIGHTS (INCL MAP-BASED ONES) SCRIPT NEEDS WORK BUT IS ONLY RELEVANT TO MOUNDS!!!
 
-# This script needs to be implemented in 2010 dataset
+# This script needs to be implemented mostly in 2010 dataset. In post-2017 the NA Heights mostly 
+# refer to surface scatters and non-mound features
 
 # Height is mostly numeric, but a few missing values were reconstructed from old atlases,
 # and entered as text. e.g.[454] "2 acc to topomap". These four entries can be either made NAs,
@@ -46,23 +47,3 @@ hist(master_reconstr_heights$HeightMax, col= "pink", add = TRUE, alpha = 0.5)
 write.csv(master, "output_data/mergedclean.csv")
 write.csv(master, "../MoundHealth/data/master.csv")
 write.csv(master_reconstr_heights, "../MoundHealth/data/master_reconstr_heights.csv")
-####################################  NEXT STEPS #############################################
-
-# NEXT STEPS: Streamline m_Faims
-# NEXT STEPS: ADD SPATIAL DATA > NEW SCRIPT 06
-# NEXT STEPS: CONTINUE THINKING: WHAT OTHER COLUMNS DO I NEED IN MASTER? OR WHAT CHECKS ARE NEEDED?
-
-# - geospatial can be extracted from GIS
-# - TopoID can be extracted from GIS (but exists in 2009-2010)
-# BEWARE: 9313 geospatial info in m2010 may be wrong as is inconsistent with image (road on image, none in GE)
-
-
-
-# REVIEW DIMENSIONS AND TYPE CONCORDANCE
-# mXXXX %>%
-#   select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>%
-#   filter(HeightMax<0.6 | DiameterMax <15 | DiameterMin < 15) %>%
-#   tail(13)
-# mutate(Type = "Extinct Burial Mound") %>%
-#   filter(HeightMax == 0) %>%
-#   mutate(Type = "Uncertain Mound")

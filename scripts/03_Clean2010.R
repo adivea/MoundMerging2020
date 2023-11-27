@@ -34,7 +34,7 @@ names(mnd2010)
 # Drop undesired columns. If you are running this the first time, uncomment.
 # Drop unwanted columns to get to 37 columns from original 58
 m2010 <- mnd2010 %>% 
-  select(-one_of("Excav", "Necropolis","ElevationTopo", "Certainty", "GC",
+  dplyr::select(-one_of("Excav", "Necropolis","ElevationTopo", "Certainty", "GC",
                  "Leader", "Datum" ,"SurfaceMaterial","SampleCollected","uuid","createdBy",
                  "Latitude","Longitude","Northing","Easting","Source_1","GC_1",
                  "Mound_ID","DateCompl0","y_proj","x_proj"))
@@ -79,7 +79,7 @@ m2010 <- m2010 %>%
   unite(Name_BG, c("BLG_Name","NameTopo"), sep = ";", remove = TRUE, na.rm = TRUE) %>% 
   unite(AllNotes, c("Notes", "Description"), sep = "; Bara:", remove = TRUE, na.rm = TRUE) %>% 
   unite(RT_Number, c("RT_number", "RT_numberGE"), sep = "; GE:", remove = TRUE, na.rm = TRUE) %>% 
-  select(-one_of("Source.x", "TopoID.y"))   #remove needless
+  dplyr::select(-one_of("Source.x", "TopoID.y"))   #remove needless
 
 
 ############################################################################################################
@@ -94,7 +94,7 @@ heightissue <- !m2010$Height_Adela%in%m2010$Height_Bara
 
 # Height differences owe to: 5 to atlas values in Adela, 7 to NAs in Bara
 m2010 %>% 
-  select(TRAP, Height_Adela, Height_Bara) %>% 
+  dplyr::select(TRAP, Height_Adela, Height_Bara) %>% 
   filter(heightissue)
 
 # reviewing the images, Height_Bara corresponds better to photograph in 9038-9057. 
@@ -126,13 +126,13 @@ m2010 %>% filter(TypeBara == "Surface Scatter")
 
 # Review type in TypeBara as Type is only 'mound'; need to fix 45 NAs if we are to use this column
 m2010 %>% 
-  select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
+  dplyr::select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
   group_by(TypeBara) %>% 
   summarize(Havg = mean(!is.na(HeightMax)), n()) 
 
 # If we exclude Burial Mound types, the NAs don't show
 m2010 %>% 
-  select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
+  dplyr::select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
   filter(TypeBara != "Burial Mound") %>% 
   group_by(TypeBara) %>%
   tally()
@@ -141,7 +141,7 @@ m2010 %>%
 
 # first, create a a temp df that contains all NAs from TypeBara and verify them in photos
 temp <- m2010 %>% 
-  select(TRAP, TypeGE, TypeBara, HeightMax, DiameterMax, DiameterMin, Condition, AllNotes) %>% 
+  dplyr::select(TRAP, TypeGE, TypeBara, HeightMax, DiameterMax, DiameterMin, Condition, AllNotes) %>% 
   filter(is.na(TypeBara)) # %>% 
 
 #  filter(HeightMax<1.1 | DiameterMax <15 | DiameterMin < 15) # couple Heights are wrong .e.g. 9302 is clearly 1m at least
@@ -158,7 +158,7 @@ remnants <-  temp$TRAP[temp$TRAP%nin%c(mounds,ext,unc)]
 
 # Replace NA values in Type using Classification vectors via case_when
 m2010 <- m2010 %>% 
-  #select(TRAP, TypeBara) %>% 
+  #dplyr::select(TRAP, TypeBara) %>% 
   #filter(is.na(TypeBara)) %>% 
   mutate(TypeBara = case_when(TRAP%in%mounds ~  "Burial Mound", 
                               TRAP%in%ext ~ "Extinct Burial Mound",
@@ -176,7 +176,7 @@ m2010 %>%
   tally()
 
 m2010 %>% 
-  select(TRAP, TypeGE, Type, HeightMax, Condition) %>% 
+  dplyr::select(TRAP, TypeGE, Type, HeightMax, Condition) %>% 
   group_by(Type) %>% 
   summarize(Havg = mean(!is.na(HeightMax)), n())
 
@@ -195,7 +195,7 @@ glimpse(m2010)
 # but is worth investigating at campaign-level as well to detect inter-annual shift in classification
 #
 # mndXXXX %>% 
-#   select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>% 
+#   dplyr::select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>% 
 #   filter(HeightMax<0.6 | DiameterMax <15 | DiameterMin < 15) %>% 
 #   tail(13)
 # mutate(Type = "Extinct Burial Mound") %>% 
