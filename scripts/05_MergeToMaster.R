@@ -85,6 +85,7 @@ dim(m)
 
 glimpse(m)
 glimpse(m2009)
+glimpse(m2010)
 glimpse(m2010[, names_all])
 glimpse(m2017[, names_all])
 glimpse(m2018[, names_all])
@@ -96,10 +97,10 @@ glimpse(m2022[, names_all])
 ####################################  MASTER M_FAIMS DATASET FOR FAIMS SEASONS 2017 - 2018 #####################################
 
 # MASTER DATASET FOR FAIMS YEARS
-
+# 1005 records and 36 cols in 2022
 m_Faims <- NULL
 m_Faims <- rbind(m2017[, names_faims], m2018[, names_faims],m2022[, names_faims])
-dim(m_Faims)  # 1005 records and 36 cols in 2022
+dim(m_Faims)  
 glimpse(m_Faims)
 write_csv(m_Faims, "output_data/mergedfaims2023.csv") 
 
@@ -157,12 +158,17 @@ LUmissing$TRAP%in%LUTmissing$TRAP
 LUmiss_subs <- m2010 %>% 
   filter(TRAP %in% LUmissing$TRAP) %>% 
   dplyr::select(TRAP, LU_AroundRS, LU_TopRS) %>% 
-  rename(LU_Around =LU_AroundRS,LU_Top=LU_TopRS)
+  rename(LU_Around =LU_AroundRS,LU_Top=LU_TopRS) %>% 
+  print(n=45)
  
 # add also "Nodata" TRAPids to the LUmiss_subs vector with NA TRAP ids
 ableftj %>% 
   filter(LandUseAround == "Nodata") %>% 
   dplyr::select(TRAP, LandUseAround,Landuse_AroundRS, Landuse_TopRS)
+ableftj %>% 
+  filter(TRAP == 9484) %>% 
+  select(20:30)
+
 
 # in LU Around  
 LUmiss_subs$LU_Around
@@ -189,6 +195,8 @@ master <- master %>%
 
 
 # Review Landuse: there should be no "Nodata" or NA's as it was replaced with RS data, where it exists. 
+master %>% 
+  filter(is.na(LU_Top))
 
 master %>% 
   group_by(LU_Top) %>% 

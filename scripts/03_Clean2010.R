@@ -30,12 +30,13 @@ if (exists(df_name)){
 # bunkers, waterstations and other features instead. 
 
 names(mnd2010)
+glimpse(mnd2010)
 
 # Drop undesired columns. If you are running this the first time, uncomment.
 # Drop unwanted columns to get to 37 columns from original 58
 m2010 <- mnd2010 %>% 
   dplyr::select(-one_of("Excav", "Necropolis","ElevationTopo", "Certainty", "GC",
-                 "Leader", "Datum" ,"SurfaceMaterial","SampleCollected","uuid","createdBy",
+                 "SurfaceMaterial","SampleCollected","uuid","createdBy",
                  "Latitude","Longitude","Northing","Easting","Source_1","GC_1",
                  "Mound_ID","DateCompl0","y_proj","x_proj"))
 
@@ -56,11 +57,39 @@ problem2010TopoID <- which(!m2010$TopoID.x%in%m2010$TopoID.y)  # 35 discrepancie
 m2010$TopoID.y[problem2010TopoID] # most are zeroes in Bara, only 200244 a problem, which is perhaps a typo?? CHECK IN GE
 
 # Fix Dates: Dates in m2010 are dates of 2010 data streamlining. Write a shortcut to 2010 season as 2010-10-30
-m2010 <- m2010 %>%
-  mutate(Date = "2010-10-30") %>% 
-  mutate(Date = as.Date(Date))
+unique(m2010$Datum)
+?as.Date() 
 
-# length(which(is.na(m2010$Date))) # ok 73 don't have a date
+m2010 <- m2010 %>%
+  mutate(DatumNew = gsub("Mon|Tue|Wed|Thu|Fri|Sat|Sun", "", Datum)) %>% 
+  mutate(DatumNew = gsub("00:00:00 CET |00:00:00 CEST ", "",DatumNew)) %>%
+  mutate(DatumNew = gsub("  ", " ", DatumNew)) %>% 
+  mutate(DatumNew = gsub("^ ", "", DatumNew)) %>% 
+  mutate(DatumNew = gsub(" ", "/", DatumNew)) %>% 
+  mutate(DatumNew = as.Date(DatumNew,format = "%b/%d/%Y"))
+
+unique(m2010$DatumNew)
+
+## CONTINUE WITH ROWSUPDATE() to fix DatumNew then transfer to Date
+fixDate2010 <- m2010 %>%
+  filter(is.na(DatumNew) | DatumNew == "2013-03-30") %>% 
+  mutate(DatumNew = Date) 
+
+glimpse(fixDate2010)
+unique(fixDate2010$DatumNew)
+
+m2010 <- rows_update(
+  m2010,
+  fixDate2010,
+  by = "TRAP")
+
+glimpse(m2010)
+
+m2010 <- m2010 %>%
+   mutate(Date = DatumNew) %>% 
+   mutate(Date = as.Date(Date))
+
+paste0(length(which(is.na(m2010$Date))), " features lack a Date") # ok 73 don't have a date
 
 ############################################################################################################
 # Generate a finalized 2010 conservative dataset (n = 406, 30 columns) 
@@ -182,7 +211,7 @@ m2010 %>%
 
 
 # Remove temps
-rm(mounds, ext, unc, remnants, temp, heightissue)
+rm(mounds, ext, unc, remnants, temp, heightissue, fixDate2010)
 rm(problem2010TopoID)
 rm(ab2010, mounds_adela, mounds_bara)
 
@@ -202,5 +231,5 @@ glimpse(m2010)
 #   filter(HeightMax == 0) %>% 
 #   mutate(Type = "Uncertain Mound")
 # 
-# levels(as.factor(mnd2017$Type))
+# levels(as.factor(mnd2010$Type))
 

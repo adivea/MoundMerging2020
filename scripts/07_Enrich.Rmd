@@ -57,8 +57,9 @@ input <- "master_sp"
 if (exists(input)){
   print("file exists")
   get(input)
-}  else source("scripts/06_GetSpatial.R")
-
+}  else source("scripts/06_GetSpatial.R") 
+# If script 06_GetSpatial.R is erroring out, run it with the line below instead of the line above
+#}  else readRDS("output_data/master_sp.rds") 
 
 ```
 
@@ -68,11 +69,11 @@ if (exists(input)){
 ### Load Vector data
 ```{r load-Y-vector}
 # Load vectors
-bg_border <- st_read("../YambolMoundAnalysis/data/Bulgaria_Border.shp")
-Y_towns <- st_read("../YambolMoundAnalysis/data/Modern_settlements_Yambol_TRAP.shp")
+bg_border <- st_read("../../YambolMoundAnalysis/data/Bulgaria_Border.shp")
+Y_towns <- st_read("../../YambolMoundAnalysis/data/Modern_settlements_Yambol_TRAP.shp")
 #towns <- st_read("~/../Documents/Professional/Projects/MQNS/GIS/Vectors/Yamurbanarea.shp") # towns within 15km buffer of Yambol boundary exported from JICA
-Y_region <- st_read("../YambolMoundAnalysis/data/YamRegion.shp")
-Y_towns_poly <- read_sf("../YambolMoundAnalysis/data/YamTownpoly/Yam_towns_poly.shp")
+Y_region <- st_read("../../YambolMoundAnalysis/data/YamRegion.shp")
+Y_towns_poly <- read_sf("../../YambolMoundAnalysis/data/YamTownpoly/Yam_towns_poly.shp")
 ```
 
 ### Mosaic and project component rasters
@@ -152,7 +153,7 @@ plot(master_sp$geometry, add = T)
 
 ### Distance to BG border
 
-```{r}
+```{r distBG}
 # Distance from points to BG boundary
 master_sp$distBG <-  st_distance(master_sp,bg_border)
 master_sp$distBG[1:3,]
@@ -169,13 +170,10 @@ This is a two-step process:
 2. getting distance with `st_distance()`
  `distTown <- st_distance(master_sp, towns[st_nearest_feature(master_sp, towns),], by_element = TRUE)`
  
-```{r distance}
+```{r distance-settlecentroid}
 # Distance to nearest (as the crow flies) village
 master_sp$distTown <- st_distance(master_sp, Y_towns[st_nearest_feature(master_sp, Y_towns),], by_element = TRUE)
 head(master_sp,3)
-head(master_sp,3)
-mn18$distTown <- st_distance(mn18, Y_towns[st_nearest_feature(mn18, Y_towns),], by_element = TRUE)
-head(mn18,3)
 ```
 
 ### Distance from mound points to nearest settlement boundary!!!
@@ -188,7 +186,7 @@ This is a two-step process:
 2. getting distance with `st_distance()`
  `distTown <- st_distance(master_sp, towns[st_nearest_feature(master_sp, towns),], by_element = TRUE)`
  
-```{r distance}
+```{r distance-settleboundary}
 # Distance to nearest (as the crow flies) village
 master_sp$distTownBoundary <- st_distance(master_sp, Y_towns_poly[st_nearest_feature(master_sp, Y_towns_poly),], by_element = TRUE)
 hist(master_sp$distTownBoundary)
@@ -250,21 +248,87 @@ library(mapview)
 master_sp %>% 
   filter(Type == "Burial Mound") %>% 
   mapview(zcol = "distBG")
+
 ```
-## Review and filter for mounds
+## Deduplicate Spatially
+
+A number of spatial duplicates and triplicates were identified in January 2023. These represent mounds/points registered across separate seasons under different TRAP Ids, which share the same location, or more frequently are within 15 m of one another.
+
+We have two lists of matching TRAP IDs for 2009-2010 mounds and their post-2010 duplicates.
+
+```{r duplicate-lists}
+# Early records
+upto2010 <- c(6011,8022:8025, 8028,8029,8030, 8035, 8350:8353, 8357,8359, 8434,8669, 9077)
+
+# Later records
+post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358, 8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
+
+# to see the pairs, they are collated in output data folder
+read.csv("../output_data/duplicates_final.txt", sep = " ")
+
+```
+
+
+# Eliminate either set of duplicates
+```{r duplicate-eliminate}
+`%nin%` = Negate(`%in%`)
+
+# To keep early records (more likely in AKB)
+early <- master_sp %>%
+  filter(TRAP%nin%post2010)
+
+# To keep later/newer records (may not be in AKB)
+later <- master_sp %>%
+  filter(TRAP%nin%upto2010)
+
+```
+
 ```{r}
-master_sp %>%
+# Check mound overviews
+early %>% 
+  group_by(Type) %>% 
+  tally()
+later %>% 
+  group_by(Type) %>% 
+  tally()
+```
+### Export deduplicated features ? (de-duplication was done 27 Dec 2022)
+
+```{r export-features}
+if (file.exists("../output_data/features_dd_later.rds")){
+  print("file exists in outputs")
+} else {
+  print("writing features_dd_later file to outputs")
+  write_rds(later, "../output_data/features_dd_later.rds")  
+}
+ 
+if (file.exists("../output_data/features_dd_early.rds")){
+  print("file exists in outputs")
+} else {
+  print("writing features_dd_later file to outputs")
+  write_rds(early, "../output_data/features_dd_early.rds")  
+}
+
+```
+
+## NEED TO COMMUNICATE THESE TWO LISTS OF DUPLICATE TRAP IDs TO TODOR!
+
+
+
+## Filter deduplicated features for mounds
+```{r}
+later %>%
    filter(grepl("Mound|Other|Uncertain", Type))%>% 
    group_by(Type) %>% 
    tally()
 
-mnd_sp <- master_sp %>%
+mnd_late_sp <- later %>%
    filter(grepl("Mound|Other|Uncertain", Type))
 
 ```
-# Clip to Yambol Province boundary
+## Clip to Yambol Province boundary
 ```{r yambol-mnds}
-Yam_mnds <- st_intersection(mnd_sp, Y_region$geometry)
+Yam_mnds <- st_intersection(mnd_late_sp, Y_region$geometry)
 plot(Yam_mnds$geometry);
 plot(Yam_mnds["Condition"])
 ```
@@ -272,31 +336,38 @@ plot(Yam_mnds["Condition"])
 
 ## Export enriched data
 This is interim export of all features from Yambol and around. It is included as a shortcut to all the calculation above.
-```{r export-features}
+
+
+```{r export-mounds-Yambol}
+# master_sp
+write_rds(master_sp, "../output_data/master_sp.rds")
+
 # RDS
-write_rds(master_sp, "../output_data/enriched_dd_features.rds")
-master_sp %>%
+ # mounds everywhere
+later %>%
   # group_by(Type) %>% 
   # tally()
   filter(grepl("Mound|Other|Uncertain", Type))%>% 
-  write_rds("../output_data/enriched_dd_mounds.rds")
+  write_rds("../output_data/enriched_dd_mounds.rds") 
 
-write_rds(mnd_sp, "../output_data/enriched_mounds_Yam.rds") # Yambol mounds
+ # mounds in Yambol borders
+write_rds(Yam_mnds, "../output_data/enriched_dd_mounds_Yam.rds") 
 
 # shapefiles
 master_sp %>% 
   dplyr::select(-TopoID) %>% 
-  st_write("../output_data/enriched_features2023.shp", append = F)
+  st_write("../output_data/master_sp.shp", append = F)
 
-mnd_sp %>% 
-  st_write("../output_data/enriched_mnds_Yam.geojson", append = F)  # Yambol mounds
+# mounds in Yambol borders  
+Yam_mnds %>% 
+  st_write("../output_data/enriched_mounds_Yam.geojson", append = F)  # Yambol mounds
 
-master_sp %>%
-  # group_by(Type) %>% 
+# mounds everywhere
+mnd_late_sp %>%
+  # group_by(Type) %>%
   # tally()
-  dplyr::select(-TopoID) %>% 
-  filter(grepl("Mound|Other|Uncertain", Type))%>% 
-  st_write("../output_data/enriched_mounds2023.shp", append = F)
+  #dplyr::select(-TopoID) %>%
+  st_write("../output_data/enriched_dd_mounds.geojson", append = F)
 
 ```
 

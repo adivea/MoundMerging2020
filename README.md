@@ -6,17 +6,17 @@ This project aims to build a master dataset of verified burial mounds with coord
 - 2010 (58 ATTRIBUTES)legacy data verification on the basis of historical topographic maps, data model also not fully sorted,plus robbery of office leads to the loss of image data for one team's week of work, LU data not transcribed, many categories missing, additional discrepancy arises from asynchronous fixing by two different teams. Requires weeks of streamlining in OR, GoogleEarthPro, ArcGIS, and old PDfs of field records, images and spreadsheets to triangulate closer to the past reality.
 - 2017 (46 ATTRIBUTES)legacy data verification with a mature data model, digital FAIMS output, 
 - 2018 (58 ATTRIBUTES) repeat of 2017 in a different region (Bolyarovo) with minor tweaks to data model, but very active body of participants who added annotations everywhere.
-- 2022 (58 ATTRIBUTES) repeat of 2017 in yet another region (Elhovo) with the same data model.
+- 2022 (58 ATTRIBUTES) repeat of data collection following the 2017 conceptual model from the FAIMS module in the municipality of Elhovo and partially Straldzha with the same data model.
 
-Difference in attributes stems from notes attached to individual fields in later seasons. 
+Difference in attribute numbers in post-2017 modules stems from notes attached to individual fields in later seasons. 
 
 ## Streamlining
 
-As in any archaeological fieldwork, the data realities and accompanying data models are emergent, and as such they evolve through time. I therefore encountered inconsistency from one dataset to another in time, with the initial datasets sufferring from more ommissions and errors, than latter ones where stricter controls and validation were implemented directly in the field. 
+As in any archaeological fieldwork, the data realities and accompanying data models are emergent, and as such they evolve through time. Inconsistencies appear across the datasets because the initial datasets were recorded on paper and suffer from ommissions and errors while the latter ones recorded via digital workflow with stricter controls and validation implemented via in the field are more complete. 
 
 - 2009 survey dataset had undergone cleaning for the initial TRAP publication and my own dissertation and only required a couple hours to split up LU into _Around and _Top and verify dimensions and spotcheck factual correctness to be ready for a merge-in
 - 2009 RS dataset required the same as 2009 survey
-- 2010 was severely impaired by missing and divergent data (2016 adela version differed from 2018 bara version, with however held the promise of fuller attributes and GIS information). In order to verify and fill in information, I had to refine each version, reconcile discrepancies and duplicates and fill LU and dimensions in from GEPro before I could merge these two versions and gauge their utility. I used RS_Temporal data (completely different source) to verify landuse data, but it was not all that useful in the end. This dataset took in excess of 60 hours to reconcile
+- 2010 was severely impaired by missing and divergent data (2016 adela version differed from 2018 bara version, with however held the promise of fuller attributes and GIS information). In order to verify and fill in information, I had to refine each version, reconcile discrepancies and duplicates and fill LU and dimensions in from GEPro before I could merge these two versions and gauge their utility. I used RS_Temporal data (completely different source) to verify landuse data, but it was not all that useful in the end. This dataset took in excess of 60 hours to reconcile. Year 2009 and 2010 together took 106 hours to streamline.
 - 2017 took 2 hours to clean up
 - 2018 took 2 hours to clean up (will need a bit more to bring into sync with all previous ones)
 - 2022 took 8 hours to clean up due to relatively infrequent in-field checks (no Bara verifying the data daily) and the discovery of attribute issues (serendipity instead of survey as source, etc.) and the need to aggregate all five seasons and deal with attribute and spatial attributes.
@@ -32,16 +32,28 @@ Once each dataset was reasonably consistent, the merging could commence. Upon me
 Divergence in the semantic model behind attributes was not tractable computationally but required reinterpretation: e.g. the application of Landuse has also shifted from 2009, when only a single landuse category was used without closer specification , while in 2017 we differentiated between Landuse_Around, Landuse_Top to specify what landuse was meant.  Having written the guidelines in 2009, I know I intended landuse around the mound, but some teams recorded on mound surface judging from the comparison of landuse visible in field photos and the spreadsheets.
 
 ## Spatial data: 
-I don't even wish to go here now yet. :)
+Manual checks were done on the datapoints from 2009-2010 vis-a-vis GPS and legacy data and googleearth by two separate people. 2017-2022 data was only checked against legacy data from topographic maps. GoogleEarth doublecheck would be helpful in 2017-2022.
 There is a number of spatial duplicates and triplicates (see duplicate_final.txt) for mounds repeatedly visited in different season either on assignment to take better photos or by accidental overlap, addressed and written up in YambolMoundAnalysis > 00b_SpatialDeduplication script.
+Extent: while survey was conducted primarily in the Yambol Province, occasionally a track led outside of its boundaries. Occurrences outside Yambol are useful when conducting analysis susceptivle to edge effects, however, features like these are filtered out (clipped by regional boundary) when cultural heritage purpose is invoked.
 
 # How to use
 
-1. For first-time users, start by running the script `source("scripts/05_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. 
+0. If you just want to use the data, choose one of the following datasets from the output_data folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
+
+  - enriched_mounds_Yam.rds - mounds clipped to Y region
+  - enriched_mounds2023.shp - mounds in and out of Y region
+  - enriched_features.rds / enriched_features2023.shp - mounds and other phenomena in and out of Y region
+  - features_dd_early.rds - mounds and other phenomena in 2010 variant
+  - features_dd_later.rds - mounds and other phenomena in 2017 variant
+  
+
+1. If you want to edit the cleaning routine yourself, then start by running the script `source("scripts/05_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. You can then edit some or all of the streamlining steps.
+
 2. Afterwards, depending on your needs, either enrich data spatial using
 
-* `06_GetSpatial.R` which loads the point shapefiles for the mounds and
-* `06a_SpatialMerge` and `06b_SpatialEnrichment` which respectively merge spatial data and attributes, and extract environmental data from rasters at points (via `raster::extract`)
+* `06_GetSpatial.R` which loads the point shapefiles for the mounds and merges the previously cleaned attribute data to them. 
 
-3. Look at and develop some of the following studies, whether on landuse classificaiton assessment (effect of perspective and discrepancy between remote sensing and field evaluation) or size effect on looting or other vulnerability.
+* `07_Enrich.rmd` takes spatialized feature data and enriches it with admin and environmental data extracted from rasters at points (via `raster::extract` etc.)
+
+3. Look at and develop some of the following studies, whether on landuse classification assessment (effect of perspective and discrepancy between remote sensing and field evaluation) or size effect on looting or other vulnerability.
 

@@ -64,14 +64,10 @@ m2022 <- m2022 %>%
 m2022$DamageNotes  # we have reduced the initial 52 to 48 variable
 names(m2022)
 
-# Rename columns & Reduce cols to 2009-2010 data
+# Rename columns 
 
 m2022 <- m2022 %>%
   dplyr::rename(TRAP=MoundID, Type=TypeClean, LU_Around = LanduseAroundMound, LU_Top = LanduseOnTopOfMound) # %>% 
-  # dplyr::select(TRAP, Source, createdBy, Date, Type, LU_Around, LU_Top, PositionInTheLandscape,
-  #               Prominence, DiameterMax, HeightMax, HeightMin, DiameterMin,
-  #               Condition, PrincipalSourceOfImpact,  
-  #               AllNotes, DamageNotes,Northing, Easting, geospatialcolumn)
 
 
 # sanity check - view the mounds
@@ -91,3 +87,25 @@ m2022$HeightMin <- as.numeric(m2022$HeightMin)
 m2022$DiameterMax <- as.numeric(m2022$DiameterMax)
 m2022$DiameterMin <- as.numeric(m2022$DiameterMin)
 glimpse(m2022)
+
+
+# Streamline Type in 16 spurious LGV records
+print(n=32)
+m2022 %>% 
+  filter(Type == "Other" |Type == "Uncertain Feature"  & Source == "Legacy verification") %>%
+  select(TRAP, Type, DescriptionOfMoundOrLocale) %>% 
+  arrange(TRAP) %>% 
+  print(n=32)
+
+# Sunburst symbols pulled out of the "Other/Uncertain Feature" values
+correct <- data.frame(TRAP = c(8666, 8670, 8671, 9837, 8657, 9902, 8639, 8689,8648), 
+                      Type = c(rep("Extinct Burial Mound?",6), rep("Burial Mound?",3)))
+
+m2022 <- rows_update(
+  m2022,
+  correct,
+  by = "TRAP")
+
+m2022 %>% 
+  group_by(Type) %>% 
+  tally()

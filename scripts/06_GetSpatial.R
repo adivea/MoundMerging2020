@@ -1,10 +1,10 @@
 ############################################################################################################
-#                   ENRICHING MASTER DATASET WITH SPATIAL DATA 
+#                   CONNECTING MASTER DATASET WITH SPATIAL DATA 
 ############################################################################################################
 #
 
 # Goal
-# Enrich the master dataset of all visited features in the Yambol province and surroundings from 2009-2018 with spatial data. 
+# Enrich the master dataset of all visited features in the Yambol province and surroundings from 2009-2022 with spatial data. 
 # Such dataset can be used to generate subset data such as all visited features in Yambol, 
 # Have both attribute and spatial data for verified features and mounds - conservative and liberal, in Yambol and everywhere.
 # Verify that we are catching all salvageable features by merging an attribute workflow from Excel and Open Refine with ArcGIS work; 
@@ -130,53 +130,5 @@ master_sp %>%
   geom_sf(aes(color = HeightMax))
 
 
-##################################      DEDUPLICATE SPATIALLY
 
-# Duplicates and triplicates were identified in January 2023. 
-# The two lists below provide matching TRAP IDs for 2009-2010 mounds and their post-2010 duplicates.
-
-# Early records
-upto2010 <- c(6011,8022:8025, 8028,8029,8030, 8035, 8350:8353, 8357,8359, 8434,8669, 9077)
-
-# Later records
-post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358, 8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
-
-# to see the pairs, they are collated in output data folder
-read.csv("output_data/duplicates_final.txt", sep = " ")
-
-# Eliminate either set of duplicates
-`%nin%` = Negate(`%in%`)
-
-# To keep early records (more likely in AKB)
-early <- master_sp %>% 
-  filter(TRAP%nin%post2010)
-
-# To keep later/newer records (may not be in AKB)
-later <- master_sp %>% 
-  filter(TRAP%nin%upto2010)
-
-# Check mound overviews
-early %>% 
-  group_by(Type) %>% 
-  tally()
-later %>% 
-  group_by(Type) %>% 
-  tally()
-
-
-
-# Export semi-clean features (de-duplication was done 27 Dec 2022)
-if (file.exists("output_data/features_dd_later.rds")){
-  print("file exists in outputs")
-} else {
-  print("writing features_dd_later file to outputs")
-  write_rds(later, "output_data/features_dd_later.rds")  
-}
- 
-if (file.exists("output_data/features_dd_early.rds")){
-  print("file exists in outputs")
-} else {
-  print("writing features_dd_later file to outputs")
-  write_rds(early, "output_data/features_dd_early.rds")  
-}
 
