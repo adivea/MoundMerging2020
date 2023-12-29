@@ -318,8 +318,10 @@ if (file.exists("../output_data/features_dd_early.rds")){
 }
 
 # FAIMS data (did not need spatial deduplication)
-#write_rds(master_sp, "../output_data/features_faims.rds") 
-
+#write_rds(master_sp, "../output_data/features_faims.rds")
+# faims <- readRDS("../output_data/features_faims.rds")
+# glimpse(faims)
+# faims %>% st_write("../output_data/features_faims.geojson")
 ```
 
 ## NEED TO COMMUNICATE THESE TWO LISTS OF DUPLICATE TRAP IDs TO TODOR!
@@ -345,13 +347,13 @@ plot(Yam_mnds["Condition"])
 ```
 
 
-## Export enriched mounds
+## Export enriched features and mounds
 This is interim export of all features from Yambol and around. It is included as a shortcut to all the calculation above.
 
 
 ```{r export-mounds-Yambol}
 # master_sp  - all features
-write_rds(master_sp, "../output_data/master_sp.rds") # enriched but not deduplicated
+write_rds(master_sp, "../output_data/master_sp.rds") # enriched but not deduplicated, except when using faims
 master_sp %>% 
   dplyr::select(-TopoID) %>% 
   st_write("../output_data/master_sp.shp", append = F)
@@ -359,7 +361,6 @@ master_sp %>%
 # features everywhere
 later %>%
   st_write("../output_data/features_dd_later.geojson")
-
 early %>%
   st_write("../output_data/features_dd_early.geojson")
 
@@ -372,7 +373,6 @@ later %>%
   write_rds("../output_data/mounds_dd_later.rds") 
 
 # mounds in Yambol borders
-
 Yam_mnds %>% 
   st_write("../output_data/mounds_dd_Yam.geojson", append = F)  # Yambol mounds
   write_rds("../output_data/mounds_dd_Yam.rds") 

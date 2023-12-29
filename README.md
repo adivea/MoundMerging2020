@@ -32,19 +32,20 @@ Once each dataset was reasonably consistent, the merging could commence. Upon me
 Divergence in the semantic model behind attributes was not tractable computationally but required reinterpretation: e.g. the application of Landuse has also shifted from 2009, when only a single landuse category was used without closer specification , while in 2017 we differentiated between Landuse_Around, Landuse_Top to specify what landuse was meant.  Having written the guidelines in 2009, I know I intended landuse around the mound, but some teams recorded on mound surface judging from the comparison of landuse visible in field photos and the spreadsheets.
 
 ## Spatial data: 
-Manual checks were done on the datapoints from 2009-2010 vis-a-vis GPS and legacy data and googleearth by two separate people. 2017-2022 data was only checked against legacy data from topographic maps. GoogleEarth doublecheck would be helpful in 2017-2022.
+Manual checks were done on the datapoints from 2009-2010 vis-a-vis GPS and legacy data and googleearth by two separate people. 2017-2022 data was checked against legacy data from topographic maps. GoogleEarth doublecheck would be helpful in 2017-2022. Check for duplicates revealed no issues.
 There is a number of spatial duplicates and triplicates (see duplicate_final.txt) for mounds repeatedly visited in different season either on assignment to take better photos or by accidental overlap, addressed and written up in YambolMoundAnalysis > 00b_SpatialDeduplication script.
 Extent: while survey was conducted primarily in the Yambol Province, occasionally a track led outside of its boundaries. Occurrences outside Yambol are useful when conducting analysis susceptivle to edge effects, however, features like these are filtered out (clipped by regional boundary) when cultural heritage purpose is invoked.
 
 # How to use
 
-0. If you just want to use the data, choose one of the following datasets from the output_data folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
+0. If you just want to use the data, choose one of the following datasets (rds or geojson) from the output_data folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
 
-  - enriched_mounds_Yam.rds - mounds clipped to Y region
-  - enriched_mounds2023.shp - mounds in and out of Y region
-  - enriched_features.rds / enriched_features2023.shp - mounds and other phenomena in and out of Y region
+  - mounds_dd_Yam.rds - mounds clipped to Y region, deduplicated to later version, enriched (07_Enrich)
+  - mounds_dd_later.rds - mounds everywhere, deduplicated to later version, enriched
   - features_dd_early.rds - mounds and other phenomena in 2010 variant
   - features_dd_later.rds - mounds and other phenomena in 2017 variant
+  - features_faims.rds - features 2017-2022 (with 45 attributes)
+  - master_sp - enriched spatialized master dataset (product of 06_GetSpatial.R and maybe also 07_enrich) not deduplicated
   
 
 1. If you want to edit the cleaning routine yourself, then start by running the script `source("scripts/05_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. You can then edit some or all of the streamlining steps.
