@@ -40,26 +40,26 @@ Extent: while survey was conducted primarily in the Yambol Province, occasionall
 
 0. If you just want to use the data, choose one of the following datasets (rds or geojson) from the output_data folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
 
-  - mounds_dd_Yam.rds - mounds clipped to Y region, deduplicated to later version, enriched (07_Enrich)
+  - mounds_dd_Yam.rds - mounds clipped to Y region, deduplicated to later version, enriched (06_Enrich)
   - mounds_dd_later.rds - mounds everywhere, deduplicated to later version, enriched
   - features_dd_early.rds - mounds and other phenomena in 2010 variant
   - features_dd_later.rds - mounds and other phenomena in 2017 variant
   - features_faims.rds - features 2017-2022 (with 45 attributes)
-  - master_sp - enriched spatialized master dataset (product of 06_GetSpatial.R and maybe also 07_enrich) not deduplicated
+  - master_sp - enriched spatialized master dataset (product of 06_GetSpatial.R and maybe also 06_Enrich) not deduplicated
   
 
-1. If you want to edit the cleaning routine yourself, then start by running the script `source("scripts/05_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. You can then edit some or all of the streamlining steps.
+1. If you want to edit the cleaning routine yourself, then start by running the script `source("scripts/04_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. You can then edit some or all of the streamlining steps.
 
 2. Afterwards, depending on your needs, either make the data spatial using
 
-* `06_GetSpatial.R` which loads the point shapefiles for the mounds and merges the previously cleaned attribute data to them. 
+* `05_GetSpatial.R` which loads the point shapefiles for the mounds and merges the previously cleaned attribute data to them. 
 
  -- Incorrect coordinates are corrected here (only where previously known, 8142 is the prime example) 
  -- Spatial duplicates are streamlined here. the dataset is divided into two: early and later versions with duplicates initially visited in 2010 and revisited in 2017
 
-* `07_Enrich.rmd` takes spatialized feature data and enriches it with admin and environmental data extracted from ASTER rasters at points (via `raster::extract` etc.). The datasets are then exported (both features and mounds)
+* `06_Enrich.rmd` takes spatialized feature data and enriches it with admin and environmental data extracted from ASTER rasters at points (via `raster::extract` etc.). The datasets are then exported (both features and mounds)
 
 3. Look at and develop some of the following studies, whether on landuse classification assessment (effect of perspective and discrepancy between remote sensing and field evaluation) or size effect on looting or other vulnerability.
 
-4. If you need additional corrections (Type, LGV-Type pairings, CRM, or others, refer to scripts 03 - 05), for spatial data fixing, 06 is best.
+4. If you need additional corrections (Type, LGV-Type pairings, CRM, or others, refer to scripts 03 - 04), for spatial data fixing, 05 is best.
 

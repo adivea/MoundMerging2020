@@ -57,8 +57,8 @@ input <- "master_sp"
 if (exists(input)){
   print("file exists")
   get(input)
-}  else source("scripts/06_GetSpatial.R") 
-# If script 06_GetSpatial.R is erroring out, run it with the line below instead of the line above
+}  else source("scripts/05_GetSpatial.R") 
+# If script 05_GetSpatial.R is erroring out, run it with the line below instead of the line above
 #}  else readRDS("../output_data/master_sp.rds") 
 
 ```
@@ -339,6 +339,7 @@ mnd_late_sp <- later %>%
    filter(grepl("Mound|Other|Uncertain", Type))
 
 ```
+
 ## Clip deduplicated mounds to the Yambol Province boundary
 ```{r yambol-mnds}
 Yam_mnds <- st_intersection(mnd_late_sp, Y_region$geometry)

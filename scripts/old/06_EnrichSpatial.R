@@ -38,7 +38,7 @@ input <- "master_sp"
 if (exists(input)){
   print("file exists")
   get(input)
-}  else source("scripts/06_GetSpatial.R")
+}  else source("scripts/05_GetSpatial.R")
 
 
 

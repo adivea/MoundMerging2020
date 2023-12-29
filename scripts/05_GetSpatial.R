@@ -13,7 +13,7 @@
 
 # Inputs
 # 1) Attributes
-# Master dataset from script 05 containing all verified features that have dimensions and have been groundtruthed and streamlined. 
+# Master dataset from script 04_MergeToMaster containing all verified features that have dimensions and have been groundtruthed and streamlined. 
 # It needs further subsetting into mounds and other features and in/out of Yambol features and mounds, but that can happen as a result of 
 # spatial overlay.
 
@@ -64,7 +64,7 @@ if (exists(input)){
   master <- readRDS("output_data/mergedcleanfeatures2023.rds")
 }
 
-#}  else source("scripts/05_MergeToMaster.R")
+#}  else source("scripts/04_MergeToMaster.R")
 
 #glimpse(master)
 
