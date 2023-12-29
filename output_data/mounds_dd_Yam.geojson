@@ -1,6 +1,6 @@
 {
 "type": "FeatureCollection",
-"name": "enriched_mounds_Yam",
+"name": "mounds_dd_Yam",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32635" } },
 "features": [
 { "type": "Feature", "properties": { "TopoID": 200016.0, "Note": null, "TRAP": 9411.0, "Source": "Survey", "Type": "Burial Mound", "LU_Around": "Scrub", "LU_Top": "Scrub", "Date": "2010-11-07", "DiameterMax": 15.0, "HeightMax": 1.5, "Condition": "2", "PrincipalSourceOfImpact": "Nodata", "distBG": 61029.498434479792, "distTown": 1806.657894218202, "distTownBoundary": 1806.657894218202, "elevAster": 242.05232238769531, "slopeAster": 3.5276943008442165, "aspectAster": 133.3089076247677, "TRI": 1.2953624725341797, "TPI": 0.57081794738769531, "rough": 4.609344482421875, "prom250mbuff": 7.17 }, "geometry": { "type": "Point", "coordinates": [ 453727.101700000464916, 4706736.773499999195337 ] } },

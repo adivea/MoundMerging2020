@@ -62,7 +62,7 @@ dim(m2018) # 40 columns in 2018 dataset
 names(m2009)[which(names(m2009)%nin%names(m2018))]  # which are not shared?
 
 # There are 11 shared columns between 2017 and 2009 
-dim(m2017) # 38 columns
+dim(m2017) # 37 columns
 
 # There are 36 shared columns between 2018 and 2017 
 dim(m2018) # 40 columns in 2018 dataset
@@ -73,7 +73,7 @@ names_all <- names(m2009)[which(names(m2009)%in%names(m2017))]  # 11 shared colu
 names_manual <- names(m2009)[which(names(m2009)%in%names(m2010))] # 12 shared in 2009-2010, (TopoID being extra)
 names_faims <- names(m2018)[which(names(m2018)%in%names(m2017))] # 36 shared columns in 2017-2018 (richer data)
 
-m2018[, names_all]
+m2017[, names_faims]
 
 ####################################  MASTER M DATASET FOR ALL SEASONS ############################################
 
@@ -81,16 +81,33 @@ m2018[, names_all]
 
 m = NULL
 m <- rbind(m2022[, names_all], m2010[, names_all], m2017[, names_all], m2018[, names_all],m2009[, names_all])
-dim(m)
+dim(m) # 1491 12 in 2023
 
 glimpse(m)
-glimpse(m2009)
+glimpse(m2009) # TODO:  re-add Notes
 glimpse(m2010)
-glimpse(m2010[, names_all])
+  glimpse(m2010[, names_all])
 glimpse(m2017[, names_all])
 glimpse(m2018[, names_all])
 glimpse(m2022[, names_all])
-#write_csv(m, "output_data/merged2023.csv") # through 2022; previous merged.csv was for 2009-18
+write_csv(m, "output_data/interim/merged2023.csv") # through 2022; previous merged.csv was for 2009-18
+
+# Check rectitude of date (there should not be any 2020-... date)
+m %>% 
+  filter(grepl("2020-",Date))
+
+
+m %>% 
+  mutate(year = year(Date),
+         DayMonth = format(as.Date(Date), "%d-%m")) %>% 
+  ggplot()+
+  geom_histogram(aes(DayMonth),stat="count")+
+  facet_grid(~year) +
+  theme_minimal()+
+  labs(title = "Mounds documentation timeframe",
+       x = "Day and Month",
+       y = "Number of registered features")
+
 
 # 1181 records in the 2009-2018 master dataset with 11 variables
 # 1491 records in the 2009-2022 master dataset
@@ -100,9 +117,32 @@ glimpse(m2022[, names_all])
 # 1005 records and 36 cols in 2022
 m_Faims <- NULL
 m_Faims <- rbind(m2017[, names_faims], m2018[, names_faims],m2022[, names_faims])
+
+# Check date, check spatial data, check datatype everywhere
+glimpse(m_Faims)
+
+# Verify timeframe
+m_Faims %>% 
+  mutate(year = year(Date),
+         DayMonth = format(as.Date(Date), "%d-%m")) %>% 
+  ggplot()+
+  geom_histogram(aes(DayMonth),stat="count")+
+  facet_grid(~year) +
+  theme_minimal()+
+  labs(title = "Mounds documentation timeframe",
+       x = "Day and Month",
+       y = "Number of registered features")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1,size = 7))
+
+# Convert 'list' datatype if it occurs
+# m_Faims$DiameterMin <- as.numeric(unlist(m_Faims$DiameterMin))
+# unique(unlist(m_Faims$HeightMin)) 
+# m_Faims$HeightMin <- as.numeric(unlist(m_Faims$HeightMin))
+# m_Faims$DescriptionOfMoundOrLocale # skip for now and fix when needed
+
 dim(m_Faims)  
 glimpse(m_Faims)
-write_csv(m_Faims, "output_data/mergedfaims2023.csv") 
+write_csv(m_Faims, "output_data/interim/faimsmaster.csv") 
 
 ####################################  STREAMLINE M INTO MASTER FOR ALL SEASONS ##################################################
 
@@ -167,7 +207,7 @@ ableftj %>%
   dplyr::select(TRAP, LandUseAround,Landuse_AroundRS, Landuse_TopRS)
 ableftj %>% 
   filter(TRAP == 9484) %>% 
-  select(20:30)
+  dplyr::select(20:30)
 
 
 # in LU Around  
@@ -195,9 +235,14 @@ master <- master %>%
 
 
 # Review Landuse: there should be no "Nodata" or NA's as it was replaced with RS data, where it exists. 
+# NAs remain in 9098 and 9484 from 2010 (check RS data)
 master %>% 
   filter(is.na(LU_Top))
 
+master %>% 
+  group_by(Source) %>% tally()
+master %>% 
+  filter(is.na(Source)) %>% glimpse()
 master %>% 
   group_by(LU_Top) %>% 
   tally()
@@ -229,11 +274,11 @@ master <- master %>%
 dim(master)
 
 # Delete no-longer needed temps
-rm(scrub, Scrub, pasture, Pasture, annual, Annual)
-rm(LUmiss_subs, LUmissing, LUTmissing)
-rm(dupl_rows)
+rm(scrub, Scrub, pasture, Pasture, annual, Annual, 
+   LUmiss_subs, LUmissing, LUTmissing, dupl_rows)
 
 ####################################### ADDITIONAL EDITS (OPTIONAL)
+paste("Starting to streamline condition")
 
 #### STREAMLINE CONDITION
 # Condition is expressed on Likert scale 1 - 5 with verbose description 
@@ -254,9 +299,11 @@ master <-  master %>%
 
 head(master$Condition)
 
+########################################## SAVE RDS ################
+
 # write_csv(master, "output_data/Master0923.csv") # 1487 rows
 # write_csv(master, "output_data/mergedclean2023.csv")
-saveRDS(master, "output_data/mergedcleanfeatures2023.rds")
+# saveRDS(master, "output_data/mergedcleanfeatures2023.rds")
 
 ####################################  NEXT STEPS #############################################
 

@@ -32,7 +32,7 @@ if (exists(df_name)){
 names(mnd2010)
 glimpse(mnd2010)
 
-# Drop undesired columns. If you are running this the first time, uncomment.
+ # Drop undesired columns. If you are running this the first time, uncomment.
 # Drop unwanted columns to get to 37 columns from original 58
 m2010 <- mnd2010 %>% 
   dplyr::select(-one_of("Excav", "Necropolis","ElevationTopo", "Certainty", "GC",
@@ -56,8 +56,21 @@ m2010 <- m2010 %>%
 problem2010TopoID <- which(!m2010$TopoID.x%in%m2010$TopoID.y)  # 35 discrepancies in Topo IDs btw adela and bara
 m2010$TopoID.y[problem2010TopoID] # most are zeroes in Bara, only 200244 a problem, which is perhaps a typo?? CHECK IN GE
 
-# Fix Dates: Dates in m2010 are dates of 2010 data streamlining. Write a shortcut to 2010 season as 2010-10-30
-unique(m2010$Datum)
+
+# Fix Dates: Google inserted 2020 instead of 2010, plus there are Date and Datum columns.
+
+# There are 73 missing dates in m2010. Re-extract dates from Datum and fill in the rest
+which(is.na(m2010$Date))
+
+#  Date also has the wrong year 2020 (result of day-month notation in Google)
+m2010 %>% 
+  dplyr::select(Date, Datum)
+
+# Fix wrong year in the Date column (2010 needs to replace 2020)
+m2010 <- m2010 %>% 
+  mutate(Date = gsub("2020", "2010", Date)) 
+
+# Extract the date from Datum timestamp
 ?as.Date() 
 
 m2010 <- m2010 %>%
@@ -69,30 +82,53 @@ m2010 <- m2010 %>%
   mutate(DatumNew = as.Date(DatumNew,format = "%b/%d/%Y"))
 
 unique(m2010$DatumNew)
+unique(m2010$Date)
 
-## CONTINUE WITH ROWSUPDATE() to fix DatumNew then transfer to Date
+# Fill in NAs (73 in Date, 46 in Datum, only 1 overlaps)
+
+m2010$DatumNew[which(is.na(m2010$Date))]
+sum(is.na(m2010$DatumNew))
+
+##### Fix most NAs in DatumNew with ROWSUPDATE() then transfer to Date
+
+# Create rows with clean dates
 fixDate2010 <- m2010 %>%
-  filter(is.na(DatumNew) | DatumNew == "2013-03-30") %>% 
-  mutate(DatumNew = Date) 
+  filter(is.na(DatumNew) | DatumNew == "2013-03-30") %>%
+  mutate(DatumNew = Date) %>% # assign 2010-11-07 date to the missing value
+  mutate(DatumNew = as.Date(DatumNew))
 
-glimpse(fixDate2010)
-unique(fixDate2010$DatumNew)
+# verify the dates are non-NA
+fixDate2010 %>%
+  dplyr::select(Date, DatumNew) 
 
+# update master data with non-NA data
 m2010 <- rows_update(
   m2010,
   fixDate2010,
   by = "TRAP")
 
 glimpse(m2010)
+m2010$DatumNew# only 1 missing date
+
+m2010$DatumNew[291] <- "2010-11-07"  # the NA is surrounded by 7 Nov
+
+glimpse(m2010)
+
+# See the old and fixed date side by side 
+m2010 %>% 
+  dplyr::select(Date, DatumNew) %>% 
+  print(n=400)
 
 m2010 <- m2010 %>%
-   mutate(Date = DatumNew) %>% 
-   mutate(Date = as.Date(Date))
+   mutate(Date = DatumNew)
 
-paste0(length(which(is.na(m2010$Date))), " features lack a Date") # ok 73 don't have a date
+m2010$Date==m2010$DatumNew
 
+# All features should now have valid Date
+
+paste0(length(which(is.na(m2010$Date))), " features lack a Date") 
 ############################################################################################################
-# Generate a finalized 2010 conservative dataset (n = 406, 30 columns) 
+# Generate a finalized 2010 conservative dataset (n = 406, 33 columns) 
 ############################################################################################################
 
 # Additional renaming and dropping of columns
@@ -147,7 +183,7 @@ which(is.na(as.numeric(m2010$Height_Bara)))  # 48 NAs get introduced to Bara
 m2010 <- m2010 %>% 
   rename(HeightMax=Height_Adela) 
 
-# Streamline Type attribute in 2010
+##################### Streamline Type attribute in 2010
 
 levels(as.factor(m2010$TypeGE))
 levels(as.factor(m2010$TypeBara))
@@ -157,7 +193,7 @@ m2010 %>% filter(TypeBara == "Surface Scatter")
 m2010 %>% 
   dplyr::select(TRAP, TypeGE, TypeBara, HeightMax, Condition) %>% 
   group_by(TypeBara) %>% 
-  summarize(Havg = mean(!is.na(HeightMax)), n()) 
+  summarize(h_avg = mean(!is.na(HeightMax)), n()) 
 
 # If we exclude Burial Mound types, the NAs don't show
 m2010 %>% 
@@ -197,7 +233,7 @@ m2010 <- m2010 %>%
   rename(Type = TypeBara)
 
 
-# Check completeness
+# Check Type completeness
 levels(as.factor(m2010$Type)) # looks ok, lets' see a tally
 
 m2010 %>% 
@@ -215,10 +251,21 @@ rm(mounds, ext, unc, remnants, temp, heightissue, fixDate2010)
 rm(problem2010TopoID)
 rm(ab2010, mounds_adela, mounds_bara)
 
-# Create clean 2010
-head(m2010,2)
+######################## Fix Height and Check Datatype
+
 m2010$HeightMax <- as.numeric(m2010$HeightMax)
+
 glimpse(m2010)
+
+
+######################### Date values: any after 2010?
+
+# unique(m2010$Datum)
+# unique(m2010$DatumNew)
+ggplot(m2010)+
+  geom_histogram(aes(Date), binwidth = 0.75)+
+  theme_bw()+
+  labs(title = "Mounds 2010 documentation timeframe")
 
 # Further Type classification vs Dimension checks - this applies to the entire master dataset,
 # but is worth investigating at campaign-level as well to detect inter-annual shift in classification
@@ -233,3 +280,26 @@ glimpse(m2010)
 # 
 # levels(as.factor(mnd2010$Type))
 
+############################ Fix missing Source
+
+# Source was taken from Bara, but 45 features are not in Bara
+m2010 %>% 
+  filter(is.na(Source)) %>% 
+  group_by(Source, SourceOriginal) %>% 
+  tally()
+
+# Recreate Source from Original
+SourceFix <- m2010 %>% 
+  filter(is.na(Source)) %>% 
+  dplyr::select(-Source) %>% 
+  mutate(Source = case_when(SourceOriginal == "TOPO50" ~ "Legacy verification",
+                            SourceOriginal == "TOP50" ~ "Legacy verification",
+                            SourceOriginal == "GC" ~ "Survey")) 
+
+# Update rows
+m2010 <- rows_update(
+    m2010,
+    SourceFix,
+    by = "TRAP")
+
+rm(SourceFix)

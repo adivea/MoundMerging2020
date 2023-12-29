@@ -29,7 +29,7 @@ This script enriches Yambol LGV data for follow-up analysis. It loads the FAIMS 
 
 The needed inputs are:
 
-- raw data on streamlined and deduplicated LGV features (provided)
+- raw data on streamlined and deduplicated and spatialized LGV features from 06_GetSpatial script: master_sp
 - Turkish and SE Bulgarian Aster images
 
 Its outputs are:
@@ -51,7 +51,7 @@ library(mapview)
 ## Load 2009-2022 data
 This data was processed mostly in 2020 with addition in 2022 and contains all map mounds as well as all survey features detected en route, and so not only extant and extinct mounds (see MoundMerging2020 repo in Github)
 ```{r features09_22}
-# Environmental-extraction-enriched output from 2020 Mound Merging repo > 07_EnrichSpatial.R
+# Environmental-extraction-enriched output from 2020 Mound Merging repo > 06_GetSpatial.R, ca 1484 features
 
 input <- "master_sp"
 if (exists(input)){
@@ -59,10 +59,15 @@ if (exists(input)){
   get(input)
 }  else source("scripts/06_GetSpatial.R") 
 # If script 06_GetSpatial.R is erroring out, run it with the line below instead of the line above
-#}  else readRDS("output_data/master_sp.rds") 
+#}  else readRDS("../output_data/master_sp.rds") 
 
 ```
 
+## Load only FAIMS 2017-2022 data
+uncomment to run
+```{r apply-to-faims, eval = FALSE}
+# master_sp <- st_transform(m_Faims4326, crs = 32635)
+```
 ## Yambol environmental and topographic data
 
 
@@ -150,7 +155,6 @@ plot(master_sp$geometry, add = T)
 ## Enrich 2022 data
 2018 features have already been enriched during their processing in 2020. 2022 mounds need this basic enrichment. Both datasets will need TPI, TRI and other indeces extracted from the raster data.
 
-
 ### Distance to BG border
 
 ```{r distBG}
@@ -189,8 +193,8 @@ This is a two-step process:
 ```{r distance-settleboundary}
 # Distance to nearest (as the crow flies) village
 master_sp$distTownBoundary <- st_distance(master_sp, Y_towns_poly[st_nearest_feature(master_sp, Y_towns_poly),], by_element = TRUE)
-hist(master_sp$distTownBoundary)
-hist(master_sp$distTown)
+hist(master_sp$distTownBoundary, main = "Distance from feature to settlement edge", xlab = "Distance")
+hist(master_sp$distTown, main = "Distance from feature to town center", xlab = "Distance")
 ```
 
 ### Sample elevation, aspect and slope at mound coordinates for 2022 data
@@ -269,13 +273,17 @@ read.csv("../output_data/duplicates_final.txt", sep = " ")
 ```
 
 
-# Eliminate either set of duplicates
+### Eliminate one set of duplicates
+Only run this on the 2009-2022 dataset, not on FAIMS data (where duplicates were eliminated already)
 ```{r duplicate-eliminate}
 `%nin%` = Negate(`%in%`)
 
+master_sp %>% 
+  filter(TRAP %in% upto2010 | TRAP %in% post2010)
+
 # To keep early records (more likely in AKB)
 early <- master_sp %>%
-  filter(TRAP%nin%post2010)
+  filter(TRAP %nin% post2010)
 
 # To keep later/newer records (may not be in AKB)
 later <- master_sp %>%
@@ -283,7 +291,7 @@ later <- master_sp %>%
 
 ```
 
-```{r}
+```{r early-later-duplicates-check}
 # Check mound overviews
 early %>% 
   group_by(Type) %>% 
@@ -293,7 +301,7 @@ later %>%
   tally()
 ```
 ### Export deduplicated features ? (de-duplication was done 27 Dec 2022)
-
+Last ran on 29 December 2023
 ```{r export-features}
 if (file.exists("../output_data/features_dd_later.rds")){
   print("file exists in outputs")
@@ -309,14 +317,17 @@ if (file.exists("../output_data/features_dd_early.rds")){
   write_rds(early, "../output_data/features_dd_early.rds")  
 }
 
+# FAIMS data (did not need spatial deduplication)
+#write_rds(master_sp, "../output_data/features_faims.rds") 
+
 ```
 
 ## NEED TO COMMUNICATE THESE TWO LISTS OF DUPLICATE TRAP IDs TO TODOR!
 
 
-
 ## Filter deduplicated features for mounds
-```{r}
+I use the later deduplicated variant as the later observations are more "current". 
+```{r filter-mounds}
 later %>%
    filter(grepl("Mound|Other|Uncertain", Type))%>% 
    group_by(Type) %>% 
@@ -326,7 +337,7 @@ mnd_late_sp <- later %>%
    filter(grepl("Mound|Other|Uncertain", Type))
 
 ```
-## Clip to Yambol Province boundary
+## Clip deduplicated mounds to the Yambol Province boundary
 ```{r yambol-mnds}
 Yam_mnds <- st_intersection(mnd_late_sp, Y_region$geometry)
 plot(Yam_mnds$geometry);
@@ -334,40 +345,38 @@ plot(Yam_mnds["Condition"])
 ```
 
 
-## Export enriched data
+## Export enriched mounds
 This is interim export of all features from Yambol and around. It is included as a shortcut to all the calculation above.
 
 
 ```{r export-mounds-Yambol}
-# master_sp
-write_rds(master_sp, "../output_data/master_sp.rds")
-
-# RDS
- # mounds everywhere
-later %>%
-  # group_by(Type) %>% 
-  # tally()
-  filter(grepl("Mound|Other|Uncertain", Type))%>% 
-  write_rds("../output_data/enriched_dd_mounds.rds") 
-
- # mounds in Yambol borders
-write_rds(Yam_mnds, "../output_data/enriched_dd_mounds_Yam.rds") 
-
-# shapefiles
+# master_sp  - all features
+write_rds(master_sp, "../output_data/master_sp.rds") # enriched but not deduplicated
 master_sp %>% 
   dplyr::select(-TopoID) %>% 
   st_write("../output_data/master_sp.shp", append = F)
 
-# mounds in Yambol borders  
-Yam_mnds %>% 
-  st_write("../output_data/enriched_mounds_Yam.geojson", append = F)  # Yambol mounds
+# features everywhere
+later %>%
+  st_write("../output_data/features_dd_later.geojson")
+
+early %>%
+  st_write("../output_data/features_dd_early.geojson")
 
 # mounds everywhere
-mnd_late_sp %>%
-  # group_by(Type) %>%
+later %>%
+  # group_by(Type) %>% 
   # tally()
-  #dplyr::select(-TopoID) %>%
-  st_write("../output_data/enriched_dd_mounds.geojson", append = F)
+  filter(grepl("Mound|Other|Uncertain", Type))%>% 
+  st_write("../output_data/mounds_dd_later.geojson")
+  write_rds("../output_data/mounds_dd_later.rds") 
+
+# mounds in Yambol borders
+
+Yam_mnds %>% 
+  st_write("../output_data/mounds_dd_Yam.geojson", append = F)  # Yambol mounds
+  write_rds("../output_data/mounds_dd_Yam.rds") 
+
 
 ```
 

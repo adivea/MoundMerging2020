@@ -73,7 +73,8 @@ if (exists(input)){
 # load mound/feature shapefile created in ArcGIS (1240 features from 2009-2018, 1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
 mnd_shp <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMax.shp") # large file compiled by Adela
 plot(mnd_shp$geometry, col = "red")
-plot(mnd_shp$geometry[which(mnd_shp$TRAP%in%master$TRAP)]) # difference of ca 60 points which lack dimensions
+paste("plotting 1174 points from 2009-2018 master")
+plot(mnd_shp$geometry[which(mnd_shp$TRAP%in%master$TRAP)]) # difference of ca 60 points which lack dimensions [coordinates?]
 
 # mnd_shpmin <- st_read("C:/Users/Adela/Documents/Professional/Projects/MQNS/GIS/Vectors/200918VisitedMinYam.shp") # conservative file from Bara
 # plot(mnd_shpmin$geometry, pch = 17, add =TRUE)
@@ -111,24 +112,41 @@ m_sp <- rows_update(
 
 m_sp[m_sp$TRAP == 8142,]
 
+# BEWARE: 9313 geospatial info in m2010 may also be wrong as the description is inconsistent with image (road on image, none in GE)
+# the TopoID from 2010 (Royce) differs from 2017(faims) so don't go by it
+# library(mapview)
+# mapview(m_sp[m_sp$TRAP == 9313,])
+
 ##################################    MERGE ATTRIBUTE AND RE-SPATIALIZE INTO MASTER_SP SF OBJECT
 
 # Full join between simple features and attributes, resulting in sf object
 master_sp <- m_sp %>% inner_join(master, c=by("TRAP"="TRAP")) # 1174 records in 2020, 1550 in 2022
+paste("Joined spatial data to attributes in a  basic master_sp")
+
 master_sp <- master_sp %>% 
   dplyr::select(-DiameterMin) %>% 
   st_as_sf(coords = c("X", "Y"), crs = 32635)
 
+paste("Created a sf object out of joined master_sp")
 
 # looks ok? 
 plot(master_sp$geometry)
+paste("master spatial data exists")
 
 # check attributes
 master_sp %>% 
   filter(Type == "Burial Mound" | Type == "Extinct Burial Mound") %>% 
   ggplot()+
-  geom_sf(aes(color = HeightMax))
+  geom_sf(aes(size = HeightMax, alpha = 0.5))
 
 
 
+#################################################################################3
+#################################################################################
+#########      FAIMS DATA
 
+glimpse(m_Faims)
+m_Faims4326 <- m_Faims %>%
+  filter(!is.na(Latitude)) %>% 
+  st_as_sf(coords = c("Longitude","Latitude"), crs = 4326)
+write_rds(m_Faims4326, "output_data/interim/m_faims4326.rds")

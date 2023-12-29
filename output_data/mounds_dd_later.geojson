@@ -1,6 +1,6 @@
 {
 "type": "FeatureCollection",
-"name": "enriched_dd_mounds",
+"name": "mounds_dd_later",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32635" } },
 "features": [
 { "type": "Feature", "properties": { "TopoID": 200013.0, "Note": "Diadopetkova mogila", "TRAP": 9305.0, "Source": null, "Type": "Burial Mound", "LU_Around": "Scrub", "LU_Top": "Scrub", "Date": "2010-10-30", "DiameterMax": 25.0, "HeightMax": 1.8, "Condition": "3", "PrincipalSourceOfImpact": null, "distBG": 68354.388819542262, "distTown": 9730.7863940095813, "distTownBoundary": 635.35716073046729, "elevAster": 303.05169677734375, "slopeAster": 3.1496116590481584, "aspectAster": 130.01992947128349, "TRI": 1.39593505859375, "TPI": 0.926605224609375, "rough": 4.585601806640625, "prom250mbuff": 64.73 }, "geometry": { "type": "Point", "coordinates": [ 441126.65610000025481, 4710087.373999999836087 ] } },

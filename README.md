@@ -49,11 +49,16 @@ Extent: while survey was conducted primarily in the Yambol Province, occasionall
 
 1. If you want to edit the cleaning routine yourself, then start by running the script `source("scripts/05_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. You can then edit some or all of the streamlining steps.
 
-2. Afterwards, depending on your needs, either enrich data spatial using
+2. Afterwards, depending on your needs, either make the data spatial using
 
 * `06_GetSpatial.R` which loads the point shapefiles for the mounds and merges the previously cleaned attribute data to them. 
 
-* `07_Enrich.rmd` takes spatialized feature data and enriches it with admin and environmental data extracted from rasters at points (via `raster::extract` etc.)
+ -- Incorrect coordinates are corrected here (only where previously known, 8142 is the prime example) 
+ -- Spatial duplicates are streamlined here. the dataset is divided into two: early and later versions with duplicates initially visited in 2010 and revisited in 2017
+
+* `07_Enrich.rmd` takes spatialized feature data and enriches it with admin and environmental data extracted from ASTER rasters at points (via `raster::extract` etc.). The datasets are then exported (both features and mounds)
 
 3. Look at and develop some of the following studies, whether on landuse classification assessment (effect of perspective and discrepancy between remote sensing and field evaluation) or size effect on looting or other vulnerability.
+
+4. If you need additional corrections (Type, LGV-Type pairings, CRM, or others, refer to scripts 03 - 05), for spatial data fixing, 06 is best.
 

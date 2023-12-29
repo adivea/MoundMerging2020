@@ -21,16 +21,13 @@ library(googlesheets4)
 # Load the datasets
 mounds_bara <- read_sheet("https://docs.google.com/spreadsheets/d/1YNylFmIQZ3oAIHdd2yxcHgre48J81K1nM0bhDG5j-bI/edit#gid=515219244", col_types = "nnccccccccccccccccncccccccnncnnnnccccncnn")# 441 obs legacy data verification Bara version (streamlined manually in 2018) version
 # mounds_RS <- read_sheet(file = "raw_data/RSMounds_Temporal20200526.csv") # 850 obs remote sensing data for verifying LU and presence of mound in map features
-mounds_adela <- read_sheet("https://docs.google.com/spreadsheets/d/11pwAdDNS6bpVg1aAhuUuz_Lgcxsze8Z_afLxAVs99wc/edit#gid=1826731021", col_types = "ddccccDccnnncccccc") # 444 obs legacy data verification Adela (original 2017 but streamlined in Open Refine with LU supplied by and dimensions verified via GoogleEarth) version
+mounds_adela <- read_sheet("https://docs.google.com/spreadsheets/d/11pwAdDNS6bpVg1aAhuUuz_Lgcxsze8Z_afLxAVs99wc/edit#gid=1826731021", col_types = "ddcccccDccnnncccccc") # 444 obs legacy data verification Adela (original 2017 but streamlined in Open Refine with LU supplied by and dimensions verified via GoogleEarth) version
 mnd2017 <- read_sheet("https://docs.google.com/spreadsheets/d/1TyWsxAbRTqOBnim7Asg8qmYqlMcvV7Q0ZuBtWKCntdE/edit#gid=433356722", col_types = "ddcccccccccccdddddcdcccnnddccccccccccccccccccc")
 mnd2018 <- read_sheet("https://docs.google.com/spreadsheets/d/1XCgQqd7ooP4CrDYQ2EmhR3_P1VDFpYlyTxywTB3PqWI/edit#gid=1326323943", col_types = "cddccccdccccccccccccccdddddcccccnnnncccccccccccccccccccccc") # 282 records cleaned in OR from annotations
 mnd2009<- read_sheet("https://docs.google.com/spreadsheets/d/1FqqVPbK263RoOVEgSzvmQTi6U7xz5jekTvLCg1qMaEE/edit#gid=0",  col_types ="nccncccDnnnccnnnccccc" ) # this file contains 2009 survey and RS mounds that Adela check in GEPro (exists on GDrive)
 #mnd2022 <- read_sheet("https://docs.google.com/spreadsheets/d/1oyCvhs4L1rOEHB1O_z10xjpW7iH_Vg7QQNDGAoyQn-M/edit#gid=720505485",col_types ="nc?ncccccccccccnnnnnnnccnnnnccccccccccccccccccL") # 310 features from 2022
 
 
-#convert to DataFrame
-#apply clean() function 
-mnd2017 <- read_sheet("https://docs.google.com/spreadsheets/d/1TyWsxAbRTqOBnim7Asg8qmYqlMcvV7Q0ZuBtWKCntdE/edit#gid=433356722")
 
 # Looking at the open-refined data
 class(mnd2009)

@@ -36,9 +36,19 @@ m2009 <- mnd2009 %>%
 # Rename columns to standard 
 m2009 <- m2009 %>% 
   rename(TRAP=TRAPCode, DiameterMax = Length, DiameterMin = Width, PrincipalSourceOfImpact=PrincipalFactor, 
-         DataProvenance = Provenance, HeightMax = HeightGC) 
+         DataProvenance = Provenance, HeightMax = HeightGC)
+m2009 <- m2009 %>% 
+  rename(AllNotes = Notes)
+
 # Clean 2009
 head(m2009,2)
 # 2009 mounds are good to go: Source "Survey" is guaranteed mounds, source "RS" or "LGV"not always. 
 # 2009 contain 80 potential mounds, 77 are certain, 3 c(8051, 8054, 8055) are uncertain.
 # (missing dates signal inaccessible locations or problematic ones)
+
+glimpse(m2009)
+
+# Needed fixes : Source value capitalisation
+# unique(m2009$Source) #[1] "RS:FNEG"   "RS:SITE" "RS:FNEG - duplicate 9358" "2010LGV" "survey" 
+# unique(m2010$Source) #"Legacy verification" "Survey"              NA 
+
