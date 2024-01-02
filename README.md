@@ -78,3 +78,4 @@ The licensor cannot revoke these freedoms as long as you follow the license term
 -- No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 
 # How to cite
+Adela Sobotkova. (2023). adivea/MoundMerging2023: First comprehensive release of Yambol mound data (v1.0). Zenodo. https://doi.org/10.5281/zenodo.10445781
