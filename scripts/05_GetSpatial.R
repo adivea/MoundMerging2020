@@ -132,6 +132,7 @@ paste("Created a sf object out of joined master_sp")
 # looks ok? 
 plot(master_sp$geometry)
 paste("master spatial data exists")
+glimpse(master_sp)
 
 # check attributes
 master_sp %>% 
@@ -139,7 +140,8 @@ master_sp %>%
   ggplot()+
   geom_sf(aes(size = HeightMax, alpha = 0.5))
 
-
+# Clean up
+rm(m8142, m_sp, mnd_shp, mnd_late_sp, mnd_sp32635)
 
 #################################################################################3
 #################################################################################
@@ -149,4 +151,5 @@ glimpse(m_Faims)
 m_Faims4326 <- m_Faims %>%
   filter(!is.na(Latitude)) %>% 
   st_as_sf(coords = c("Longitude","Latitude"), crs = 4326)
+
 write_rds(m_Faims4326, "output_data/interim/m_faims4326.rds")

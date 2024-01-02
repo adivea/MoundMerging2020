@@ -45,7 +45,7 @@ Extent: while survey was conducted primarily in the Yambol Province, occasionall
   - features_dd_early.rds - mounds and other phenomena in 2010 variant
   - features_dd_later.rds - mounds and other phenomena in 2017 variant
   - features_faims.rds - features 2017-2022 (with 45 attributes)
-  - master_sp - enriched spatialized master dataset (product of 06_GetSpatial.R and maybe also 06_Enrich) not deduplicated
+  - master_sp - enriched spatialized master dataset (product of 05_GetSpatial.R and maybe also 06_Enrich) not deduplicated
   
 
 1. If you want to edit the cleaning routine yourself, then start by running the script `source("scripts/04_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. You can then edit some or all of the streamlining steps.

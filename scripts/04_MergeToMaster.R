@@ -84,9 +84,9 @@ m <- rbind(m2022[, names_all], m2010[, names_all], m2017[, names_all], m2018[, n
 dim(m) # 1491 12 in 2023
 
 glimpse(m)
-glimpse(m2009) # TODO:  re-add Notes
-glimpse(m2010)
-  glimpse(m2010[, names_all])
+glimpse(m2009) # Check:  existence of AllNotes
+glimpse(m2010) # Check: valid 2010 date
+glimpse(m2010[, names_all])
 glimpse(m2017[, names_all])
 glimpse(m2018[, names_all])
 glimpse(m2022[, names_all])

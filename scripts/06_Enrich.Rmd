@@ -254,6 +254,11 @@ master_sp %>%
   mapview(zcol = "distBG")
 
 ```
+
+```{r clean-workspace}
+rm(Y_aspslope,Y_flow, Y_rough, Y_TRI, Y_TPI)
+```
+
 ## Deduplicate Spatially
 
 A number of spatial duplicates and triplicates were identified in January 2023. These represent mounds/points registered across separate seasons under different TRAP Ids, which share the same location, or more frequently are within 15 m of one another.
@@ -299,6 +304,7 @@ early %>%
 later %>% 
   group_by(Type) %>% 
   tally()
+glimpse(later)  # Look for AllNotes, valid Dates and new attributes
 ```
 ### Export deduplicated features ? (de-duplication was done 27 Dec 2022)
 Last ran on 29 December 2023
@@ -357,28 +363,28 @@ This is interim export of all features from Yambol and around. It is included as
 write_rds(master_sp, "../output_data/master_sp.rds") # enriched but not deduplicated, except when using faims
 master_sp %>% 
   dplyr::select(-TopoID) %>% 
-  st_write("../output_data/master_sp.shp", append = F)
+  st_write("../output_data/interim/master_sp.shp", append = F)
 
 # features everywhere
 later %>%
-  st_write("../output_data/features_dd_later.geojson")
+  st_write("../output_data/features_dd_later.geojson", append = F) # is not writing properly
+
 early %>%
-  st_write("../output_data/features_dd_early.geojson")
+  st_write("../output_data/features_dd_early.geojson", append = F)
 
 # mounds everywhere
 later %>%
   # group_by(Type) %>% 
   # tally()
   filter(grepl("Mound|Other|Uncertain", Type))%>% 
-  st_write("../output_data/mounds_dd_later.geojson")
+ # st_write("../output_data/mounds_dd_later.geojson")
   write_rds("../output_data/mounds_dd_later.rds") 
 
 # mounds in Yambol borders
 Yam_mnds %>% 
-  st_write("../output_data/mounds_dd_Yam.geojson", append = F)  # Yambol mounds
+  #st_write("../output_data/mounds_dd_Yam.geojson", append = F)  # Yambol mounds
   write_rds("../output_data/mounds_dd_Yam.rds") 
 
 
 ```
-
 
