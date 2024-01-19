@@ -9,7 +9,7 @@
 # Have both attribute and spatial data for verified features and mounds - conservative and liberal, in Yambol and everywhere.
 # Verify that we are catching all salvageable features by merging an attribute workflow from Excel and Open Refine with ArcGIS work; 
 # these two workflows had been separate, which can contribute to error.
-# Deduplicate spatial duplicates (features re-visited in different seasons and given different ID)
+
 
 # Inputs
 # 1) Attributes
@@ -42,8 +42,7 @@
 # 1) load master attribute dataset and large shapefile
 # 2) design merging workflow and clean up coordinates where known as wrong
 # 3) compare TRAP IDs and see the extent of mismatch between shapefile and attribute - is there anything we can salvage>
-# 4) deduplicate places visited repeatedly (same/nearby points with different IDs) 
-# 5) do  basic streamlining
+# 4) do  basic streamlining
 
 
 # Library

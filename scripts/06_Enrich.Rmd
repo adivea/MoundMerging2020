@@ -34,6 +34,7 @@ The needed inputs are:
 
 Its outputs are:
 
+- deduplicated spatial duplicates (features re-visited in different seasons and given different ID)
 - an aggregate dataset of FAIMS features with attributes such as ASTER elevation, topographic prominence, roughness etc. 
 - mosaiced raster that fits the confines of the Yambol Province
 - mosaiced raster that crosses the Yambol-Turkish border 
