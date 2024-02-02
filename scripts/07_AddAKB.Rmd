@@ -354,3 +354,13 @@ Y_features %>%
 
 ```
 
+## CHeck 2009 - 2010 records for Toshko
+```{r}
+mounds %>% 
+  st_drop_geometry() %>% 
+  dplyr::filter(grepl("2009|2010", Date)) %>% 
+  arrange(TRAP) %>% 
+  write_csv2("../output_data/2009_2010.csv")
+
+```
+
