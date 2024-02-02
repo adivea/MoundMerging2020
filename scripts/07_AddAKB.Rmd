@@ -171,38 +171,84 @@ Y_features %>%
   st_write("../output_data/LGVMoundsUncertain.shp", append=F)
 
 ```
-
-Later features : 17 uncertain ones
-
-9516 : photo - typical feature of BG fields, a small-mound sized cluster of stones hiding in a scrub in a slight terrain wave,  could be natural geology, a field stone cluster, or an extinct mound
-8337 : terrain wave, possible mound, in GE satellite image a round light soil mark 80m to SW from GPS point 
-8388 : terrain wave near a serious mound 8387, nothing in GE satellite image now, but soilmark in 2009
-9645 : water station / extinct mound? next to a road
-8427 : moundlike feature (round, conical pile) with concrete construction
-9838 : ploughed up mound (definitely)l light soil marks in GE >> CHANGE UNCERTAIN TO CERTAIN
-9847 : pile in a forest; no visibility; should be UNCERTAIN
-9852 : pretty clear scrub covered mound! l    ozenge in GE >> CHANGE UNCERTAIN TO CERTAIN
-8764 : very uncertain lozenge between two mounds: natural or cultural >> should be SURVEY (instead of 8763) AND UNCERTAIN EXTINCT mound
-8766 : massive mound, why the doubt? >> CHANGE UNCERTAIN TO CERTAIN
-8770 : two concentric circles, negative and positive: strange, something else?
-8772 : smallish mound like protrusion > marked as extinct and should stay so
-8775 : hardly anything >> maybe eliminate or keep as extinct
-8648 : disturbed area >> should perhaps be eliminated
-9883 : flat nothing in photo or GE; lots of pottery >> CHANGE TO SCATTER
-9910 : very low feature in photo, light soilmark in GE, next to a solid 9909 >> CHANGE TO EXTINCT
-9911 : looks like nothing, check Topo map, might need flagging at EXTINCT or deletion
-
-Early features
-18 uncertain ones, 17 same as later features, 8359 is the one outlier
-9516 8337 8359 8388 9645 8427 9838 9847 9852 8764 8766 8770 8772 8775 8648 9883 9910 9911
- 
-8359 : is an excellent mound >> CHANGE UNCERTAIN TO CERTAIN
-```{r duplicate}
+```{r spatial-duplicates}
 # Early records
 upto2010 <- c(6011,8022,8023,8024,8025,8028,8029,8030,8035,8350,8351, 8352,8353,8357,8359,8434,8669,9077)
 
 # Later records
-post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358, 8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
+post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358,8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
+```
+
+#### Later features  
+
+17 uncertain ones
+
+9516 : photo - typical feature of BG fields, a small-mound sized cluster of stones hiding in a scrub in a slight terrain wave,  could be natural geology, a field stone cluster, or an extinct mound >> change to EXTINCT mound (following the topo symbol methodology: if in a map and spurious on the ground, then 'extinct')
+8337 : terrain wave, possible mound, in GE satellite image a round light soil mark 80m to SW from GPS point >> change to EXTINCT 
+8388 : terrain wave near a serious mound 8387, nothing in GE satellite image now, but soilmark in 2009 >> change to EXTINCT
+9645 : water station / extinct mound? next to a road >>  OTHER
+8427 : mound like feature (round, conical pile) with concrete construction >> OTHER
+9838 : ploughed up mound (definitely)l light soil marks in GE >> CHANGE UNCERTAIN TO CERTAIN
+9847 : pile in a forest; no visibility; should stay UNCERTAIN 
+9852 : pretty clear scrub covered mound! lozenge in GE >> CHANGE UNCERTAIN TO CERTAIN
+8764 : very uncertain lozenge between two mounds: natural or cultural >> should be SURVEY (instead of 8763) AND UNCERTAIN EXTINCT mound
+8766 : massive mound, why the doubt? >> CHANGE UNCERTAIN TO CERTAIN
+8770 : two concentric circles, negative and positive: strange, something else? >> EXTINCT??
+8772 : smallish mound like protrusion > marked as extinct and should stay so
+8775 : hardly anything >> keep as extinct
+8648 : disturbed area >> should perhaps be eliminated
+9883 : flat nothing in photo or GE; lots of pottery >> CHANGE TO SCATTER
+9910 : very low feature in photo, light soilmark in GE, next to a solid 9909 >> CHANGE TO EXTINCT
+9911 : looks like nothing, check Topo map, might need flagging as EXTINCT or deletion
+
+#### Early features
+
+18 uncertain ones, 17 same as later features, 8359 is the one outlier
+9516 8337 8359 8388 9645 8427 9838 9847 9852 8764 8766 8770 8772 8775 8648 9883 9910 9911
+ 
+8359 : is an excellent mound >> CHANGE UNCERTAIN TO CERTAIN
+
+
+## Changes TO DO
+```{r}
+# Type Certainty UNCERTAIN TO CERTAIN
+certain <- Y_features %>% 
+  filter(TRAP %in% c(9838,9852,8766,8359)) %>% 
+  mutate(TypeCertainty = "Certain" )
+
+# Type Burial mound to EXTINCT
+extinct <- Y_features %>% 
+  filter(TRAP %in% c(9516, 8337, 8388, 8770, 9910, 9911)) %>% 
+  mutate(Type = "Extinct Burial Mound" )
+
+# Type Burial mound to Scatter
+scatter <- Y_features %>% 
+  filter(TRAP == 9883) %>% 
+  mutate(Type = "Surface Scatter" )
+
+# Type Burial mound to Other
+other <- Y_features %>% 
+  filter(TRAP %in% c(8427, 9645))%>% 
+  mutate(Type = "Other")
+
+# Swap Source in these two and TypeCertainty
+m8763 <- Y_features %>% 
+  filter(TRAP == 8763) %>% 
+  mutate(Source = "Legacy verification")
+m8764 <- Y_features %>% 
+  filter(TRAP ==  8764) %>% 
+  mutate(Source = "Survey", Type = "Extinct Burial Mound", TypeCertainty = "Uncertain")
+  
+fixes <- rbind(m8763,m8764, other,scatter,extinct,certain)
+
+# Fix with row_update(
+
+features_fixed <- rows_update(
+  Y_features,
+  fixes,
+  by = "TRAP")
+## fails on distBG datatype - must do it before spatialisation in 04 MergeToMaster!! TO DO 
+
 ```
 
 ### Quick visual
@@ -213,7 +259,7 @@ mapview(Y_features, zcol = "Type")
 ```
 ### Export Yambol Features
 ```{r}
-st_write(Y_features, "../output_data/features_dd_Yam.geojson")
+# st_write(Y_features, "../output_data/features_dd_Yam.geojson")
 
 Y_features %>% 
   mutate(latitude = st_coordinates(.)[,2],
