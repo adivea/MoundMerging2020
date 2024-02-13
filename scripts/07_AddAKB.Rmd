@@ -114,7 +114,7 @@ features %>%
 ## Clip Features by Yambol boundary
 
 ```{r}
-Y_region <- st_read("../data/YamRegion.shp") # shapefile is in Yambol Analysis
+Y_region <- st_read("../../YambolMoundAnalysis/data/YamRegion.shp") # shapefile is in Yambol Analysis
 Y_features <- st_intersection(features, Y_region$geometry)
 Y_features #1242 features and 24 fields
 ```
@@ -154,9 +154,13 @@ Y_features %>%
   filter(grepl("Mound", Type))
 ```
 
-## Explore Uncertain Features
-This is to relabel features if they do not conform to the premises of the project (ie. are in map, but marked not as extinct mounds)
+## Explore the Type in Uncertain Features
+This is to relabel feature Type if they do not conform to the premises of the project (ie. are in map, but marked not as extinct mounds)
 ```{r}
+Y_features %>% 
+  group_by(Type) %>% 
+  tally()
+
 Y_features %>% 
   filter(TypeCertainty == "Uncertain",  Source == "Legacy verification") %>% 
   filter(grepl("Mound|Uncertain", Type)) %>%
@@ -241,15 +245,95 @@ m8764 <- Y_features %>%
   
 fixes <- rbind(m8763,m8764, other,scatter,extinct,certain)
 
-# Fix with row_update(
+class(fixes$distBG)
+
+# Fix source in features with row_update()
+colnames(Y_features)
+colnames(fixes)
+
+# row_update() fails on distBG and geometry datatype so we eliminate for a moment  
 
 features_fixed <- rows_update(
-  Y_features,
-  fixes,
+  st_drop_geometry(Y_features)[,-14],  #remove distBG
+  st_drop_geometry(fixes)[,-14],
   by = "TRAP")
-## fails on distBG datatype - must do it before spatialisation in 04 MergeToMaster!! TO DO 
 
+# rejoin geometry and distBG to cleaned source and type data
+features_fixed <- features_fixed %>% 
+  left_join(Y_features[,c("TRAP", "distBG")], by = "TRAP") %>% 
+  st_as_sf()
+
+features_fixed %>% mapview(zcol = "Type")
+features_fixed %>% 
+  filter(Type == "Tell") %>% 
+  select(Date, TRAP, Source)
 ```
+
+## AKB data - Distance to zemlishte central settlement (only 2022 data example)
+AKB asks for distance and azimuth to the nearest village (in "zemlishte")
+
+```{r load-distance}
+# Zemlishte information sit in ElhStr_towns shapefile
+village <- read_sf("../data/ElhStr_towns.shp")
+data22 <- read_sf("../data/ElhStr_features.shp")
+```
+
+### Wrangle the features and nearest municipality centers (which need not be the geographically nearest places)
+```{r}
+# Subset the features 2022 data to only TRAP numbers and the name of the  zemlishte-defining village
+features22 <- data22 %>%
+  dplyr::select(TRAP,EKATTE, Name_en) #EKATTE and Name_en are the number and name of the zemlishte that we are interested in
+
+# Create a simple feature of village points ordered by the TRAP numbers from the features 22 dataset,   
+villages22 <- features22 %>% 
+  st_drop_geometry() %>%  # dropping feature geometry
+  left_join(village, by = "EKATTE") %>%  #joining village geometry to TRAP numbers
+  dplyr::select(-Descr_bg, -Name_bg, -Suffix_bg, -Suffix_en)
+villages22
+```
+
+### Calculate distances
+
+between mounds and zemlishte using the st_distance() function, utilizing by_element argument, because I am only interested in pairwise distances 
+```{r}
+features22$distToTown <- st_distance(features22$geometry, villages22$geometry, by_element = TRUE)
+ls('package:sf')
+```
+
+### Calculate azimuth
+
+I use the nngeo package of Michael Dorman as it calculates "planar" /geometric azimuth (https://michaeldorman.github.io/nngeo/index.html).
+sf library works in geometric /planar space and so 
+The other geosphere::azimuth which calculates geographic azimuth in latlong coordinates.(https://stackoverflow.com/questions/51030060/in-geosphere-package-in-r-why-arent-bearings-in-0-360-degrees) 
+
+
+```{r}
+install.packages("remotes")
+remotes::install_github("michaeldorman/nngeo")
+features22$azimuth <- nngeo::st_azimuth(features22$geometry, villages22$geometry)
+```
+
+### Export for Toshko
+```{r}
+# All 479 features from the Elhovo and Straldzha municipality (2010-2022)
+write.csv(features22 %>% st_drop_geometry(), "../output_data/features22forToshko.csv")
+
+# Only 238 features collected in 2022 in the Elhovo and Straldzha municipality
+library(mapview)
+features22 %>% 
+  filter(TRAP %in%mnd22$TRAP) %>% 
+  mapview()
+
+# Only 311 features collected in 2010-2022 in the Elhovo municipality
+mun <- read_sf("../data/Yam_Municipalities.shp")
+
+library(sf)
+features22$geometry %>% 
+  sf::st_intersection(mun[4,]) %>% 
+  mapview()
+```
+
+
 
 ### Quick visual
 
@@ -303,7 +387,7 @@ plot(Yam_mnds["Condition"])
 
 ## Export the Yambol mound dataset
 
-now that all looks reasonably well, let's export the data. These are features inside the Yambol Province.
+now that all looks reasonably well, let's export the data. These are features [feature or mounds] inside the Yambol Province.
 
 ```{r export-mnds}
 write_rds(Yam_mnds, "../output_data/Yam_dd_early_mnds.rds")
@@ -316,7 +400,7 @@ write_rds(Yam_mnds, "../output_data/Yam_dd_early_mnds.rds")
 ## AKB mound joining
 ```{r}
 # load the 1058 records of AKB numbers
-AKB <- read_csv("../data/AKBmounds.csv")
+AKB <- read_csv("../../YambolMoundAnalysis/data/AKBmounds.csv")
 
 # clean up the AKB Number column to discard type notes
 AKB$`AKB №` <- as.numeric(AKB$`AKB №`)
@@ -337,10 +421,10 @@ AKB <- AKB %>%
 
 ## Join up
 ```{r}
-Y_features <- Y_features %>% 
+Yambol_features <- features_fixed %>% 
   left_join(AKB, by = c('TRAP'))
 
-colnames(Y_features)
+colnames(Yambol_features)
 
 ```
 ## CHeck how many are excavated
@@ -356,11 +440,29 @@ Y_features %>%
 
 ## CHeck 2009 - 2010 records for Toshko
 ```{r}
-mounds %>% 
-  st_drop_geometry() %>% 
+# with northing & easting
+Yambol_features %>%
+  mutate(northing = st_coordinates(.)[,2],
+               easting = st_coordinates(.)[,1]) %>%
+  st_drop_geometry() %>%
   dplyr::filter(grepl("2009|2010", Date)) %>% 
   arrange(TRAP) %>% 
-  write_csv2("../output_data/2009_2010.csv")
+#  glimpse() 
+  # mapview(zcol = "Type")  # 428
+  write_csv2("../output_data/2009_2010ne.csv")
 
+  
+# with lat /long
+Yambol_features %>%
+  st_transform(crs = 4326) %>% 
+  mutate(latitude = st_coordinates(.)[,2],
+               longitude = st_coordinates(.)[,1]) %>%
+  st_drop_geometry() %>%
+  dplyr::filter(grepl("2009|2010", Date)) %>% 
+  arrange(TRAP) %>% 
+  # glimpse() 
+  # mapview(zcol = "Type")  # 428
+  write_csv2("../output_data/2009_2010ll.csv")
+  
 ```
 
