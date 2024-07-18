@@ -114,11 +114,12 @@ features %>%
 ## Clip Features by Yambol boundary
 
 ```{r}
-Y_region <- st_read("../../YambolMoundAnalysis/data/YamRegion.shp") # shapefile is in Yambol Analysis
+getwd()
+Y_region <- st_read("../../YambolMoundAnalysis2023/data/YamRegion.shp") # shapefile is in Yambol Analysis
 Y_features <- st_intersection(features, Y_region$geometry)
 Y_features #1242 features and 24 fields
 ```
-Within Yambol we documented 1243 features. 
+Within Yambol we documented 1242/1243 early/later features. 
 
 ## Source
 
@@ -379,8 +380,7 @@ str(mnds)
 
 ## Clip Mounds by Yambol region
 ```{r yambol-mnds}
-Y_region <- st_read("../data/YamRegion.shp")
-Yam_mnds <- st_intersection(mnds, Y_region$geometry)
+
 plot(Yam_mnds$geometry);
 plot(Yam_mnds["Condition"])
 ```
@@ -397,8 +397,10 @@ write_rds(Yam_mnds, "../output_data/Yam_dd_early_mnds.rds")
 
 
 
-## AKB mound joining
-```{r}
+## AKB number joining to FAIMS features
+
+### test with initial data
+```{r eval = FALSE}
 # load the 1058 records of AKB numbers
 AKB <- read_csv("../../YambolMoundAnalysis/data/AKBmounds.csv")
 
@@ -412,12 +414,20 @@ sum(is.na(AKB$`AKB №`))
 AKB %>% 
   filter(`AKB №`> 0) %>% 
   filter(!is.na(Excavated)) # 12 mounds have been excavated
-```
-## Clean AKB up
-```{r}
+
+# Clean up column names
 AKB <- AKB %>% 
   rename(SeasonNotes = Season, AKB = `AKB №`, TRAP = `TRAP №`)
 ```
+
+### finished data: 1055 AKB numbers
+We have 1055 AKB numbers and some 1466 features, so there are some who did not make the AKB cut, because of small size, uncertainty, and other reasons
+```{r}
+AKB <- read_csv("../raw_data/MoundsAKB.csv")
+sum(is.na(AKB$AKB))
+names(AKB)
+```
+
 
 ## Join up
 ```{r}
@@ -427,6 +437,46 @@ Yambol_features <- features_fixed %>%
 colnames(Yambol_features)
 
 ```
+## Inspect 1030/1040 early/late features that have been matched with an AKB
+```{r}
+sum(!is.na(Yambol_features$AKB))
+
+Yambol_features %>% 
+  filter(is.na(AKB)) %>% 
+  group_by(Source) %>% # 59 LGV features lack AKB (and should not)
+  #group_by(Type) %>%  # 38 Burial mounds lack AKB (and should not)
+  tally()
+
+```
+
+## Inspect the 213/204 early/late mounds that lack AKB
+```{r}
+sum(is.na(Yambol_features$AKB))
+
+# we mostly care about registering all the Burial and Extinct Burial mounds that still have some footprint/volume left
+Yambol_features %>% 
+  filter(is.na(AKB)) %>% 
+  filter(Type == "Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
+  filter(Source == "Legacy verification") %>% 
+  select(TRAP, HeightMax, Condition, Type, Source )
+
+# 2 Extincts have height over 1m
+# All 4 burial mounds have 2+ meters. Check especially 9218, 9055, 8432, 8766
+
+earlymoundslgv_wo_AKB <- Yambol_features %>% 
+  filter(is.na(AKB)) %>% 
+  filter(Type == "Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
+  filter(Source == "Legacy verification") %>% 
+  pull(TRAP)
+
+earlyextinct_wo_AKB <- Yambol_features %>% 
+  filter(is.na(AKB)) %>% 
+  filter(Type == "Extinct Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
+  filter(Source == "Legacy verification") %>% 
+  pull(TRAP)
+```
+
+
 ## CHeck how many are excavated
 ```{r}
 Y_features %>% 
