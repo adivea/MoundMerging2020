@@ -331,9 +331,6 @@ if (file.exists("../output_data/features_dd_early.rds")){
 # faims %>% st_write("../output_data/features_faims.geojson")
 ```
 
-## NEED TO COMMUNICATE THESE TWO LISTS OF DUPLICATE TRAP IDs TO TODOR!
-
-
 ## Filter deduplicated features for mounds
 I use the later deduplicated variant as the later observations are more "current". 
 ```{r filter-mounds}
@@ -377,6 +374,8 @@ early %>%
 later %>%
   # group_by(Type) %>% 
   # tally()
+  
+  filter(grepl("Mound|Other", Type))
   filter(grepl("Mound|Other|Uncertain", Type))%>% 
  # st_write("../output_data/mounds_dd_later.geojson")
   write_rds("../output_data/mounds_dd_later.rds") 
@@ -385,7 +384,5 @@ later %>%
 Yam_mnds %>% 
   #st_write("../output_data/mounds_dd_Yam.geojson", append = F)  # Yambol mounds
   write_rds("../output_data/mounds_dd_Yam.rds") 
-
-
 ```
 

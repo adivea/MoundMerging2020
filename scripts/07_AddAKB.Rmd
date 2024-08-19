@@ -117,8 +117,10 @@ features %>%
 getwd()
 Y_region <- st_read("../../YambolMoundAnalysis2023/data/YamRegion.shp") # shapefile is in Yambol Analysis
 Y_features <- st_intersection(features, Y_region$geometry)
-Y_features #1242 features and 24 fields
+Y_features #1243 features and 27 fields
 ```
+
+
 Within Yambol we documented 1242/1243 early/later features. 
 
 ## Source
@@ -127,6 +129,14 @@ Within Yambol we documented 1242/1243 early/later features.
 ```{r source-all-features}
 features %>% 
   group_by(Source) %>% 
+  tally()
+
+Y_features %>% 
+  group_by(Type) %>% 
+  tally()
+
+Yam_mnds%>% 
+  group_by(Type) %>% 
   tally()
 ```
 
@@ -270,7 +280,8 @@ features_fixed %>%
   select(Date, TRAP, Source)
 ```
 
-## AKB data - Distance to zemlishte central settlement (only 2022 data example)
+## AKB data creation: Distance to zemlishte central settlement (only 2022 data example) 
+
 AKB asks for distance and azimuth to the nearest village (in "zemlishte")
 
 ```{r load-distance}
@@ -378,31 +389,13 @@ mnds <- features %>%
 str(mnds)
 ```
 
-## Clip Mounds by Yambol region
-```{r yambol-mnds}
 
-plot(Yam_mnds$geometry);
-plot(Yam_mnds["Condition"])
-```
+## AKB number extraction: joining to FAIMS features
 
-## Export the Yambol mound dataset
-
-now that all looks reasonably well, let's export the data. These are features [feature or mounds] inside the Yambol Province.
-
-```{r export-mnds}
-write_rds(Yam_mnds, "../output_data/Yam_dd_early_mnds.rds")
-#st_write(Yam_mnds,"../output_data/Yam_mnds.shp", append = FALSE )
-
-```
-
-
-
-## AKB number joining to FAIMS features
-
-### test with initial data
+### streamline initial AKB numbers data
 ```{r eval = FALSE}
 # load the 1058 records of AKB numbers
-AKB <- read_csv("../../YambolMoundAnalysis/data/AKBmounds.csv")
+AKB <- read_csv("../../YambolMoundAnalysis2023/data/AKBmounds.csv")
 
 # clean up the AKB Number column to discard type notes
 AKB$`AKB №` <- as.numeric(AKB$`AKB №`)
@@ -421,27 +414,42 @@ AKB <- AKB %>%
 ```
 
 ### finished data: 1055 AKB numbers
-We have 1055 AKB numbers and some 1466 features, so there are some who did not make the AKB cut, because of small size, uncertainty, and other reasons
+We have 1055 AKB numbers and some 1466 features, because some mounds were excavated and assigned AKB before TRAP survey.
 ```{r}
 AKB <- read_csv("../raw_data/MoundsAKB.csv")
 sum(is.na(AKB$AKB))
 names(AKB)
+head(AKB)
 ```
 
 
 ## Join up
 ```{r}
-Yambol_features <- features_fixed %>% 
+Y_features <- features_fixed %>% 
   left_join(AKB, by = c('TRAP'))
+mapview(Y_features, zcol= "Notes")
 
-colnames(Yambol_features)
+colnames(Y_features)
+head(Yambol_features[,10:27])
+
+# Are there duplicate AKB numbers? 
+AKBduplicated <- Y_features %>%
+  filter(!is.na(AKB)) %>% 
+filter(duplicated(AKB)) %>% 
+  pull(AKB)
+Y_features %>% 
+  filter(AKB %in% AKBduplicated) %>% 
+  select(TRAP, AKB)
 
 ```
-## Inspect 1030/1040 early/late features that have been matched with an AKB
-```{r}
-sum(!is.na(Yambol_features$AKB))
+Beware: In 8 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 16 TRAP mounds share an AKB number. 
 
-Yambol_features %>% 
+## Inspect 1030/1040 early/late features that have been matched with an AKB
+These mounds correspond to officially approved "mounds". The ones without AKB may not be sufficiently 'moundlike'.
+```{r}
+sum(!is.na(Y_features$AKB)) # 1030 early features have an AKB number, 1040 later features have one
+
+Y_features %>% 
   filter(is.na(AKB)) %>% 
   group_by(Source) %>% # 59 LGV features lack AKB (and should not)
   #group_by(Type) %>%  # 38 Burial mounds lack AKB (and should not)
@@ -449,12 +457,13 @@ Yambol_features %>%
 
 ```
 
-## Inspect the 213/204 early/late mounds that lack AKB
+## TO DO: Inspect the 213/204 early/late mounds that lack AKB 
+Check with Todor regarding the reason for their exclusion. Check photos.
 ```{r}
-sum(is.na(Yambol_features$AKB))
+sum(is.na(Y_features$AKB))
 
 # we mostly care about registering all the Burial and Extinct Burial mounds that still have some footprint/volume left
-Yambol_features %>% 
+Y_features %>% 
   filter(is.na(AKB)) %>% 
   filter(Type == "Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
   filter(Source == "Legacy verification") %>% 
@@ -463,13 +472,13 @@ Yambol_features %>%
 # 2 Extincts have height over 1m
 # All 4 burial mounds have 2+ meters. Check especially 9218, 9055, 8432, 8766
 
-earlymoundslgv_wo_AKB <- Yambol_features %>% 
+earlymoundslgv_wo_AKB <- Y_features %>% 
   filter(is.na(AKB)) %>% 
   filter(Type == "Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
   filter(Source == "Legacy verification") %>% 
   pull(TRAP)
 
-earlyextinct_wo_AKB <- Yambol_features %>% 
+earlyextinct_wo_AKB <- Y_features %>% 
   filter(is.na(AKB)) %>% 
   filter(Type == "Extinct Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
   filter(Source == "Legacy verification") %>% 
@@ -477,16 +486,59 @@ earlyextinct_wo_AKB <- Yambol_features %>%
 ```
 
 
-## CHeck how many are excavated
+## Check how many mounds are excavated in 2023
 ```{r}
 Y_features %>% 
   filter(AKB > 0) %>% 
-  filter(!is.na(Excavated)) # 11
+  filter(grepl("Excav", Notes)) #  27 excavated in early dataset
 
 Y_features %>% 
-  filter(AKB > 0)  # 698 features have AKB >> duplicates must be here
+  filter(AKB > 0)  # 1040 later features have AKB >> duplicates must be here
+
+Y_features %>% 
+  filter(TRAP %in% upto2010) 
+```
+
+
+
+## Export Yambol features, later and early 
+```{r export-mnds}
+names(Y_features)
+head(Y_features)
+
+# features in Yambol
+Y_features %>% # later ones
+  write_rds("../output_data/Y_features_dd_later.rds")
+  st_write("../output_data/Y_features_dd_later.geojson", append = F) # is not writing properly
+
+Y_features %>% # early ones at start
+   #write_rds("../output_data/Y_features_dd_early.rds")
+  st_write("../output_data/Y_features_dd_early.geojson", append = F)
+```
+
+## Export Yambol mounds dataset
+
+now that all looks reasonably well, let's export the data. These are features [feature or mounds] inside the Yambol Province.
+
+```{r export-mnds}
+# early
+Y_features %>% 
+    filter(grepl("Mound", Type)) %>% 
+    #write_rds("../output_data/Y_mounds_dd_early.rds")
+    st_write("../output_data/Y_mounds_dd_early.geojson")
+
+# later
+Y_features %>% 
+    filter(grepl("Mound", Type)) %>% 
+    write_rds("../output_data/Y_mounds_dd_later.rds")
+    st_write("../output_data/Y_mounds_dd_later.geojson")
+
+#st_write(Yam_mnds,"../output_data/Yam_mnds.shp", append = FALSE )
 
 ```
+
+
+
 
 ## CHeck 2009 - 2010 records for Toshko
 ```{r}
