@@ -1,5 +1,5 @@
 ---
-title: "Add AKB data to Yambol Mounds - early version"
+title: "Add AKB data to Yambol Mounds"
 author: "Adela Sobotkova"
 date: "updated`r Sys.Date()`"
 output:
@@ -24,11 +24,15 @@ opts_chunk$set(echo=TRUE,
 opts_knit$set(width=75)
 ```
 
-## Add AKB data to Yambol features/mounds data
+The script explores the consistency of datatypes and feature attributes created in previous scripts, streamlines loose ends, and marries the records to their AKB counterparts, before exporting the data in two versions.
 
-The purpose of this script is add AKB information aggregated by Todor to the Yambol region mostly-mound points. The biggest benefit is having the AKB reference and an information on whether a mound was excavated or not. 
-Issues: 
-- AKB numbers have been added to early features so need to be mapped there.
+## AKB data 
+
+AKB stands for the "Arheologicheska Karta na Bulgaria", national digital register, where all archaeological sites and places of interest are entered upon their first investigation. The purpose of the present script is add AKB information aggregated by Todor Valchev to the Yambol mound records. The biggest benefit of this exercise is to have the AKB reference and information on whether a mound was excavated or not. Users with access to AKB can then look up the cultural heritage information associated with the record.
+
+Sites are often entered into AKB upon their first visit, with additional data added as new information flows in from future revisits, excavations or other analyses.
+
+The AKB link is one reason why we are retaining two versions of Yambol  data, _early and _later. While the _later revisits are more authoritative (especially if driven by the need to update or improve the record), and are used in analyses, the _early record IDs are linked in AKB and are used here. 
 
 ## Setup
 ```{r libraries}
@@ -40,8 +44,8 @@ library(mapview)
 
 ## Load data
 ```{r -load-aggr-data}
-features <- readRDS("../../MoundMerging2023/output_data/features_dd_later.rds") # 2023
-features <- readRDS("../../MoundMerging2023/output_data/features_dd_early.rds") # 2023
+features <- readRDS("../output_data/features_dd_later.rds") # best records
+features <- readRDS("../output_data/features_dd_early.rds") # first AKB entry
 str(features)
 
 ```
@@ -55,7 +59,7 @@ features %>%
   tally()
 ```
 ```{r type-check}
-# Verify that "Other" category is not legacy-data verificaiton, because those should be mounds/extinct mounds if the symbol was a brown sunburst
+# Verify that "Other" category is not legacy-data verification, because those should be mounds/extinct mounds if the symbol was a brown sunburst
 
 features %>% 
   filter(Type == "Other") %>% 
@@ -63,9 +67,9 @@ features %>%
   tally()
 
 ```
-In the tally of "Other" types, there are 34 Legacy verification features and 41 Survey features. While the latter are expected, the 34 LgV features required follow up on 27 Dec 2022. Inspection showed that many of the LGV features originate not from sunbursts but other map markers, such as raysed squares and triangles, which were demonstrated to lead to mounds less reliably. 
+In the tally of "Other" types, there are 34 Legacy verification features and 41 Survey features. While the latter are expected, the 34 LgV features required follow up on 27 Dec 2022. Inspection showed that many of the LGV features originate not from sunbursts but other map markers, such as rayed squares and triangles. We inspected these in the early seasons but stopped doing so after these led to mounds less reliably. 
 
-### what is "other"?
+### What is hiding under "other"?
 ```{r}
 features %>% 
   filter(Type == "Other" & Source == "Legacy verification") %>% 
@@ -74,7 +78,7 @@ features %>%
 ```
 
 
-## Validation II: Check for duplicates (similar attributes)
+## Validation II: Check for attribute duplicates 
 Spatial duplication is addressed in 00b_SpatialDeduplication.Rmd
 ```{r duplicate-check}
 features$TRAP[duplicated(features$TRAP)] 
@@ -84,11 +88,10 @@ features$TRAP[duplicated(features$TRAP)]
 
 ```{r clean-up}
 unique(features$Condition)
+glimpse(features)
 
 features <- features %>%
-  #st_drop_geometry() %>%  
-  dplyr::mutate(Condition = str_extract(Condition, "\\d")) %>%
-  dplyr::mutate(Condition = case_when(Condition == 0 ~ "NA",
+   dplyr::mutate(Condition = case_when(Condition == 0 ~ "NA",
                                Condition == 6 ~ "5",
                                Condition != 0 ~ Condition)) %>% 
   dplyr::mutate(Condition = as.factor(Condition)) %>% 
@@ -96,16 +99,10 @@ features <- features %>%
     grepl("\\?",Type) ~ "Uncertain",
     !grepl("\\?",Type) ~ "Certain")) %>% 
   dplyr::mutate(Type= gsub("\\?","",Type)) %>% 
-  dplyr::mutate(HeightMax = as.numeric(HeightMax)) %>% 
   dplyr::mutate(DiameterMax = as.numeric(DiameterMax)) 
 
 #levels(features$Condition) = c(1,2,3,4,5, NA)
 
-# See if you need to eliminate uncertainty from Height
-# unique(features$HeightMax) # are there any ? in the data values?
-# features %>%  # if the answer is yes, you can filter them out.
-#   mutate(HeightMax = gsub("\\?", "",HeightMax)) %>%
-#   mutate(HeightMax = as.numeric(HeightMax))
 features %>% 
   group_by(Type) %>% 
   tally()
@@ -113,119 +110,18 @@ features %>%
 
 ## Clip Features by Yambol boundary
 
-```{r}
-getwd()
-Y_region <- st_read("../../YambolMoundAnalysis2023/data/YamRegion.shp") # shapefile is in Yambol Analysis
+```{r yambol-features}
+Y_region <- st_read("../input_data/Vectors/YamRegion.shp") # shapefile is in Yambol Analysis
 Y_features <- st_intersection(features, Y_region$geometry)
-Y_features #1243 features and 27 fields
+Y_features #1243 features and 24 fields
 ```
 
 
-Within Yambol we documented 1242/1243 early/later features. 
+Within Yambol, we documented 1242/1243 early/later features. 
 
-## Source
-
-### all features
-```{r source-all-features}
-features %>% 
-  group_by(Source) %>% 
-  tally()
-
-Y_features %>% 
-  group_by(Type) %>% 
-  tally()
-
-Yam_mnds%>% 
-  group_by(Type) %>% 
-  tally()
-```
-
-In terms of feature source, 1046 / (1040 in the early features) topographic map features from the entire visited area (Yambol and surrounding) were visited, and 397 moundlike features were discovered along the route. 
-
-Let's see what the stats are for Yambol Province.
-
-### Source of Features within Yambol
-Were the features found thanks to topo maps or via survey?
-
-```{r source-Yam}
-Y_features %>% 
-  group_by(Source) %>% 
-  tally()
-```
-
-In Yambol Province, we have documented 1243 features, 847 later (840 in early features) originated from map symbols and the rest were encountered en route by means survey (373), local informants and serendipity.
-
-
-```{r type-yambol}
-Y_features %>% 
-  group_by(Type, TypeCertainty) %>% 
-  tally()
-
-Y_features %>% 
-  filter(grepl("Mound", Type))
-```
-
-## Explore the Type in Uncertain Features
-This is to relabel feature Type if they do not conform to the premises of the project (ie. are in map, but marked not as extinct mounds)
-```{r}
-Y_features %>% 
-  group_by(Type) %>% 
-  tally()
-
-Y_features %>% 
-  filter(TypeCertainty == "Uncertain",  Source == "Legacy verification") %>% 
-  filter(grepl("Mound|Uncertain", Type)) %>%
-  #group_by(Type) %>% tally
-  st_drop_geometry() %>% pull(TRAP)
-  
-# Export uncertain Burial Mounds from LGV as shp to check in GEarth and images
-Y_features %>% 
-  filter(TypeCertainty == "Uncertain",  Source == "Legacy verification") %>% 
-  filter(grepl("Mound|Uncertain", Type)) %>%
-  select(-TopoID) %>% 
-  st_write("../output_data/LGVMoundsUncertain.shp", append=F)
-
-```
-```{r spatial-duplicates}
-# Early records
-upto2010 <- c(6011,8022,8023,8024,8025,8028,8029,8030,8035,8350,8351, 8352,8353,8357,8359,8434,8669,9077)
-
-# Later records
-post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358,8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
-```
-
-#### Later features  
-
-17 uncertain ones
-
-9516 : photo - typical feature of BG fields, a small-mound sized cluster of stones hiding in a scrub in a slight terrain wave,  could be natural geology, a field stone cluster, or an extinct mound >> change to EXTINCT mound (following the topo symbol methodology: if in a map and spurious on the ground, then 'extinct')
-8337 : terrain wave, possible mound, in GE satellite image a round light soil mark 80m to SW from GPS point >> change to EXTINCT 
-8388 : terrain wave near a serious mound 8387, nothing in GE satellite image now, but soilmark in 2009 >> change to EXTINCT
-9645 : water station / extinct mound? next to a road >>  OTHER
-8427 : mound like feature (round, conical pile) with concrete construction >> OTHER
-9838 : ploughed up mound (definitely)l light soil marks in GE >> CHANGE UNCERTAIN TO CERTAIN
-9847 : pile in a forest; no visibility; should stay UNCERTAIN 
-9852 : pretty clear scrub covered mound! lozenge in GE >> CHANGE UNCERTAIN TO CERTAIN
-8764 : very uncertain lozenge between two mounds: natural or cultural >> should be SURVEY (instead of 8763) AND UNCERTAIN EXTINCT mound
-8766 : massive mound, why the doubt? >> CHANGE UNCERTAIN TO CERTAIN
-8770 : two concentric circles, negative and positive: strange, something else? >> EXTINCT??
-8772 : smallish mound like protrusion > marked as extinct and should stay so
-8775 : hardly anything >> keep as extinct
-8648 : disturbed area >> should perhaps be eliminated
-9883 : flat nothing in photo or GE; lots of pottery >> CHANGE TO SCATTER
-9910 : very low feature in photo, light soilmark in GE, next to a solid 9909 >> CHANGE TO EXTINCT
-9911 : looks like nothing, check Topo map, might need flagging as EXTINCT or deletion
-
-#### Early features
-
-18 uncertain ones, 17 same as later features, 8359 is the one outlier
-9516 8337 8359 8388 9645 8427 9838 9847 9852 8764 8766 8770 8772 8775 8648 9883 9910 9911
- 
-8359 : is an excellent mound >> CHANGE UNCERTAIN TO CERTAIN
-
-
-## Changes TO DO
-```{r}
+## Few more changes in attributes
+This chunk corrects poor data entries in the structured digital forms on the basis of photographs, diaries, and AKB records.
+```{r changes-type-source}
 # Type Certainty UNCERTAIN TO CERTAIN
 certain <- Y_features %>% 
   filter(TRAP %in% c(9838,9852,8766,8359)) %>% 
@@ -280,213 +176,48 @@ features_fixed %>%
   select(Date, TRAP, Source)
 ```
 
-## AKB data creation: Distance to zemlishte central settlement (only 2022 data example) 
 
-AKB asks for distance and azimuth to the nearest village (in "zemlishte")
+## AKB
 
-```{r load-distance}
-# Zemlishte information sit in ElhStr_towns shapefile
-village <- read_sf("../data/ElhStr_towns.shp")
-data22 <- read_sf("../data/ElhStr_features.shp")
-```
-
-### Wrangle the features and nearest municipality centers (which need not be the geographically nearest places)
-```{r}
-# Subset the features 2022 data to only TRAP numbers and the name of the  zemlishte-defining village
-features22 <- data22 %>%
-  dplyr::select(TRAP,EKATTE, Name_en) #EKATTE and Name_en are the number and name of the zemlishte that we are interested in
-
-# Create a simple feature of village points ordered by the TRAP numbers from the features 22 dataset,   
-villages22 <- features22 %>% 
-  st_drop_geometry() %>%  # dropping feature geometry
-  left_join(village, by = "EKATTE") %>%  #joining village geometry to TRAP numbers
-  dplyr::select(-Descr_bg, -Name_bg, -Suffix_bg, -Suffix_en)
-villages22
-```
-
-### Calculate distances
-
-between mounds and zemlishte using the st_distance() function, utilizing by_element argument, because I am only interested in pairwise distances 
-```{r}
-features22$distToTown <- st_distance(features22$geometry, villages22$geometry, by_element = TRUE)
-ls('package:sf')
-```
-
-### Calculate azimuth
-
-I use the nngeo package of Michael Dorman as it calculates "planar" /geometric azimuth (https://michaeldorman.github.io/nngeo/index.html).
-sf library works in geometric /planar space and so 
-The other geosphere::azimuth which calculates geographic azimuth in latlong coordinates.(https://stackoverflow.com/questions/51030060/in-geosphere-package-in-r-why-arent-bearings-in-0-360-degrees) 
-
-
-```{r}
-install.packages("remotes")
-remotes::install_github("michaeldorman/nngeo")
-features22$azimuth <- nngeo::st_azimuth(features22$geometry, villages22$geometry)
-```
-
-### Export for Toshko
-```{r}
-# All 479 features from the Elhovo and Straldzha municipality (2010-2022)
-write.csv(features22 %>% st_drop_geometry(), "../output_data/features22forToshko.csv")
-
-# Only 238 features collected in 2022 in the Elhovo and Straldzha municipality
-library(mapview)
-features22 %>% 
-  filter(TRAP %in%mnd22$TRAP) %>% 
-  mapview()
-
-# Only 311 features collected in 2010-2022 in the Elhovo municipality
-mun <- read_sf("../data/Yam_Municipalities.shp")
-
-library(sf)
-features22$geometry %>% 
-  sf::st_intersection(mun[4,]) %>% 
-  mapview()
-```
-
-
-
-### Quick visual
-
-```{r}
-library(mapview)
-mapview(Y_features, zcol = "Type")
-```
-### Export Yambol Features
-```{r}
-# st_write(Y_features, "../output_data/features_dd_Yam.geojson")
-
-Y_features %>% 
-  mutate(latitude = st_coordinates(.)[,2],
-               longitude = st_coordinates(.)[,1]) %>% 
-  st_drop_geometry() %>% glimpse()
-
-```
-
-### Check how many LGV and survey features have 0 height
-
-```{r}
-Y_features %>% 
-  filter(grepl("Mound|Uncertain", Type)) %>% 
-  filter(HeightMax < 0.2) %>% 
-  group_by(Source, Type) %>% 
-  tally()
-
-Y_features %>% 
-  st_drop_geometry() %>% 
-  filter(Type == "Burial Mound") %>% 
-  filter(HeightMax <0.2)
-```
-
-
-### Subset to mounds only
-
-```{r filter-mounds}
-mnds <- features %>% 
-  dplyr::filter(Type == "Burial Mound" | Type == "Extinct Burial Mound")
-
-str(mnds)
-```
-
-
-## AKB number extraction: joining to FAIMS features
-
-### streamline initial AKB numbers data
-```{r eval = FALSE}
-# load the 1058 records of AKB numbers
-AKB <- read_csv("../../YambolMoundAnalysis2023/data/AKBmounds.csv")
-
-# clean up the AKB Number column to discard type notes
-AKB$`AKB №` <- as.numeric(AKB$`AKB №`)
-
-# this coerces 349 records to NA
-sum(is.na(AKB$`AKB №`))
-
-# leaving 709 AKB records
-AKB %>% 
-  filter(`AKB №`> 0) %>% 
-  filter(!is.na(Excavated)) # 12 mounds have been excavated
-
-# Clean up column names
-AKB <- AKB %>% 
-  rename(SeasonNotes = Season, AKB = `AKB №`, TRAP = `TRAP №`)
-```
-
-### finished data: 1055 AKB numbers
+### 1055 AKB numbers
 We have 1055 AKB numbers and some 1466 features, because some mounds were excavated and assigned AKB before TRAP survey.
-```{r}
-AKB <- read_csv("../raw_data/MoundsAKB.csv")
-sum(is.na(AKB$AKB))
+```{r AKB-mounds}
+AKB <- read_csv("../input_data/MoundsAKBnumbers.csv")
+sum(!is.na(AKB$AKB))
 names(AKB)
 head(AKB)
+
+# Which ones are excavated?
+AKB %>% 
+  filter(grepl("[Ee]xcavated", Notes)) 
 ```
 
 
-## Join up
-```{r}
+## Join AKB to features
+```{r join-AKB}
 Y_features <- features_fixed %>% 
   left_join(AKB, by = c('TRAP'))
+
 mapview(Y_features, zcol= "Notes")
 
 colnames(Y_features)
-head(Yambol_features[,10:27])
+head(Y_features[,10:27])
 
 # Are there duplicate AKB numbers? 
 AKBduplicated <- Y_features %>%
   filter(!is.na(AKB)) %>% 
-filter(duplicated(AKB)) %>% 
+  filter(duplicated(AKB)) %>% 
   pull(AKB)
+
 Y_features %>% 
   filter(AKB %in% AKBduplicated) %>% 
   select(TRAP, AKB)
 
 ```
-Beware: In 8 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 16 TRAP mounds share an AKB number. 
 
-## Inspect 1030/1040 early/late features that have been matched with an AKB
-These mounds correspond to officially approved "mounds". The ones without AKB may not be sufficiently 'moundlike'.
-```{r}
-sum(!is.na(Y_features$AKB)) # 1030 early features have an AKB number, 1040 later features have one
+Beware: In 9 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 16 TRAP mounds share an AKB number. 
 
-Y_features %>% 
-  filter(is.na(AKB)) %>% 
-  group_by(Source) %>% # 59 LGV features lack AKB (and should not)
-  #group_by(Type) %>%  # 38 Burial mounds lack AKB (and should not)
-  tally()
-
-```
-
-## TO DO: Inspect the 213/204 early/late mounds that lack AKB 
-Check with Todor regarding the reason for their exclusion. Check photos.
-```{r}
-sum(is.na(Y_features$AKB))
-
-# we mostly care about registering all the Burial and Extinct Burial mounds that still have some footprint/volume left
-Y_features %>% 
-  filter(is.na(AKB)) %>% 
-  filter(Type == "Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
-  filter(Source == "Legacy verification") %>% 
-  select(TRAP, HeightMax, Condition, Type, Source )
-
-# 2 Extincts have height over 1m
-# All 4 burial mounds have 2+ meters. Check especially 9218, 9055, 8432, 8766
-
-earlymoundslgv_wo_AKB <- Y_features %>% 
-  filter(is.na(AKB)) %>% 
-  filter(Type == "Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
-  filter(Source == "Legacy verification") %>% 
-  pull(TRAP)
-
-earlyextinct_wo_AKB <- Y_features %>% 
-  filter(is.na(AKB)) %>% 
-  filter(Type == "Extinct Burial Mound" ) %>%  # 4 burial mounds and 13 extinct mounds are LGV and lack AKB number
-  filter(Source == "Legacy verification") %>% 
-  pull(TRAP)
-```
-
-
-## Check how many mounds are excavated in 2023
+## Check how many mounds have been excavated by 2023
 ```{r}
 Y_features %>% 
   filter(AKB > 0) %>% 
@@ -500,13 +231,13 @@ Y_features %>%
 ```
 
 
-
 ## Export Yambol features, later and early 
-```{r export-mnds}
+To export these properly, comment out the irrelevant version and rerun the script with either the early or the later dataset.
+```{r export-features}
 names(Y_features)
 head(Y_features)
 
-# features in Yambol
+# Features in Yambol
 Y_features %>% # later ones
   write_rds("../output_data/Y_features_dd_later.rds")
   st_write("../output_data/Y_features_dd_later.geojson", append = F) # is not writing properly
@@ -516,20 +247,20 @@ Y_features %>% # early ones at start
   st_write("../output_data/Y_features_dd_early.geojson", append = F)
 ```
 
-## Export Yambol mounds dataset
+## Export Yambol mounds dataset, later and early
 
-now that all looks reasonably well, let's export the data. These are features [feature or mounds] inside the Yambol Province.
+Now that the attributes look reasonably well, let's filter out and export the most likely mounds inside the Yambol Province.
 
 ```{r export-mnds}
 # early
 Y_features %>% 
-    filter(grepl("Mound", Type)) %>% 
+    filter(grepl("[Mm]ound", Type)) %>% 
     #write_rds("../output_data/Y_mounds_dd_early.rds")
     st_write("../output_data/Y_mounds_dd_early.geojson")
 
 # later
 Y_features %>% 
-    filter(grepl("Mound", Type)) %>% 
+    filter(grepl("[Mm]ound", Type)) %>% 
     write_rds("../output_data/Y_mounds_dd_later.rds")
     st_write("../output_data/Y_mounds_dd_later.geojson")
 
@@ -538,33 +269,4 @@ Y_features %>%
 ```
 
 
-
-
-## CHeck 2009 - 2010 records for Toshko
-```{r}
-# with northing & easting
-Yambol_features %>%
-  mutate(northing = st_coordinates(.)[,2],
-               easting = st_coordinates(.)[,1]) %>%
-  st_drop_geometry() %>%
-  dplyr::filter(grepl("2009|2010", Date)) %>% 
-  arrange(TRAP) %>% 
-#  glimpse() 
-  # mapview(zcol = "Type")  # 428
-  write_csv2("../output_data/2009_2010ne.csv")
-
-  
-# with lat /long
-Yambol_features %>%
-  st_transform(crs = 4326) %>% 
-  mutate(latitude = st_coordinates(.)[,2],
-               longitude = st_coordinates(.)[,1]) %>%
-  st_drop_geometry() %>%
-  dplyr::filter(grepl("2009|2010", Date)) %>% 
-  arrange(TRAP) %>% 
-  # glimpse() 
-  # mapview(zcol = "Type")  # 428
-  write_csv2("../output_data/2009_2010ll.csv")
-  
-```
 

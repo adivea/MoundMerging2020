@@ -101,5 +101,6 @@ m2022 %>%
   group_by(Type) %>% 
   tally()
 
+# Clean up
 rm(correct)
 paste("Mounds from 2022 attributes are streamlined")

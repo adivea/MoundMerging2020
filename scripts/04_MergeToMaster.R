@@ -108,7 +108,8 @@ m %>%
 # 1181 records in the 2009-2018 master dataset with 11 variables
 # 1491 records in the 2009-2022 master dataset
 
-####################################  MASTER M_FAIMS DATASET FOR FAIMS SEASONS 2017 - 2018 #####################################
+####################### MASTER M_FAIMS DATASET FOR FAIMS SEASONS 2017 - 2018 #####################################
+
 paste("Starting to streamline FAIMS seasons' attributes")
 
 # MASTER DATASET FOR YEARS 2017-2022 when we used fully-digital workflow
@@ -137,9 +138,10 @@ dim(m_Faims)
 glimpse(m_Faims)
 write_csv(m_Faims, "output_data/interim/faimsmaster.csv") 
 
-##################### STREAMLINE M INTO MASTER FOR ALL SEASONS ##################################################
+##################### STREAMLINE M ATTRIBUTES ##################################################
 
-####  We will need the values in fields such as Type, Height, Landuse and others streamlined before analysis
+# Values in fields such as Type, Height, Landuse and others 
+# need to be complete and streamlined before analysis
 
 ## Create a new object called master so as to differentiate streamlined data from the product of merger
 master <- m
@@ -246,7 +248,8 @@ master %>%
   arrange(perc)
 
  
-###  Eliminate ID duplicates (revisited mounds). For spatial duplicates, see spatial scripts 06
+######  Eliminate TRAP ID duplicates (revisited mounds). 
+## For spatial deduplication, see spatial scripts 05 and 06.
 
 # Find duplicate TRAP ids
 master$TRAP[duplicated(master$TRAP)] 
@@ -271,7 +274,7 @@ rm(scrub, Scrub, pasture, Pasture, annual, Annual,
    LUmiss_subs, LUmissing, LUTmissing, dupl_rows, ab, 
    mnd2009, mnd2010, mnd2017, mnd2018)
 
-####################################### ADDITIONAL EDITS (OPTIONAL)
+########################### ADDITIONAL EDITS (OPTIONAL)
 paste("Starting to streamline condition")
 
 #### STREAMLINE CONDITION

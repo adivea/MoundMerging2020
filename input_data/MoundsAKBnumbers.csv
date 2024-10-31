@@ -66,12 +66,12 @@ TRAP,AKB,Area,Notes
 8434,2700216,Mogila,second TRAP number 9216
 9216,2700216,Mogila,second TRAP number 8434
 8358,2700219,Mogila,
-8348,2700220,Mogila,Excavated by Piotr - Rome; second TRAP number 9223
+8348,2700220,Mogila,Excavated by Piotr - Rome
 9223,2700220,Mogila,second TRAP number 8348
-8357,2700221,Mogila,Excavated by Volker EBA; second TRAP number 9220
+8357,2700221,Mogila,Excavated by Volker EBA
 9220,2700221,Mogila,second TRAP number 8357
 8345,2700222,Mogila,Excavated by Ilia EBA
-8349,2700226,Mogila,Excavated by Piotr - Rome; second TRAP number 9222
+8349,2700226,Mogila,Excavated by Piotr - Rome
 9222,2700226,Mogila,second TRAP number 8349
 9217,2700229,Mogila,
 9215,2700230,Mogila,
@@ -530,8 +530,8 @@ TRAP,AKB,Area,Notes
 9219,10007349,Mogila,second TRAP number 8359
 8350,10007350,Mogila,second TRAP number 9226
 9226,10007350,Mogila,second TRAP number 8350
-8346,10007351,Mogila,Excavated by Petra - EBA; second TRAP number 9224 
-9224,10007351,Mogila,Excavated by Petra - EBA; second TRAP number 8346
+8346,10007351,Mogila,Excavated by Petra - EBA
+9224,10007351,Mogila,Excavated by Petra - EBA
 8347,10007352,Mogila,second TRAP number 9225
 9225,10007352,Mogila,second TRAP number 8347
 8730,10007354,Malomirovo,
