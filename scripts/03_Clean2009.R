@@ -2,7 +2,7 @@
 #             Creating a clean 2009 verified mound dataset
 ############################################################################################################
 
-# Goal
+# Goal:
 # Create an analysis-ready dataset of all features visited in Yambol in 2009.
 
 # Requires couple prerequisites, such as 
@@ -20,7 +20,7 @@ library(lubridate)
 df_name <- c("mnd2009")
 if (exists(df_name)){
   is.data.frame(get(df_name))
-}  else source("scripts/01_LoadDataG.R")
+}  else source("scripts/01_LoadData.R")
 
 #### 2009 DATASET
 
@@ -40,7 +40,7 @@ m2009 <- m2009 %>%
 m2009 <- m2009 %>% 
   rename(AllNotes = Notes)
 
-# Clean 2009
+# Check cleaned 2009
 head(m2009,2)
 # 2009 mounds are good to go: Source "Survey" is guaranteed mounds, source "RS" or "LGV"not always. 
 # 2009 contain 80 potential mounds, 77 are certain, 3 c(8051, 8054, 8055) are uncertain.
@@ -48,7 +48,7 @@ head(m2009,2)
 
 glimpse(m2009)
 
-# Needed fixes : Source value capitalisation
+# Needed fixes : consistent Source value capitalisation
 # unique(m2009$Source) #[1] "RS:FNEG"   "RS:SITE" "RS:FNEG - duplicate 9358" "2010LGV" "survey" 
 # unique(m2010$Source) #"Legacy verification" "Survey"              NA 
 

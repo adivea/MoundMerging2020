@@ -50,9 +50,10 @@ library(mapview)
 ```
 
 ## Load 2009-2022 data
-This data was processed mostly in 2020 with addition in 2022 and contains all map mounds as well as all survey features detected en route, and so not only extant and extinct mounds (see MoundMerging2020 repo in Github)
+This data was processed mostly in 2020 with addition in 2022 and contains all verified map mound locations as well as all survey features detected en route, and so not only extant but also extinct mounds, tells, surface scatters (see the 2020 history of MoundMerging2023 repo in Github)
+
 ```{r features09_22}
-# Environmental-extraction-enriched output from 2020 Mound Merging repo > 06_GetSpatial.R, ca 1484 features
+# Loading the product of 05_GetSpatial.R ca 1484 features
 
 input <- "master_sp"
 if (exists(input)){
@@ -61,25 +62,17 @@ if (exists(input)){
 }  else source("scripts/05_GetSpatial.R") 
 # If script 05_GetSpatial.R is erroring out, run it with the line below instead of the line above
 #}  else readRDS("../output_data/master_sp.rds") 
-
 ```
 
-## Load only FAIMS 2017-2022 data
-uncomment to run
-```{r apply-to-faims, eval = FALSE}
-# master_sp <- st_transform(m_Faims4326, crs = 32635)
-```
 ## Yambol environmental and topographic data
-
 
 ### Load Vector data
 ```{r load-Y-vector}
 # Load vectors
-bg_border <- st_read("../../YambolMoundAnalysis/data/Bulgaria_Border.shp")
-Y_towns <- st_read("../../YambolMoundAnalysis/data/Modern_settlements_Yambol_TRAP.shp")
-#towns <- st_read("~/../Documents/Professional/Projects/MQNS/GIS/Vectors/Yamurbanarea.shp") # towns within 15km buffer of Yambol boundary exported from JICA
-Y_region <- st_read("../../YambolMoundAnalysis/data/YamRegion.shp")
-Y_towns_poly <- read_sf("../../YambolMoundAnalysis/data/YamTownpoly/Yam_towns_poly.shp")
+bg_border <- st_read("../raw_data/Vectors/Bulgaria_Border.shp")
+Y_towns <- st_read("../raw_data/Vectors/Modern_settlements_Yambol_TRAP.shp")
+Y_region <- st_read("../raw_data/Vectors/YamRegion.shp")
+Y_towns_poly <- read_sf("../raw_data/Vectors/YamTownpoly/Yam_towns_poly.shp")
 ```
 
 ### Mosaic and project component rasters

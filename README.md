@@ -1,4 +1,4 @@
-## Merging Mound Monitoring Data from Yambol: 2009-2022 
+## Merging Mound Monitoring Data from Yambol: 2009-2022 Streamlined
 
 This project aims to build a master dataset of verified burial mounds with coordinates, TRAP and TopoID, dimensions, landuse and conservation attributes. We have five datasets from the following campaigns of fieldwalking:
 
@@ -14,31 +14,31 @@ Difference in attribute numbers in post-2017 modules stems from notes attached t
 
 As in any archaeological fieldwork, the data realities and accompanying data models are emergent, and as such they evolve through time. Inconsistencies appear across the datasets because the initial datasets were recorded on paper and suffer from ommissions and errors while the latter ones recorded via digital workflow with stricter controls and validation implemented via in the field are more complete. 
 
-- 2009 survey dataset had undergone cleaning for the initial TRAP publication and my own dissertation and only required a couple hours to split up LU into _Around and _Top and verify dimensions and spotcheck factual correctness to be ready for a merge-in
-- 2009 RS dataset required the same as 2009 survey
-- 2010 was severely impaired by missing and divergent data (2016 adela version differed from 2018 bara version, with however held the promise of fuller attributes and GIS information). In order to verify and fill in information, I had to refine each version, reconcile discrepancies and duplicates and fill LU and dimensions in from GEPro before I could merge these two versions and gauge their utility. I used RS_Temporal data (completely different source) to verify landuse data, but it was not all that useful in the end. This dataset took in excess of 60 hours to reconcile. Year 2009 and 2010 together took 106 hours to streamline.
-- 2017 took 2 hours to clean up
-- 2018 took 2 hours to clean up (will need a bit more to bring into sync with all previous ones)
-- 2022 took 8 hours to clean up due to relatively infrequent in-field checks (no Bara verifying the data daily) and the discovery of attribute issues (serendipity instead of survey as source, etc.) and the need to aggregate all five seasons and deal with attribute and spatial attributes.
+- 2009 survey dataset had undergone cleaning for the initial TRAP publication and my own dissertation and only required a couple hours to split up LU into \_Around and \_Top and verify dimensions and spotcheck factual correctness to be ready for a merge-in
+- 2009 remotely sensed dataset required the same edits as 2009 survey
+- 2010 was severely impaired by missing and divergent data (2016 Adela version differed from 2018 Bara version, but had fuller attributes and GIS information). In order to verify and fill in information, I had to refine each version, reconcile discrepancies and duplicates and fill in land use and dimensions on the basis of Google Earth Pro before I could merge these two versions. I used RS_Temporal.csc data (completely different source) to verify landuse data, but it was not all that useful in the end. This dataset took in excess of 80 hours to reconcile. Year 2009 and 2010 together took 106 hours to streamline.
+- 2017 took 2 hours to clean up because it was produced by a fully digital workflow
+- 2018 took 2 hours to clean up 
+- 2022 took 8 hours to clean up mostly due to infrequent sanity checks during collection (Bara was not verifying the incoming data daily) and the discovery of attribute issues ('serendipity' being wrongly selected as Source instead of 'survey', etc.) and the need to aggregate all five seasons and deal with attribute and spatial attributes.
 
 It is perhaps useful to categorize the main issues that archaeologists seeking to reuse data encounter. 
 
 ### Within dataset issues:
-Within each dataset there are quirks such a typographic and factual errors, such as duplicate IDs or erroneous IDs, or dot-separated decimals, misspellings, or multivalued attributes that prevent merging and analysis in R. These I have strived to reconcile in OpenRefine. Missing data were filled in where possible by revisiting field records, field photos, and by using temporal slider in satellite imagery viewer GoogleEarthPro. Furthermore, records were randomly spotchecked against scanned paper data to verify factual accuracy. To summarize the issues were divided between the technical inconsistencies due to lack of validation (fixable with computer-assistance of OR) and factual errors which required manual review.
-Datasets were cleaned of the issues within before merging.
+Within each dataset there are quirks such a typographic and factual errors, such as duplicate IDs or erroneous IDs, or dot-separated decimals, misspellings, or multivalued attributes that prevent merging and analysis in R. These I have strived to reconcile in OpenRefine. Missing data were filled in where possible by revisiting field records, field photos, and by using temporal slider in satellite imagery viewer of Google Earth Pro. Furthermore, records were randomly spotchecked against scanned paper data to verify transcription correspondence. To summarize the issues were divided between the technical inconsistencies due to lack of validation (fixable with computer-assistance of OpenRefine) and factual errors which required manual review.
+These issues were resolved before merging.
 
 ### Between dataset issues:
-Once each dataset was reasonably consistent, the merging could commence. Upon mergin, I discovered that despite cleaning, vocabularies slightly differed among datasets (spelling, capitalisation, etc.) from one year to another even in established categories such as Landuse, and more under attributes such as CRM/Conservation. Column names also varied. This was tractable with grepl and attention. 
-Divergence in the semantic model behind attributes was not tractable computationally but required reinterpretation: e.g. the application of Landuse has also shifted from 2009, when only a single landuse category was used without closer specification , while in 2017 we differentiated between Landuse_Around, Landuse_Top to specify what landuse was meant.  Having written the guidelines in 2009, I know I intended landuse around the mound, but some teams recorded on mound surface judging from the comparison of landuse visible in field photos and the spreadsheets.
+Once each dataset was reasonably consistent, the merging could commence. Upon merging, I discovered that despite cleaning, vocabularies slightly differed among datasets (spelling, capitalisation, etc.) from one year to another even in established categories such as Landuse, and more under attributes such as CRM/Conservation. Column names also varied slightly. This was tractable with grepl and attention. 
+Divergence in the semantic model behind attributes was not tractable computationally but required reinterpretation: e.g. the application of Landuse has also shifted from 2009, when only a single landuse category was used without closer specification , while in 2017 we differentiated between Landuse_Around, Landuse_Top to specify landuse around the mound from that on top of it, as they differed and the difference impacted their preservation.  Having written the guidelines in 2009, I intended landuse around the mound, but diary records showed some teams recorded mound surface landuse.
 
 ## Spatial data: 
-Manual checks were done on the datapoints from 2009-2010 vis-a-vis GPS and legacy data and googleearth by two separate people. 2017-2022 data was checked against legacy data from topographic maps. GoogleEarth doublecheck would be helpful in 2017-2022. Check for duplicates revealed no issues.
-There is a number of spatial duplicates and triplicates (see duplicate_final.txt) for mounds repeatedly visited in different season either on assignment to take better photos or by accidental overlap, addressed and written up in YambolMoundAnalysis > 00b_SpatialDeduplication script.
-Extent: while survey was conducted primarily in the Yambol Province, occasionally a track led outside of its boundaries. Occurrences outside Yambol are useful when conducting analysis susceptivle to edge effects, however, features like these are filtered out (clipped by regional boundary) when cultural heritage purpose is invoked.
+Manual checks were done on the spatial points of records from 2009-2010 vis-a-vis GPS and legacy data and Google Earth by two separate people. 2017-2022 data was checked against legacy data from topographic maps. Google Earth doublecheck would be helpful in 2017-2022. 
+There is a number of spatial duplicates and triplicates (see duplicate_final.txt) for mounds repeatedly visited in different seasons either on assignment to take better photos or by accidental overlap, addressed and written up in YambolMoundAnalysis > 00b_SpatialDeduplication script.
+Extent: while survey was conducted primarily in the Yambol Province, occasionally a track led outside of its boundaries. Occurrences outside Yambol are useful when conducting analysis susceptible to edge effects, however, features like these are filtered out (clipped by regional boundary) for cultural heritage and administrative reporting reasons.
 
 # How to use
 
-0. If you just want to use the data, choose one of the following datasets (rds or geojson) from the output_data folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
+0. If you just want to use the data, choose the most suitable dataset for your toolkit (rds is great for R but geojson probably easier for Python users) from the output_data/ folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
 
   - Y_mounds_dd_early.rds - mounds clipped to Yambol region, deduplicated to early version, enriched (06_Enrich and 07_AKB)
   - Y_mounds_dd_later.rds - mounds clipped to Yambol region, deduplicated to later version, enriched (06_Enrich and 07_AKB)

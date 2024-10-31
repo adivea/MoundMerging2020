@@ -6,7 +6,7 @@
 # Create an analysis-ready dataset of all features visited in Yambol in 2010.
 
 # Requires couple prerequisites, such as 
-# 0) loading the output of joined/merged 2010 bara and adela datasets 
+# 0) loading the output of joined/merged 2010 Bara and Adela datasets 
 # 1) dropping and renaming columns to achieve consistency between datasets,  
 # 2) aggregating notes into fewer columns
 # 3) eliminating columns irrelevant at present (e.g. spatial join results that are not shared among datasets) 
@@ -24,10 +24,10 @@ if (exists(df_name)){
 
 ### 2010 Dataset
 
-# Input is mnd2010 (n = 406), a conservative result of a left join between adela and bara 2010 datasets (m2010mounds),
+# Input is mnd2010 (n = 406), a conservative result of a left join between adela and bara 2010 datasets,
 # filtered by type == mound. 
-# Another potential input is m2010leftj (n = 444), which is a more liberal result of left join with 38 features that were mapped as mounds, look like mounds, but are 
-# bunkers, waterstations and other features instead. 
+# Other options to consider here are ab (n = 444), all potential mounds, which includes 38 features classified as other than mound 
+# or ab2010 (n = 493), all attempted map features: ab + those attempted whose ground control failed
 
 names(mnd2010)
 glimpse(mnd2010)
@@ -57,22 +57,12 @@ problem2010TopoID <- which(!m2010$TopoID.x%in%m2010$TopoID.y)  # 35 discrepancie
 m2010$TopoID.y[problem2010TopoID] # most are zeroes in Bara, only 200244 a problem, which is perhaps a typo?? CHECK IN GE
 
 
-# Fix Dates: Google inserted 2020 instead of 2010, plus there are Date and Datum columns.
+# Fix Dates: There are Date (day-month) and Datum (timestamp) columns.
 
-# There are 73 missing dates in m2010. Re-extract dates from Datum and fill in the rest
+# There are 73 missing Dates in m2010. Re-extract dates from Datum and fill in the rest
 which(is.na(m2010$Date))
 
-#  Date also has the wrong year 2020 (result of day-month notation in Google)
-m2010 %>% 
-  dplyr::select(Date, Datum)
-
-# Fix wrong year in the Date column (2010 needs to replace 2020)
-m2010 <- m2010 %>% 
-  mutate(Date = gsub("2020", "2010", Date)) 
-
 # Extract the date from Datum timestamp
-?as.Date() 
-
 m2010 <- m2010 %>%
   mutate(DatumNew = gsub("Mon|Tue|Wed|Thu|Fri|Sat|Sun", "", Datum)) %>% 
   mutate(DatumNew = gsub("00:00:00 CET |00:00:00 CEST ", "",DatumNew)) %>%
@@ -81,10 +71,9 @@ m2010 <- m2010 %>%
   mutate(DatumNew = gsub(" ", "/", DatumNew)) %>% 
   mutate(DatumNew = as.Date(DatumNew,format = "%b/%d/%Y"))
 
+# Fill in missing temporal data (73 in Date, 46 in Datum, only 1 overlaps)
 unique(m2010$DatumNew)
 unique(m2010$Date)
-
-# Fill in NAs (73 in Date, 46 in Datum, only 1 overlaps)
 
 m2010$DatumNew[which(is.na(m2010$Date))]
 sum(is.na(m2010$DatumNew))
@@ -94,12 +83,14 @@ sum(is.na(m2010$DatumNew))
 # Create rows with clean dates
 fixDate2010 <- m2010 %>%
   filter(is.na(DatumNew) | DatumNew == "2013-03-30") %>%
-  mutate(DatumNew = Date) %>% # assign 2010-11-07 date to the missing value
-  mutate(DatumNew = as.Date(DatumNew))
+  # paste in values from Date column (in 17-Nov format) appending 2010
+  mutate(DatumNew = paste(Date, sep="-","2010")) %>% 
+  mutate(DatumNew = as.Date(DatumNew,format = "%d-%b-%Y"))
 
+# date in TRAP 9320 is still missing, we'll assign 2010-11-07 value to it later
 # verify the dates are non-NA
 fixDate2010 %>%
-  dplyr::select(Date, DatumNew) 
+  dplyr::select(Date, DatumNew)
 
 # update master data with non-NA data
 m2010 <- rows_update(
@@ -111,8 +102,6 @@ glimpse(m2010)
 m2010$DatumNew# only 1 missing date
 
 m2010$DatumNew[291] <- "2010-11-07"  # the NA is surrounded by 7 Nov
-
-glimpse(m2010)
 
 # See the old and fixed date side by side 
 m2010 %>% 
@@ -139,12 +128,12 @@ m2010 <- m2010 %>%
          Width_Bara = Width.y, Height_Bara = Height.y, Condition_Bara = Condition, Condition = CRM, 
          DiameterMin = Width.x, Height_Adela = Height.x, RT_numberGE = RT_number, RT_number = RTDescription, 
          TopoID2017 = `2017identifier`, TopoID = TopoID.x,
-         HeightMap = TopoMapHeight, Source = Source.y, 
+         HeightMap = TopoMapHeight, Source = Source.y, SourceOriginal=Source.x,
          DiameterMax_Bara=Diameter_Bara, DiameterMin_Bara=Width.y) %>% 
   unite(Name_BG, c("BLG_Name","NameTopo"), sep = ";", remove = TRUE, na.rm = TRUE) %>% 
   unite(AllNotes, c("Notes", "Description"), sep = "; Bara:", remove = TRUE, na.rm = TRUE) %>% 
   unite(RT_Number, c("RT_number", "RT_numberGE"), sep = "; GE:", remove = TRUE, na.rm = TRUE) %>% 
-  dplyr::select(-one_of("Source.x", "TopoID.y"))   #remove needless
+  dplyr::select(-one_of("TopoID.y"))   #remove needless
 
 
 ############################################################################################################
@@ -260,25 +249,11 @@ glimpse(m2010)
 
 ######################### Date values: any after 2010?
 
-# unique(m2010$Datum)
-# unique(m2010$DatumNew)
 ggplot(m2010)+
   geom_histogram(aes(Date), binwidth = 0.75)+
   theme_bw()+
   labs(title = "Mounds 2010 documentation timeframe")
 
-# Further Type classification vs Dimension checks - this applies to the entire master dataset,
-# but is worth investigating at campaign-level as well to detect inter-annual shift in classification
-#
-# mndXXXX %>% 
-#   dplyr::select(TRAP, Source, DiameterMax, DiameterMin, HeightMax, Condition, Notes, Type) %>% 
-#   filter(HeightMax<0.6 | DiameterMax <15 | DiameterMin < 15) %>% 
-#   tail(13)
-# mutate(Type = "Extinct Burial Mound") %>% 
-#   filter(HeightMax == 0) %>% 
-#   mutate(Type = "Uncertain Mound")
-# 
-# levels(as.factor(mnd2010$Type))
 
 ############################ Fix missing Source
 
@@ -303,3 +278,6 @@ m2010 <- rows_update(
     by = "TRAP")
 
 rm(SourceFix)
+
+# Signal mounds are done
+print("mounds from 2010 are aggregated and streamlined")

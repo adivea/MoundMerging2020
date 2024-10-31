@@ -16,19 +16,6 @@
 library(tidyverse)
 library(lubridate)
 
-
-# Merge FAIMS data
-
-# Uncomment these lines if you need to recreate from scratch and
-# redo some OpenRefining
-# mounds22_1 <- read_csv("../data/20220921BurialMoundOne-csv.csv")
-# mounds22_2 <- read_csv("../data/20220930BurialMoundTwo-csv.csv")
-# 
-# mounds22 <- rbind(mounds22_1,mounds22_2)
-# table(mounds22$TypeClean)
-# names(mounds22)
-# write.csv(mounds22, "../data/2022Elhovo.csv")
-
 ## Load 2022 data
 
 # 2022 data was freshly collected via FAIMS app in September 2022
@@ -45,7 +32,10 @@ m2022 <- m2022 %>%
   mutate(Date = date(createdAtGMT)) %>% 
   mutate(Date = ymd(Date))
 
-### Merge notes into one or two columns
+### Merge annotations 
+# Notes from the mobile app (these are 
+# "scribbles on the margin" in dropdown attributes) 
+# are collated into one or two columns
 
 m2022 <- m2022 %>% 
   dplyr::select(-NotesAndPhotoID) %>% 
@@ -55,16 +45,18 @@ m2022 %>%
   dplyr::select(grep(" 2",names(m2022)), grep("Note",names(m2022))) 
 
 
-# Unite them into two columns for damage and generate with unite(x, y, sep = ",", remove = TRUE, na.rm = TRUE) function
+# Unite annotations into two columns for All and Damage
+# with unite(x, y, sep = ",", remove = TRUE, na.rm = TRUE) function
+
 m2022 <- m2022 %>% 
   unite(AllNotes, c(grep("[Nn]ote",names(m2022))), sep = ",", remove = TRUE, na.rm = TRUE) 
 m2022$AllNotes
 m2022 <- m2022 %>% 
   unite(DamageNotes, c(grep(" 2",names(m2022))), sep = ",", remove = TRUE, na.rm = TRUE)  # Damage notes have "2" in column name from OpenRefine
-m2022$DamageNotes  # we have reduced the initial 52 to 48 variable
+m2022$DamageNotes  # we have reduced the initial 52 to 48 variables
 names(m2022)
 
-# Rename columns 
+# Rename columns to standardize with other attributes
 
 m2022 <- m2022 %>%
   dplyr::rename(TRAP=MoundID, Type=TypeClean, LU_Around = LanduseAroundMound, LU_Top = LanduseOnTopOfMound) # %>% 
@@ -90,7 +82,6 @@ glimpse(m2022)
 
 
 # Streamline Type in 16 spurious LGV records
-print(n=32)
 m2022 %>% 
   filter(Type == "Other" |Type == "Uncertain Feature"  & Source == "Legacy verification") %>%
   select(TRAP, Type, DescriptionOfMoundOrLocale) %>% 
@@ -109,3 +100,6 @@ m2022 <- rows_update(
 m2022 %>% 
   group_by(Type) %>% 
   tally()
+
+rm(correct)
+paste("Mounds from 2022 attributes are streamlined")

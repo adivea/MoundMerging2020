@@ -20,7 +20,7 @@ library(lubridate)
 df_name <- c("mnd2017")
 if (exists(df_name)){
   is.data.frame(get(df_name))
-}  else source("scripts/01_LoadDataG.R")  # change to LoadData.R i
+}  else source("scripts/01_LoadData.R")  # change to LoadData.R i
 
 ############################################################################################################
 #    2017 DATASET 
