@@ -22,7 +22,7 @@ library(lubridate)
 # and cleaned with the 2022_Elhovo_ORcleaningscript to clean up data from the Elhovo 2022 Burial module first (https://docs.google.com/document/d/1Xcq5yuQOrQpVOkGF2fp3ZeK4ynyaTVa3sZZ41NI7ZF8/edit) and 
 # deposited the exported spreadsheets in the data/ folder
 
-m2022 <- read_csv("raw_data/2022Elhovo.csv")
+m2022 <- read_csv("input_data/2022Elhovo.csv")
 names(m2022)
 glimpse(m2022)
 

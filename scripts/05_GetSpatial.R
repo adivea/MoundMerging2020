@@ -63,7 +63,7 @@ glimpse(master)
 ##################################    LOAD SPATIAL DATA from 2009-2018. 2022 comes later
 
 # load mound/feature shapefile created in ArcGIS (1240 features from 2009-2018, 1 known spatial duplicate, ~346 TopoIDs, 1240 TRAPids)
-mnd_shp <- st_read("raw_data/Vectors/200918VisitedMax.shp") # large file compiled by Adela
+mnd_shp <- st_read("input_data/Vectors/200918VisitedMax.shp") # large file compiled by Adela
 plot(mnd_shp$geometry, col = "red")
 
 paste("plotting 1240 points from 2009-2018 master")

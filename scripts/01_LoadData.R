@@ -1,7 +1,7 @@
 # Purpose
 # This script helps me create analysis-ready data from observations of burial mounds in Yambol province, 
 # based on field surveys during 2009-2018, collected using paper-digital hybrid workflow (2009-2010) and fully digital FAIMS-based workflow (2017-2018). 
-# After data collection, these datasets have been cleaned in OpenRefine and outputs of this streamlining were placed in the raw_data folder
+# After data collection, these datasets have been cleaned in OpenRefine and outputs of this streamlining were placed in the input_data folder
 
 # The cleaning happens in 2 stages: 
 # 1) merge and compare two legacy datasets, address discrepancies, and extract ground truthing information. 
@@ -13,12 +13,12 @@ library(here)
 
 
 # Load the datasets
-mounds_bara <- read_csv(file = here("raw_data/2010-LGV-Bara-enrichedOR-20200619.csv"))# 441 obs legacy data verification Bara version (streamlined manually in 2018) version
-#mounds_RS <- read_csv(file = here("raw_data/RSMounds_Temporal20200526.csv")) # 850 obs remote sensing data for verifying LandUse and presence of mound in map features
-mounds_adela <- read_csv(file = here("raw_data/2010-LGV-AdelaLU-20200629.csv")) # 444 obs legacy data verification Adela (original 2017 but streamlined in Open Refine with LandUse supplied by and dimensions verified via GoogleEarth) version
-mnd2017 <- read_csv(file = here("raw_data/2017ElenovoAll.csv"))
-mnd2018 <- read_csv(file = here("raw_data/2018Bolyarovo.csv")) # 282 records cleaned in OR from annotations
-mnd2009<- read_csv(file = here("raw_data/2009Mounds_20200722.csv")) # this file contains 2009 survey and RS mounds that Adela check in GoogleEarthPro (exists also in GDrive)
+mounds_bara <- read_csv(file = here("input_data/2010-LGV-Bara-enrichedOR-20200619.csv"))# 441 obs legacy data verification Bara version (streamlined manually in 2018) version
+#mounds_RS <- read_csv(file = here("input_data/RSMounds_Temporal20200526.csv")) # 850 obs remote sensing data for verifying LandUse and presence of mound in map features
+mounds_adela <- read_csv(file = here("input_data/2010-LGV-AdelaLU-20200629.csv")) # 444 obs legacy data verification Adela (original 2017 but streamlined in Open Refine with LandUse supplied by and dimensions verified via GoogleEarth) version
+mnd2017 <- read_csv(file = here("input_data/2017ElenovoAll.csv"))
+mnd2018 <- read_csv(file = here("input_data/2018Bolyarovo.csv")) # 282 records cleaned in OR from annotations
+mnd2009<- read_csv(file = here("input_data/2009Mounds_20200722.csv")) # this file contains 2009 survey and RS mounds that Adela check in GoogleEarthPro (exists also in GDrive)
 
 
 

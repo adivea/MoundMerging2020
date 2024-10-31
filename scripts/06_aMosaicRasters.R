@@ -10,8 +10,8 @@
 # Load ASTER DEM rasters, provided by JICA, in 4326 unprojected EPSG!
 # projected files do not align and are non-trivial to merge
 
-Yam <- raster("C:/Users/adela/Desktop/TRAP_Oxbow/YAM/ASTGTM_N42E026/ASTGTM_N42E026_dem.tif")
-Tur <- raster("C:/Users/adela/Desktop/TRAP_Oxbow/YAM/ASTGTM_N41E026/ASTGTM_N41E026_dem.tif")
+Yam <- raster("input_data/large/ASTGTM_N42E026_dem.tif")
+Tur <- raster("input_data/large/ASTGTM_N41E026_dem.tif")
 
 Yam # projected WGS84 0.00027 resolution, 3601x3601 cells
 Tur # projected WGS84 0.00027 resolution, 3601x3601 cells
