@@ -1,0 +1,322 @@
+---
+title: "Final cleaning and linking of AKB IDs to Yambol Features"
+author: "Adela Sobotkova"
+date: "updated `r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    highlight: kate
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+library(formatR)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+The script explores the consistency of datatypes and feature attributes created in previous scripts, streamlines loose ends, and marries the records to their AKB counterparts.
+Final data are clipped to Yambol bounadry before export in two spatially-deduplicated versions.
+This script can be run standalone and is final. There is no need to run previous scripts unless one wishes to explore the data in their raw state or change some of the processing.
+
+## What is AKB 
+
+AKB stands for the "Arheologicheska Karta na Bulgaria", national digital register, where all archaeological sites and places of interest are entered upon their first investigation. The purpose of the present script is to add AKB identifiers assembled by Todor Valchev to the Yambol field observations. The biggest benefit of this exercise is that the AKB reference lets us see if a given mound was excavated and dated. It also allows users with access to AKB to look up the full cultural heritage information associated with the record.
+
+Sites are often entered into AKB upon their first visit, with additional data added upon revisit, excavations, or other analyses.
+
+The AKB link is one reason why we retain the Yambol data in two spatial versions: `_early` and `_later`. While the `_later` is based on revisits and thus more recent and authoritative (especially if driven by the need to update or improve the record), the `_early` record IDs were use to create links in AKB and so are more suitable for mapping of cultural heritage data in AKB with the environmental variables present here. 
+
+## Setup
+```{r libraries}
+library(tidyverse)
+library(sf)
+library(mapview)
+```
+
+
+## Load data - select early or late
+Here we load aggregated and deduplicated features. Choose whether you wish to use the `_later`, most recent observations, or `_early`, the earliest version, which matches the AKB best. `_early` version is the default. If you change the default, remember to adjust the export filenames in code chunks in lines 242 and 272.
+
+```{r -load-aggr-data}
+# # Later
+# features <- readRDS("../output_data/interim/features_dd_later.rds") # most recent observations
+# Early
+features <- readRDS("../output_data/interim/features_dd_early.rds") # first AKB entry
+str(features)
+
+```
+
+## Validation I: Check how many of the features are actually mounds
+
+```{r type-tally}
+# Filter features by type
+features %>% 
+  group_by(Type) %>% 
+  tally()
+```
+
+```{r type-check}
+# Verify the Source in the category "Other"  of Type.
+
+features %>% 
+  filter(Type == "Other") %>% 
+  group_by(Source) %>% 
+  tally()
+
+```
+In the tally of "Other" types, there are 34 Legacy verification features and 41 Survey features. While the latter are expected, the 34 verified features required follow up on 27 Dec 2022. Inspection showed that many of the verified features originate not from sunbursts but other map markers, such as rayed squares and triangles. We inspected these in the early seasons but stopped doing so after these turned out not to lead to mounds reliably. 
+
+### What is hiding under "other"?
+```{r explore-type-other}
+features %>% 
+  filter(Type == "Other" & Source == "Legacy verification")  %>% 
+  group_by(PrincipalSourceOfImpact) %>% 
+  tally()
+```
+We can see that a lot of the map symbols led to geodetic points and benchmarks, 8 were not accessible, and other locations contained water wells and other structures, whose setting prevented us from labelling them as extinct mounds
+
+## Validation II: Check for attribute duplicates 
+Spatial duplication is addressed in 06_Enrich.Rmd
+```{r duplicate-check}
+features$TRAP[duplicated(features$TRAP)] 
+```
+
+## Validation III: Clean up condition, height and other attribute
+
+Condition was documented on Likert scale from 1 to 5 with 1 being pristine and 5 being extinct. 0 denoted No `observation`.
+```{r clean-up-condition}
+unique(features$Condition)
+glimpse(features)
+
+features <- features %>%
+   dplyr::mutate(Condition = case_when(Condition == 0 ~ "NA",
+                               Condition == 6 ~ "5",
+                               Condition != 0 ~ Condition)) %>% 
+  dplyr::mutate(Condition = as.factor(Condition)) %>% 
+  dplyr::mutate(TypeCertainty = case_when(
+    grepl("\\?",Type) ~ "Uncertain",
+    !grepl("\\?",Type) ~ "Certain")) %>% 
+  dplyr::mutate(Type= gsub("\\?","",Type)) %>% 
+  dplyr::mutate(DiameterMax = as.numeric(DiameterMax)) 
+
+levels(features$Condition) = c(1,2,3,4,5, NA)
+
+features %>% 
+  group_by(TypeCertainty) %>% 
+  tally()
+```
+
+## Constrain to Yambol Province 
+
+```{r yambol-features}
+# load the boundary
+Y_region <- st_read("../input_data/Vectors/YamRegion.shp") 
+
+Y_features <- st_intersection(features, Y_region$geometry)
+Y_features  # 1243 features and 24 fields
+```
+
+
+Within Yambol, we documented 1243 features (early observations). 
+
+## Execute attribute changes following manual review
+This chunk corrects poor data entries in the structured digital forms on the basis of photographs, diaries, and AKB records.
+```{r changes-type-source}
+# Type Certainty UNCERTAIN TO CERTAIN
+certain <- Y_features %>% 
+  filter(TRAP %in% c(9838,9852,8766,8359)) %>% 
+  mutate(TypeCertainty = "Certain" )
+
+# Type Burial mound to EXTINCT
+extinct <- Y_features %>% 
+  filter(TRAP %in% c(9516, 8337, 8388, 8770, 9910, 9911)) %>% 
+  mutate(Type = "Extinct Burial Mound" )
+
+# Type Burial mound to Scatter
+scatter <- Y_features %>% 
+  filter(TRAP == 9883) %>% 
+  mutate(Type = "Surface Scatter" )
+
+# Type Burial mound to Other
+other <- Y_features %>% 
+  filter(TRAP %in% c(8427, 9645))%>% 
+  mutate(Type = "Other")
+
+# Swap Source in these two and TypeCertainty
+m8763 <- Y_features %>% 
+  filter(TRAP == 8763) %>% 
+  mutate(Source = "Legacy verification")
+m8764 <- Y_features %>% 
+  filter(TRAP ==  8764) %>% 
+  mutate(Source = "Survey", Type = "Extinct Burial Mound", TypeCertainty = "Uncertain")
+  
+fixes <- rbind(m8763,m8764, other,scatter,extinct,certain)
+
+class(fixes$distBG)
+
+# Fix source in features with row_update()
+colnames(Y_features)
+colnames(fixes)
+
+# row_update() fails on the units distBG and geometry columns so we eliminate these for a moment to apply fixes, and then rejoin them.  
+
+features_fixed <- rows_update(
+  st_drop_geometry(Y_features)[,-14],  #remove distBG
+  st_drop_geometry(fixes)[,-14],
+  by = "TRAP")
+
+# rejoin geometry and distBG to cleaned source and type data
+features_fixed <- features_fixed %>% 
+  left_join(Y_features[,c("TRAP", "distBG")], by = "TRAP") %>% 
+  st_as_sf()
+
+features_fixed %>% mapview(zcol = "Type")
+features_fixed %>% 
+  dplyr::filter(Type == "Tell") %>% 
+  dplyr::select(Date, TRAP, Source)
+```
+### Fix missing data notation
+AllNotes field and TopoID field sometimes contain zeroes or are outright blank to indicate missing data. Missing data is legitimate, as only Map symbols get TopoID and many mounds were first encountered during Survey. Likewise, AllNotes field is aggregated from annotations in the mobile app, which served to comment on structured data (dropdown options), indicating some deviation or addition. They do not exist everywhere. 
+Let's convert all these zeroes and blanks to NAs for consistency.
+```{r missing-to-NAs}
+features_fixed$AllNotes <- ifelse(features_fixed$AllNotes == "0" |
+                                    features_fixed$AllNotes == "", NA, 
+                                  features_fixed$AllNotes)
+features_fixed$TopoID <- ifelse(features_fixed$TopoID == "0", NA, features_fixed$TopoID)
+```
+
+
+Clean up after the changes
+```{r clean-up-objects}
+rm(certain, extinct, fixes, m8763, m8764, other, scatter)
+```
+
+## AKB identifiers
+Here we add AKB numbers to feature data so their future analyses can be brought to bear on the environmental attributes documented during survey.
+
+### 1055 AKB records
+We have 1055 AKB numbers among 1466 visited features. The mismatch is because some features were not deemed worthy of registering (extinct or overbuilt status, military bunkers. etc)
+
+```{r load-AKB}
+AKB <- read_csv("../input_data/MoundsAKBnumbers.csv")
+sum(!is.na(AKB$AKB))
+names(AKB)
+head(AKB)
+
+# Which ones are excavated?
+AKB %>% 
+  filter(grepl("[Ee]xcavated", Notes)) 
+```
+
+
+### Join AKB to features
+```{r join-AKB}
+Y_features <- features_fixed %>% 
+  left_join(AKB, by = c('TRAP')) %>% 
+  rename(AKBNotes = Notes)
+
+mapview(Y_features, zcol= "AKBNotes")
+
+colnames(Y_features)
+head(Y_features[,10:27])
+
+# Are there duplicate AKB numbers? 
+AKBduplicated <- Y_features %>%
+  filter(!is.na(AKB)) %>% 
+  filter(duplicated(AKB)) %>% 
+  pull(AKB)
+
+Y_features %>% 
+  dplyr::filter(AKB %in% AKBduplicated) %>% 
+  dplyr::select(TRAP, AKB)
+
+```
+
+Beware: In 9 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 16 TRAP mounds share an AKB number. 
+
+## How many features/mounds have been excavated in Yambol by 2023
+```{r Yambol-exav-mnds}
+Y_features %>% 
+  filter(AKB > 0) %>% 
+  filter(grepl("Excav", AKBNotes)) #  27 excavated in early dataset
+
+Y_features %>% 
+  filter(AKB > 0)  # 1030/1040 early/later features have AKB >> duplicates must be here
+```
+
+## Fix column names for legibility
+
+```{r rename-colums}
+names(Y_features)
+Y_features <- Y_features %>% 
+  rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, DistBG_m = distBG, AKBArea = Area)
+```
+
+
+## Export Yambol features, later and early 
+To export these properly, select your desired version to run the script with either the early or the later dataset. Also, mke sure to select the best format for your further processing: rds(R) or geojson(Python). Default is the `_early` version and `rds` format.
+
+```{r export-features}
+# Features in Yambol
+names(Y_features)
+glimpse(Y_features)
+
+# Early version
+Y_features %>%
+  write_rds("../output_data/Y_features_dd_early.rds")
+
+Y_features %>%
+  st_write("../output_data/Y_features_dd_early.geojson", append = F)
+
+# # Later version
+# Y_features %>%
+#   write_rds("../output_data/Y_features_dd_later.rds")
+# Y_features %>%
+#   st_write("../output_data/Y_features_dd_later.geojson", append = F)
+```
+## Filter deduplicated features for mounds
+Now that the attributes look reasonably well, let's filter out and export the most likely mounds inside the Yambol Province.
+
+```{r filter-mounds}
+Y_features %>%
+   filter(grepl("Mound|Other|Uncertain", Type))%>% 
+   group_by(Type) %>% 
+   tally()
+```
+
+## Export Yambol mounds, later and early
+Moving to export, uncomment the relevant section of early or later variant.
+I recommend using the `_later` deduplicated variant as authoritative as the later observations are more "current".  But there is good reason to use the _early variant if you wish to look for change in observations between teams and seasons, or if you need to add AKB information - it is linked to the earlier IDs as it's usually recorded upon first visit.
+
+```{r export-mnds}
+# early version
+Y_features %>%
+    filter(grepl("[Mm]ound", Type)) %>%
+    write_rds("../output_data/Y_mounds_dd_early.rds")
+
+Y_features %>%
+    filter(grepl("[Mm]ound", Type)) %>%
+    st_write("../output_data/Y_mounds_dd_early.geojson", append=FALSE)
+
+# later version
+# Y_features %>%
+#     filter(grepl("[Mm]ound", Type)) %>%
+#     write_rds("../output_data/Y_mounds_dd_later.rds")
+#
+# Y_features %>%
+#     filter(grepl("[Mm]ound", Type)) %>%
+#     st_write("../output_data/Y_mounds_dd_later.geojson", append=FALSE)
+```
+
+
+

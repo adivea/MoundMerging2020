@@ -299,7 +299,7 @@ head(master$Condition)
 ########################################## SAVE RDS ################
 
 # Signal mounds are done
-print("mound attributes from 2009-2022 are aggregated and streamlined")
+paste("mound attributes from 2009-2022 are aggregated and streamlined")
 
 # saveRDS(master, "output_data/mergedcleanfeatures2023.rds")
 

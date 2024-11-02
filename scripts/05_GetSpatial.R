@@ -1,7 +1,7 @@
 ############################################################################################################
 #                   CONNECTING MASTER DATASET WITH SPATIAL DATA 
 ############################################################################################################
-#
+#        SPATIALISATION OF FEATURES
 
 # Goal
 # Enrich the master dataset of all visited features in the Yambol province and surroundings from 2009-2022 with spatial data. 
@@ -145,14 +145,16 @@ master_sp %>%
   ggplot()+
   geom_sf(aes(size = HeightMax, alpha = 0.5))
 
+########################## SAVE FINAL PRODUCT
+
 # Save rds
-saveRDS(master_sp, "output_data/master_sp.rds")
+saveRDS(master_sp, "output_data/interim/master_sp.rds")
 
 # Clean up
 rm(m8142, m, m_sp, mnd_shp, mnd_sp32635, df_name, i, input, names_all,
    names_faims, names_manual, script)
 
-##############      FAIMS DATA
+#########################      FAIMS DATA
 
 m_Faims <- read_csv("output_data/interim/faimsmaster.csv")
 glimpse(m_Faims)

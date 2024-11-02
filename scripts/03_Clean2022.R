@@ -84,7 +84,7 @@ glimpse(m2022)
 # Streamline Type in 16 spurious LGV records
 m2022 %>% 
   filter(Type == "Other" |Type == "Uncertain Feature"  & Source == "Legacy verification") %>%
-  select(TRAP, Type, DescriptionOfMoundOrLocale) %>% 
+  dplyr::select(TRAP, Type, DescriptionOfMoundOrLocale) %>% 
   arrange(TRAP) %>% 
   print(n=32)
 

@@ -1,5 +1,5 @@
 ---
-title: "Yambol Data Preparation"
+title: "Spatial enrichment and deduplication"
 author: "Adela Sobotkova"
 date: "updated`r Sys.Date()`"
 output:
@@ -23,24 +23,23 @@ opts_chunk$set(echo=TRUE,
 opts_knit$set(width=75)
 ```
 
-## Data Loading and Preparation
+## The objectives
 
-This script enriches Yambol verified data for follow-up analysis. It loads the master_sp data from 2009-2018 and 2022 on burial mounds from Yambol as well as associated Yambol region vectors and elevation rasters. It uses the latter for mound data enrichment.
+This script enriches and spatially deduplicates Yambol verified data for follow-up analysis. It builds on the `master_sp` data generated in `05_GetSpatial` script and Yambol region vectors and elevation rasters. As part of enrichment, we extract distances to nearest settlement boundary, to national border (implicated in site conservation), elevation, ruggedness and topographic prominence for each mound.
 
 ### Inputs
 
-- master_sp: raw data on streamlined and spatialized verified features from 05_GetSpatial script
-- Turkish and SE Bulgarian ASTER images
+- `master_sp`: streamlined and spatialized verified features. Run 05_GetSpatial.R if not present
+- `Y_elev32635` : JICA ASTER (N42E026)raster that fits the confines of the Yambol Province and 
+- `YT_elev32635`: mosaiced JICA ASTER (N42E026 + N41E026)raster that crosses the Yambol-Turkish border. See supplementary/06a_Mosaic.R for processing of original JICA downloads
 
 ### Outputs
 
-- deduplicated enriched master_sp and features_dd in later and early versions (features re-visited in two different seasons and given different ID)
-- additional attributes such as ASTER elevation, topographic prominence, roughness etc. 
-- mosaiced raster that fits the confines of the Yambol Province
-- mosaiced raster that crosses the Yambol-Turkish border 
+- enriched but not deduplicated `master_sp` in the output_data/interim/ folder
+- enriched and deduplicated `features_dd` in _later and _early versions. These two versions contain features re-visited in two different seasons and given different IDs under which they appear in the Bulgarian national register of archaeological sites (AKB, see 07_Finalize.rmd)
+- these files have been enriched with additional attributes such as ASTER elevation, topographic prominence, roughness etc. 
 
-
-## Setup
+## Libraries
 
 ```{r libraries}
 library(tidyverse)
@@ -60,7 +59,7 @@ if (exists(input)){
   print("file exists")
   get(input)
 }   else 
-  master_sp <- readRDS("../output_data/master_sp.rds") 
+  master_sp <- readRDS("../output_data/interim/master_sp.rds") 
 # You could also try running the 05_GetSpatial.R script here:
 # }  else source("../scripts/05_GetSpatial.R") 
 # If script 05_GetSpatial.R is erroring out from this RMD, open and run it manually.
@@ -97,7 +96,7 @@ plot(elev)
 
 ```
 
-## Plot everything
+### Plot everything
 ```{r plot-all}
 plot(elev)
 
@@ -153,13 +152,13 @@ hist(master_sp$distTown, main = "Distance from feature to town center", xlab = "
 ```
 
 ### Sample elevation, aspect and slope at mound coordinates
-
+Done following https://rdrr.io/cran/raster/man/terrain.html
 ```{r elev-aspect-slope}
 # Prerequisite to sampling - a dataframe with coordinates alone
 mound_coordinates <- data.frame(st_coordinates(master_sp)) # don't add TRAP yet
 
 # Sample elevations at mound locations
-master_sp$elevAster <- raster::extract(elev, mound_coordinates)
+master_sp$ElevAster_m <- raster::extract(elev, mound_coordinates)
 
 # Create slope and aspect raster (can add 'flowdir' also, if needed)
 Y_aspslope <- raster::terrain(elev, opt = c('slope','aspect'), neighbors = 8, unit= 'degrees')
@@ -179,29 +178,31 @@ Y_rough <- raster::terrain(elev, opt ='roughness', neighbors = 8)
 
 
 # Extract values
-master_sp$slopeAster <-  raster::extract(Y_aspslope$slope, mound_coordinates)
-master_sp$aspectAster <-  raster::extract(Y_aspslope$aspect, mound_coordinates)
+master_sp$SlopeAster_degrees <-  raster::extract(Y_aspslope$slope, mound_coordinates)
+master_sp$AspectAster <-  raster::extract(Y_aspslope$aspect, mound_coordinates)
 master_sp$TRI <-  raster::extract(Y_TRI$tri, mound_coordinates)
 master_sp$TPI <-  raster::extract(Y_TPI$tpi, mound_coordinates)
-master_sp$rough <-  raster::extract(Y_rough$roughness, mound_coordinates)
+master_sp$Roughness <-  raster::extract(Y_rough$roughness, mound_coordinates)
 
 ```
 
 ### Calculate mound prominence within 250m radius 
+To gauge mound prominence I calculate the fraction of surrounding cells (within specified radius) whose altitude is lower than that of the mound. I use `perc()` function from the `FSA` package (Ogle et al, 2023) to calculate the percentage of lower-altitude cells with the help of `lt` flag. 
 ```{r prominence}
-library(FSA) # provides the perc() function used to calculate the fraction of locations below the mound altitude for neighborhood in a given radius
+library(FSA) 
 ?perc()      # check the function is in the FSA package
+
 master_sp$prom250mbuff <- raster::extract(elev, 
                         mound_coordinates, # mounds coordinate df
-                        buffer = 250, # buffer size in crs units, in this case 250m or ca 7x7 cells around kernel
-                        fun = function(x){FSA::perc(x,x[length(x)/2],"lt", na.rm = FALSE, digits = 2)})  # lt argument means "lower than supplied altitude" 
+                        buffer = 250, # radius in crs units, in this case 250m 
+                        fun = function(x){FSA::perc(x,x[length(x)/2],"lt", na.rm = FALSE, digits = 2)})  # "lt" argument means "lower than supplied altitude" 
 
 summary(master_sp[,13:19]) 
 hist(master_sp$prom250mbuff)
 ```
 
 ### Sanity checks
-Look whether the generated values check out. Some such as distance to BG border should be obvious
+Inspect visually whether the generated values check out. Some such as distance to BG border should be fairly obvious.
 ```{r view-BGborder-distance}
 library(mapview)
 master_sp %>% 
@@ -234,7 +235,7 @@ read.csv("../output_data/duplicates_final.txt", sep = " ")
 
 ### Eliminate one set of duplicates
 Only run this on the 2009-2022 dataset, not on FAIMS data (where duplicates were eliminated already)
-```{r duplicate-eliminate}
+```{r duplicates-separate-early-later}
 `%nin%` = Negate(`%in%`)
 
 master_sp %>% 
@@ -255,58 +256,61 @@ later <- master_sp %>%
 early %>% 
   group_by(Type) %>% 
   tally()
+
 later %>% 
   group_by(Type) %>% 
   tally()
+
 glimpse(later)  # Look for AllNotes, valid Dates and new attributes
 ```
-### Export deduplicated features (de-duplication was done 27 Dec 2022)
-Last run on 29 December 2023
-```{r export-features}
-if (file.exists("../output_data/features_dd_later.rds")){
+## Export deduplicated features
+
+First run on 29 December 2022
+This is interim export of all features from Yambol and around, deduplicated and enriched, in `geojson` and `rds` format for Python and R users respectively.
+
+```{r export-enriched-deduplicated-features}
+## Geojson with all documented features - the latest, most authoritative observations
+rm("../output_data/interim/features_dd_later.geojson") # erase previous else geojson writing errors out 
+later %>%
+  sf::st_write("../output_data/interim/features_dd_later.geojson", append = F)  
+
+# Geojson with all documented features - the earliest observations which is good for linking with AKB 
+rm("../output_data/interim/features_dd_early.geojson") # erase previous else geojson writing errors out
+early %>%
+  sf::st_write("../output_data/interim/features_dd_early.geojson", append = F)
+
+# RDS of latest observations
+if (file.exists("../output_data/interim/features_dd_later.rds")){
   print("file exists in outputs")
 } else {
   print("writing features_dd_later file to outputs")
-  write_rds(later, "../output_data/features_dd_later.rds")  
+  write_rds(later, "../output_data/interim/features_dd_later.rds")  
 }
  
-if (file.exists("../output_data/features_dd_early.rds")){
+# RDS of early observations
+if (file.exists("../output_data/interim/features_dd_early.rds")){
   print("file exists in outputs")
 } else {
   print("writing features_dd_later file to outputs")
-  write_rds(early, "../output_data/features_dd_early.rds")  
+  write_rds(early, "../output_data/interim/features_dd_early.rds")  
 }
 ```
 
-## Filter deduplicated features for mounds
-I tend to use the later deduplicated variant as authoritative as the later observations are more "current". 
-```{r filter-mounds}
-later %>%
-   filter(grepl("Mound|Other|Uncertain", Type))%>% 
-   group_by(Type) %>% 
-   tally()
+## Export enriched but not deduplicated features
+In case we wish to have all observations collated
 
-mnd_late_sp <- later %>%
-   filter(grepl("Mound|Other|Uncertain", Type))
+```{r export-master_sp-enriched-data-Yambol-and-surroundings}
+# All features enriched but not deduplicated
+write_rds(master_sp, "../output_data/interim/master_sp_enriched.rds") 
+sf::st_write(master_sp,"../output_data/interim/master_sp_enriched.geojson")
+
+# master_sp %>% 
+#   dplyr::select(-TopoID) %>%  # shapefiles struggle with TopoID
+#   sf::st_write("../output_data/interim/master_sp.shp", append = F)
 
 ```
-
-## Export deduplicated and enriched features
-This is interim export of all features from Yambol and around. It is included as a shortcut to all the calculation above.
-
-```{r export-enriched-data-Yambol}
-# master_sp  - all features
-write_rds(master_sp, "../output_data/master_sp.rds") # enriched but not deduplicated
-master_sp %>% 
-  dplyr::select(-TopoID) %>%  # shapefiles struggle with TopoID
-  st_write("../output_data/interim/master_sp.shp", append = F)
-
-# features everywhere - later authoritative version
-later %>%
-  st_write("../output_data/features_dd_later.geojson", append = F) # is not writing properly
-
-# features everywhere - early version which has AKB links and numbers
-early %>%
-  st_write("../output_data/features_dd_early.geojson", append = F)
+### Cleanup
+```{r cleanup}
+rm(bg_border, mound_coordinates, Y_elev32635, Y_towns_poly, Y_towns, master_sp)
 ```
 
