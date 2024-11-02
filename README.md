@@ -72,6 +72,13 @@ Each of these scripts is fully stand-alone and running `07_Finalize.rmd` will ge
 
 3. The idea behind the multiple scripts and data versions is that each script focuses on different aspect of cleaning. The streamlining needs follow a certain logic of ease, e.g. spatial deduplication (==splitting) makes sense after most streamlining and enrichment is done to avoid repetition on the subsets. Spatialisation focuses on geometries, while merging works mostly with identifiers and attributes.  Standardisation of the attributes of Type, Condition, LandUse (LU) serves most common analyses of type and landuse classification, vulnerability assessment and similar.  Additional variation, uncertainty and verbose annotations are streamlined and moved either to AllNotes or fields such as TypeCertainty in 05_GetSpatial and 07_Finalize rmd scripts. They can be accessed in the interim/ products.
 
+# Acknowledgments
+Collecting a landscape-scale dataset would not be possible without the dedicated help of local and international colleagues. We hereby give massive thanks to Barbora Weissova her assistance with mound monitoring and spatial data streamlining. We also thank Petra Heřmánková and Věra Doležálková for leading field teams and managing data collection. Last but not least, the data would not exist were it not for the students, colleagues, and volunteers from the Yambol History Museum, UNSW Australia, Macquarie University, New Bulgarian University, Charles University, Aarhus University and many other institutions. In rough chronological order of appearance these include Iliya Iliev, Georgi Iliev, Yavor Rusev, Stefan Bakardzhiev, Simon Connor, Shawn Ross, Petra Tušlová, Tereza Dobrovodská, Sona Holičková, Scott Jackson, Stanislav Marchovski, Jana Ryšavková, Radko Sedláček, Jarmila Švédová, Dragomir Garbov,  Emma Jacobson, Royce Lawrence, Briana Barton, Stephanie Black, Lachlan Hanley, Samuel Riley, Isaac Roberts, Tiana Anderson, Amy Tanswell, Mikaila Walker, Bronwyn Schlamowitz, Elissa Sinclair, Angel Bogdanov Grigorov, Matilde Jensen, Sara Vejrup, Dorthe Pedersen, Julie Lund, Joel Sercombe, Mathias Kaas, and Mathias Johansen.
+
+# Funding Information
+This work was supported by the Australian Research Council Linkage Projects Funding scheme LP0989901, University of Michigan International Grant, America for Bulgaria Foundation, Endeavour Short-Term Mobility Programme from the Australian Department of Education, grant 19686; National eResearch Collaboration Tools and Resources (NeCTAR) under eResearch Tools grant RT043; the Australian Research Council under Linkage, Infrastructure, Equipment and Facilities (LIEF) grant LE140100151; Macquarie University and UNSW Australia under internal infrastructure grant schemes; and Aarhus University Forskningsfond Starting grant no. AUFF-2018-7-22 awarded to the ‘Social Complexity in the Ancient Mediterranean’ (SDAM) project.
+
+
 # License
 Attribution-NonCommercial-ShareAlike 4.0 International
 * You are free to:
@@ -85,6 +92,7 @@ The licensor cannot revoke these freedoms as long as you follow the license term
 -- NonCommercial — You may not use the material for commercial purposes .
 -- ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 -- No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
 
 # How to cite
 Adela Sobotkova. (2024). Verified Burial Mounds in Yambol Province, SE Bulgaria (v1.1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.13342120
