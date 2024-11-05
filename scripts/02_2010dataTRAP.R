@@ -4,9 +4,11 @@
 
 # this script is one step towards a master dataset of mounds in Yambol province, built 
 # for chronological and vulnerability modeling.
-# Field data from 2010 has been forked during previous cleaning process and needs more 
-# conciliation than data from 2009 or 2017-2022, hence this extra script. In this script we use TRAP IDs to carve out a 2010 dataset.
-# 2010 verified dataset should not contain too many features whose dimensions are unknown or that don't have the potential of having once been a mound
+# Field data from 2010 has been cleaned in two workflows: Adela verified attributes and Bara spatial data 
+# and condition. These produced two versions of the same observations, which are merged in this extra script. 
+# TRAP IDs are the shared column used for joining and two final versions are produced, a conservative (visited mounds)
+# and a liberal dataset (with potential mounds). The 2010 verified dataset should not contain too many features 
+# whose dimensions are unknown or that don't have the potential of having once been a mound
 
 
 ############################################################################################################
@@ -57,8 +59,8 @@ mounds_bara %>%
 # LEFT JOIN BY TRAP - MEANINGFUL MOUNDS mnd2010 AND POTENTIAL MOUNDS ab
 ############################################################################################################
 #
-## Left join to Adela's dataset
-# I consider Adela dataset slightly more verified (from several sources) and so we start with a left join 
+## Combining two streamlined datasets into one
+# Adela dataset is a bit more streamlined and verified from several sources and so we start with a left join 
 # of Bara's to Adela's data via TRAP ID to preserve Adela's data and append Bara's
 # All mounds should have a TRAP number since they have been surveyed (in theory) and verified. 
 # Line 33-34 shows that Bara's dataset has 10 mounds with missing TRAP ID. 

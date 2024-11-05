@@ -49,7 +49,7 @@ Here we load aggregated and deduplicated features. Choose whether you wish to us
 
 ```{r -load-aggr-data}
 # # Later
-# features <- readRDS("../output_data/interim/features_dd_later.rds") # most recent observations
+features <- readRDS("../output_data/interim/features_dd_later.rds") # most recent observations
 # Early
 features <- readRDS("../output_data/interim/features_dd_early.rds") # first AKB entry
 str(features)
@@ -259,7 +259,7 @@ Y_features %>%
 ```{r rename-colums}
 names(Y_features)
 Y_features <- Y_features %>% 
-  rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, DistBG_m = distBG, AKBArea = Area)
+  rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, Prominence_at250m = prom250mbuff, DistBG_m = distBG, AKBArea = Area)
 ```
 
 
@@ -272,17 +272,35 @@ names(Y_features)
 glimpse(Y_features)
 
 # Early version
+# Y_features %>%
+#   write_rds("../output_data/Y_features_dd_early.rds")
+# 
+# Y_features %>%
+#   st_write("../output_data/Y_features_dd_early.geojson", append = F)
+
+# Y_features %>%
+#   mutate(X = st_coordinates(.)[,2],
+#          Y = st_coordinates(.)[,1]) %>% 
+#   mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
+#          DistTown_m = unclass(DistTown_m),
+#          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
+#   st_drop_geometry() %>% 
+#   write_csv("../output_data/Y_features_dd_early.csv")
+
+# Later version
 Y_features %>%
-  write_rds("../output_data/Y_features_dd_early.rds")
+  write_rds("../output_data/Y_features_dd_later.rds")
+Y_features %>%
+  st_write("../output_data/Y_features_dd_later.geojson", append = F)
 
 Y_features %>%
-  st_write("../output_data/Y_features_dd_early.geojson", append = F)
-
-# # Later version
-# Y_features %>%
-#   write_rds("../output_data/Y_features_dd_later.rds")
-# Y_features %>%
-#   st_write("../output_data/Y_features_dd_later.geojson", append = F)
+  mutate(X = st_coordinates(.)[,2],
+         Y = st_coordinates(.)[,1]) %>% 
+  mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
+         DistTown_m = unclass(DistTown_m),
+         DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
+  st_drop_geometry() %>% 
+  write_csv("../output_data/Y_features_dd_later.csv")
 ```
 ## Filter deduplicated features for mounds
 Now that the attributes look reasonably well, let's filter out and export the most likely mounds inside the Yambol Province.
@@ -300,22 +318,41 @@ I recommend using the `_later` deduplicated variant as authoritative as the late
 
 ```{r export-mnds}
 # early version
-Y_features %>%
-    filter(grepl("[Mm]ound", Type)) %>%
-    write_rds("../output_data/Y_mounds_dd_early.rds")
-
-Y_features %>%
-    filter(grepl("[Mm]ound", Type)) %>%
-    st_write("../output_data/Y_mounds_dd_early.geojson", append=FALSE)
+# Y_features %>%
+#     filter(grepl("[Mm]ound", Type)) %>%
+#     write_rds("../output_data/Y_mounds_dd_early.rds")
+# 
+# Y_features %>%
+#     filter(grepl("[Mm]ound", Type)) %>%
+#     st_write("../output_data/Y_mounds_dd_early.geojson", append=FALSE)
+# Y_features %>%
+#   filter(grepl("[Mm]ound", Type)) %>%
+#   mutate(X = st_coordinates(.)[,2],
+#          Y = st_coordinates(.)[,1]) %>% 
+#   mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
+#          DistTown_m = unclass(DistTown_m),
+#          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
+#   st_drop_geometry() %>% 
+#   write_csv("../output_data/Y_features_dd_early.csv")
 
 # later version
-# Y_features %>%
-#     filter(grepl("[Mm]ound", Type)) %>%
-#     write_rds("../output_data/Y_mounds_dd_later.rds")
-#
-# Y_features %>%
-#     filter(grepl("[Mm]ound", Type)) %>%
-#     st_write("../output_data/Y_mounds_dd_later.geojson", append=FALSE)
+Y_features %>%
+    filter(grepl("[Mm]ound", Type)) %>%
+    write_rds("../output_data/Y_mounds_dd_later.rds")
+
+Y_features %>%
+    filter(grepl("[Mm]ound", Type)) %>%
+    st_write("../output_data/Y_mounds_dd_later.geojson", append=FALSE)
+
+Y_features %>%
+  filter(grepl("[Mm]ound", Type)) %>%
+  mutate(X = st_coordinates(.)[,2],
+         Y = st_coordinates(.)[,1]) %>% 
+  mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
+         DistTown_m = unclass(DistTown_m),
+         DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
+  st_drop_geometry() %>% 
+  write_csv("../output_data/Y_mounds_dd_later.csv")
 ```
 
 

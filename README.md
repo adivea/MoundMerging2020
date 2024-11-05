@@ -41,10 +41,10 @@ Extent: while survey was conducted primarily in the Yambol Province, occasionall
 
 0. If you just want to use the data, choose the most suitable dataset for your toolkit (rds is great for R but geojson is easier to work with for Python users) from the output_data/ folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
 
-  - Y_mounds_dd_early.rds - mounds clipped to Yambol region, deduplicated to early version, enriched (06_Enrich and 07_Finalize)
-  - Y_mounds_dd_later.rds - mounds clipped to Yambol region, deduplicated to later version, enriched (06_Enrich and 07_Finalize)
-  - Y_features_dd_early.rds - moundlike and other phenomena encountered in maps with 2010 variant of duplicates
-  - Y_features_dd_later.rds - moundlike and other phenomena encountered in maps with 2017 variant of duplicates
+  - Y_mounds_dd_early - mounds clipped to Yambol region, deduplicated to early version, enriched (06_Enrich and 07_Finalize)
+  - Y_mounds_dd_later - mounds clipped to Yambol region, deduplicated to later version, enriched (06_Enrich and 07_Finalize)
+  - Y_features_dd_early - moundlike and other phenomena encountered in maps with 2010 variant of duplicates
+  - Y_features_dd_later - moundlike and other phenomena encountered in maps with 2017 variant of duplicates
 
   For completeness and to facilitate transition between the scripts, interim outputs are stored in the interim/ folder. Some are products of earler scripts, where attributes are less streamlined to allow access to raw records. Others, such as the features_dd are similar to final files in the output_data/ but their spatial extent is greater, as they contain all originally verified features, and not only those inside the Yambol region. 
   - interim/features_dd_early, interim/features_dd_later 
@@ -99,3 +99,9 @@ Adela Sobotkova. (2024). Verified Burial Mounds in Yambol Province, SE Bulgaria 
 
 References:
 JICA. n.d. “ASTER Global Digital Elevation Model.” ASTER GDEM. Accessed June 25, 2024. https://gdemdl.aster.jspacesystems.or.jp/index_en.html.
+Appelhans T, Detsch F, Reudenbach C, Woellauer S (2023). mapview: Interactive Viewing of Spatial Data in R_. R  package version 2.11.2, <https://CRAN.R-project.org/package=mapview>.
+Ogle, Derek H., Jason C. Doll, A. Powell Wheeler, and Alexis Dinno. 2023. “FSA: Simple Fisheries Stock Assessment Methods.” https://CRAN.R-project.org/package=FSA.
+Pebesma, E., & Bivand, R. (2023). Spatial Data Science:  With Applications in R. Chapman and Hall/CRC.  https://doi.org/10.1201/9780429459016
+Pebesma, E., 2018. Simple Features for R: Standardized  Support for Spatial Vector Data. The R Journal 10 (1),  439-446, https://doi.org/10.32614/RJ-2018-009
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the Tidyverse.” Journal of Open Source Software. https://doi.org/10.21105/joss.01686.
+
