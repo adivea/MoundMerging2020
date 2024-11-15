@@ -33,44 +33,45 @@ Divergence in the semantic model behind attributes was not tractable computation
 
 ## Spatial data: 
 Manual checks were done on the spatial points of records from 2009-2010 vis-a-vis GPS and legacy data and Google Earth by two separate people. 2017-2022 data was checked against legacy data from topographic maps. Systematic Google Earth check would be helpful for 2017-2022 data, which have only been spotchecked. 
-There is a number of spatial duplicates and triplicates (see duplicate_final.txt) for mounds repeatedly visited in different seasons either on assignment to take better photos or by accidental overlap. The duplication is treated in script 06_Enrich.Rmd.
+There is a number of spatial duplicates and triplicates (see duplicate_final.txt) for mounds repeatedly visited in different seasons either on assignment to take better photos or by accidental overlap. The duplicates are retained and declared to facilitate their filtering in script `07_Finalize.Rmd`.
 
-Extent: while survey was conducted primarily in the Yambol Province, occasionally a track led outside of its boundaries. Occurrences outside Yambol are useful when conducting analysis susceptible to edge effects, however, features like these are filtered out in 07_Finalize.Rmd(clipped by regional boundary) for cultural heritage and administrative reporting reasons.
+Extent: while survey was conducted primarily in the Yambol Province, occasionally a track led outside of its boundaries. Occurrences outside Yambol are useful when conducting analysis susceptible to edge effects, however, features like these are filtered out in `07_Finalize.Rmd`(clipped by regional boundary) for cultural heritage and administrative reporting reasons.
 
 # How to use
 
-0. If you just want to use the data, choose the most suitable dataset for your toolkit (rds is great for R but geojson is easier to work with for Python users) from the output_data/ folder. All are streamlined, and sorted by from the most conservative and filtered to the most complete:
+0. If you just want to use the data, choose the most suitable dataset for your toolkit (rds is great for R but geojson is easier to work with for Python users, csv should open anywhere) from the output_data/ folder. All attributes are streamlined, duplicates are indicated:
 
-  - Y_mounds_dd_early - mounds clipped to Yambol region, deduplicated to early version, enriched (06_Enrich and 07_Finalize)
-  - Y_mounds_dd_later - mounds clipped to Yambol region, deduplicated to later version, enriched (06_Enrich and 07_Finalize)
-  - Y_features_dd_early - moundlike and other phenomena encountered in maps with 2010 variant of duplicates
-  - Y_features_dd_later - moundlike and other phenomena encountered in maps with 2017 variant of duplicates
+  - Y_features - observations of mounds, moundlike and other phenomena encountered en route to and in locations indicated by Soviet maps clipped to Yambol region
+  - Y_mounds - a subset of mounds from the Y_features
 
-  For completeness and to facilitate transition between the scripts, interim outputs are stored in the interim/ folder. Some are products of earler scripts, where attributes are less streamlined to allow access to raw records. Others, such as the features_dd are similar to final files in the output_data/ but their spatial extent is greater, as they contain all originally verified features, and not only those inside the Yambol region. 
+  For completeness and to facilitate transition between the scripts, interim outputs are stored in the interim/ folder. Some are products of earlier scripts, where attributes are less streamlined to allow access to raw data. Others, such as the master_sp_enriched are similar to final files in the output_data/ but their spatial extent is greater, as they contain all originally verified features, and not only those inside the Yambol region. 
   - interim/features_dd_early, interim/features_dd_later 
   - interim/master_sp_enriched - spatialized master dataset (product of 05_GetSpatial.R and also 06_Enrich.rmd) but not deduplicated
   
-1. If you want to edit the cleaning routine yourself, then start by running the script `source("scripts/04_MergeToMaster.R")` to create a master dataset from the 2009-2022 data above. You can then edit some or all of the streamlining steps.
+1. If you want to edit the cleaning routine yourself, you can open and start with any of the R or rmd files in the `scripts/` folder, as long as you remember to run all the remaining (=higher number) scripts afterwards. To facilitate decision-making about what you wish to alter, here is a quick summary of each script's purpose:
 
-2. Afterwards, depending on your needs, either make the data spatial using
+* `1_LoadData.R` loads each seasons' data from local input_data/ folder  
+* `2_2010dataTRAP.R` creates 2010 data by merging and filtering two differently cleaned versions of 2010 data by Adela and Bara. This is an essential step however one can change the prioritization of Bara or Adela's attributes.
+* `3_CleanXXXX.R` a series of scripts to streamline each season's dataset. Each season, the teams and conditions differed slightly resulting in slight differences in collected values. 
+* `4_MergeToMaster.R` to create a master dataset from the 2009-2022 data above. You can change which attributes are included in the master, and edit some or all of the streamlining steps.
 
-* `05_GetSpatial.R` which loads the point shapefiles for the mounds and merges the previously cleaned attribute data to them. 
+* `05_GetSpatial.R` which merges the cleaned and merged attribute data from several seasons and marries them to point shapefiles by TRAP id. 
 
  -- Incorrect coordinates are corrected here (only where previously known, 8142 is the prime example) 
  
-* `06_Enrich.rmd` takes spatialized feature data and enriches it with admin and environmental data extracted from JICA ASTER 30m resolution rasters at points (via `raster::extract` etc.). 
+* `06_Enrich.rmd` takes the spatialized feature data and enriches the records with environmental values extracted from JICA ASTER 30m resolution rasters at points (via `raster::extract` etc.). 
 
--- Spatial duplicates are streamlined here. the dataset is divided into two: early and later versions with duplicates initially visited in 2010 and revisited in 2017
-The datasets are then exported into interim/ folder
+-- If you have a finer resolution dataset, you may want to replace the ASTER here. 
+The output dataset are then exported into interim/ folder
 
-* `07_Finalize.rmd` takes deduplicated features from previous scripts, strips uncertainty (removing '?' ) from Type and Condition, and writes it to TypeCertainty according to feedback from BG colleagues. AKB numbers and excavation status is added. 
-Features are clipped to Yambol border and exported in two spatially-deduplicated versions in geojson and rds formats. Features are further filtered for mounds and exported in geojson and rds formats.
+* `07_Finalize.rmd`takes enriched features from script 06, strips uncertainty (removing '?' ) from Type and Condition, and writes it to TypeCertainty. AKB numbers and excavation status is added as is SpatialDuplicate status, PairedID, and columns for version filtering. 
+Features are clipped to Yambol border and exported in csv, geojson, and rds formats. Features are further filtered for mounds and exported in geojson and rds formats.
 
 -- final attribute streamlining happens here as well as AKB mapping, which connects field observation to cultural defition in excavated mounds
 
 Each of these scripts is fully stand-alone and running `07_Finalize.rmd` will generate the most refined and enriched, but spatially constrained datasets. 
 
-3. The idea behind the multiple scripts and data versions is that each script focuses on different aspect of cleaning. The streamlining needs follow a certain logic of ease, e.g. spatial deduplication (==splitting) makes sense after most streamlining and enrichment is done to avoid repetition on the subsets. Spatialisation focuses on geometries, while merging works mostly with identifiers and attributes.  Standardisation of the attributes of Type, Condition, LandUse (LU) serves most common analyses of type and landuse classification, vulnerability assessment and similar.  Additional variation, uncertainty and verbose annotations are streamlined and moved either to AllNotes or fields such as TypeCertainty in 05_GetSpatial and 07_Finalize rmd scripts. They can be accessed in the interim/ products.
+3. The idea behind the multiple scripts is that each script focuses on different aspect of cleaning. Standardisation of the attributes of Type, Condition, LandUse (LU) serves most common analyses of type and landuse classification, vulnerability assessment and similar.  Additional variation, uncertainty and verbose annotations are streamlined and moved either to AllNotes or fields such as TypeCertainty in 05_GetSpatial and 07_Finalize rmd scripts. They can be accessed in the interim/ products.
 
 # Acknowledgments
 Collecting a landscape-scale dataset would not be possible without the dedicated help of local and international colleagues. We hereby give massive thanks to Barbora Weissova her assistance with mound monitoring and spatial data streamlining. We also thank Petra Heřmánková and Věra Doležálková for leading field teams and managing data collection. Last but not least, the data would not exist were it not for the students, colleagues, and volunteers from the Yambol History Museum, UNSW Australia, Macquarie University, New Bulgarian University, Charles University, Aarhus University and many other institutions. In rough chronological order of appearance these include Iliya Iliev, Georgi Iliev, Yavor Rusev, Stefan Bakardzhiev, Simon Connor, Shawn Ross, Petra Tušlová, Tereza Dobrovodská, Sona Holičková, Scott Jackson, Stanislav Marchovski, Jana Ryšavková, Radko Sedláček, Jarmila Švédová, Dragomir Garbov,  Emma Jacobson, Royce Lawrence, Briana Barton, Stephanie Black, Lachlan Hanley, Samuel Riley, Isaac Roberts, Tiana Anderson, Amy Tanswell, Mikaila Walker, Bronwyn Schlamowitz, Elissa Sinclair, Angel Bogdanov Grigorov, Matilde Jensen, Sara Vejrup, Dorthe Pedersen, Julie Lund, Joel Sercombe, Mathias Kaas, and Mathias Johansen.

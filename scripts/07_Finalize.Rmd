@@ -25,7 +25,7 @@ opts_knit$set(width=75)
 ```
 
 The script explores the consistency of datatypes and feature attributes created in previous scripts, streamlines loose ends, and marries the records to their AKB counterparts.
-Final data are clipped to Yambol bounadry before export in two spatially-deduplicated versions.
+Final data are clipped to Yambol boundary and spatial duplicates are identified and filtering facilitated by adding logical campaign-indicating columns.
 This script can be run standalone and is final. There is no need to run previous scripts unless one wishes to explore the data in their raw state or change some of the processing.
 
 ## What is AKB 
@@ -34,7 +34,7 @@ AKB stands for the "Arheologicheska Karta na Bulgaria", national digital registe
 
 Sites are often entered into AKB upon their first visit, with additional data added upon revisit, excavations, or other analyses.
 
-The AKB link is one reason why we retain the Yambol data in two spatial versions: `_early` and `_later`. While the `_later` is based on revisits and thus more recent and authoritative (especially if driven by the need to update or improve the record), the `_early` record IDs were use to create links in AKB and so are more suitable for mapping of cultural heritage data in AKB with the environmental variables present here. 
+The AKB link is one reason why you may want to filter the Yambol data for one or another spatial versions: `Upto2010` and `Post2010`. While the `Post2010` is based on later revisits and thus more recent and authoritative (especially if driven by the need to update or improve the record), the `Upto2010` record IDs were use to create links in AKB and so are more suitable for mapping of cultural heritage data in AKB with the environmental variables present here.
 
 ## Setup
 ```{r libraries}
@@ -44,16 +44,11 @@ library(mapview)
 ```
 
 
-## Load data - select early or late
-Here we load aggregated and deduplicated features. Choose whether you wish to use the `_later`, most recent observations, or `_early`, the earliest version, which matches the AKB best. `_early` version is the default. If you change the default, remember to adjust the export filenames in code chunks in lines 242 and 272.
-
-```{r -load-aggr-data}
-# # Later
-features <- readRDS("../output_data/interim/features_dd_later.rds") # most recent observations
-# Early
-features <- readRDS("../output_data/interim/features_dd_early.rds") # first AKB entry
-str(features)
-
+## Load data - master_sp_enriched
+Here we load aggregated and enriched features from Yambol and wider surroundings. 
+```{r load-aggr-data}
+# not deduplicated for final dataset
+features <- st_read("../output_data/interim/master_sp_enriched.geojson")
 ```
 
 ## Validation I: Check how many of the features are actually mounds
@@ -74,7 +69,7 @@ features %>%
   tally()
 
 ```
-In the tally of "Other" types, there are 34 Legacy verification features and 41 Survey features. While the latter are expected, the 34 verified features required follow up on 27 Dec 2022. Inspection showed that many of the verified features originate not from sunbursts but other map markers, such as rayed squares and triangles. We inspected these in the early seasons but stopped doing so after these turned out not to lead to mounds reliably. 
+In the tally of "Other" types, there are 34 Legacy verification features and 41 Survey features in the later monitoring and 30 LgV and 41 Survey in the earlier monitoring. While the latter are expected, the 34 verified features required follow up on 27 Dec 2022. Inspection showed that many of the verified features originate not from sunbursts but other map markers, such as rayed squares and triangles. We inspected these in the early seasons but stopped doing so after these turned out not to lead to mounds reliably. 
 
 ### What is hiding under "other"?
 ```{r explore-type-other}
@@ -242,13 +237,13 @@ Y_features %>%
 
 ```
 
-Beware: In 9 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 16 TRAP mounds share an AKB number. 
+Beware: In 8-9 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 16/17 TRAP mounds share an AKB number. 
 
 ## How many features/mounds have been excavated in Yambol by 2023
 ```{r Yambol-exav-mnds}
 Y_features %>% 
   filter(AKB > 0) %>% 
-  filter(grepl("Excav", AKBNotes)) #  27 excavated in early dataset
+  filter(grepl("Excav", AKBNotes)) #  27 excavated in both datasets
 
 Y_features %>% 
   filter(AKB > 0)  # 1030/1040 early/later features have AKB >> duplicates must be here
@@ -261,9 +256,77 @@ names(Y_features)
 Y_features <- Y_features %>% 
   rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, Prominence_at250m = prom250mbuff, DistBG_m = distBG, AKBArea = Area)
 ```
+## Mark duplicates
+
+A number of features were visited multiple times and registered under different numbers. Spatial duplicates and triplicates are mounds that share the same location (often are within 15 m of one another) but have unique ID.
+
+We have two lists of matching TRAP IDs for 2009-2010 mounds and their post-2010 duplicates.
+```{r duplicate-lists}
+# Early records
+upto2010 <- c(6011,8022:8025, 8028,8029,8030, 8035, 8350:8353, 8357,8359, 8434,8669, 9077)
+
+# Later records
+post2010 <- c(9357,9594,9595,9593,9596,9592,9591,9358, 8202,9226,9227,9258,9257,9220,9219,9216,9740,9715)
+
+# to see the pairs, they are collated in output data folder
+duplicates <- read.csv("../output_data/interim/duplicates_final.txt", sep = " ")
+
+```
+
+In order to highlight the duplicates and allow users to filter the early or later variant (2009-2010 or post-2010), we create a `SpatialDuplicate` column, declare the paired TRAP ID in the `PairedID` column, and create a `Pre2010Variant` and `Post2010Variant` columns to facilitate filtering of the early and later version.  
+
+```{r}
+# Label the spatial versions/duplicates as such
+Y_features$SpatialDuplicate <- ifelse(
+  Y_features$TRAP %in% duplicates$upto2010 | 
+    Y_features$TRAP %in% duplicates$post2010,
+  "Duplicate",
+  "Unique"
+)
+
+```
+Add `PairedID` column and fill in with other version TRAP id where applicable
+
+```{r}
+# Initialize PairedID column with NA
+Y_features$PairedID <- NA
+
+# For upto2010 records, use the TRAP id in post2010 column of duplicates
+Y_features$PairedID[Y_features$TRAP %in% duplicates$upto2010] <- duplicates$post2010[match(
+  Y_features$TRAP[Y_features$TRAP %in% duplicates$upto2010],
+  duplicates$upto2010
+)]
+
+# For post2010 records, use TRAP id from upto2010 from duplicates
+Y_features$PairedID[Y_features$TRAP %in% duplicates$post2010] <- duplicates$upto2010[match(
+  Y_features$TRAP[Y_features$TRAP %in% duplicates$post2010],
+  duplicates$post2010
+)]
+
+Y_features %>% 
+  st_drop_geometry() %>% 
+  dplyr::select(TRAP, PairedID, SpatialDuplicate) %>% 
+  filter(SpatialDuplicate == "Duplicate")
+
+```
+
+Create two columns `Upto2010` and `Post2010` to facilitate filtering by different versions.
+```{r}
+`%nin%` <- Negate(`%in%`)
+Y_features$Upto2010 <- ifelse(Y_features$TRAP %nin% duplicates$post2010, "Yes", "No")
+Y_features$Post2010 <- ifelse(Y_features$TRAP %nin% duplicates$upto2010, "Yes", "No")
+
+# review
+Y_features %>% 
+  st_drop_geometry() %>% 
+  dplyr::select(TRAP, PairedID, SpatialDuplicate, Upto2010, Post2010) %>% 
+  filter(SpatialDuplicate == "Duplicate")
+```
 
 
-## Export Yambol features, later and early 
+
+## Export Yambol features  
+
 To export these properly, select your desired version to run the script with either the early or the later dataset. Also, mke sure to select the best format for your further processing: rds(R) or geojson(Python). Default is the `_early` version and `rds` format.
 
 ```{r export-features}
@@ -271,27 +334,11 @@ To export these properly, select your desired version to run the script with eit
 names(Y_features)
 glimpse(Y_features)
 
-# Early version
-# Y_features %>%
-#   write_rds("../output_data/Y_features_dd_early.rds")
-# 
-# Y_features %>%
-#   st_write("../output_data/Y_features_dd_early.geojson", append = F)
-
-# Y_features %>%
-#   mutate(X = st_coordinates(.)[,2],
-#          Y = st_coordinates(.)[,1]) %>% 
-#   mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
-#          DistTown_m = unclass(DistTown_m),
-#          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
-#   st_drop_geometry() %>% 
-#   write_csv("../output_data/Y_features_dd_early.csv")
-
-# Later version
+# Export
 Y_features %>%
-  write_rds("../output_data/Y_features_dd_later.rds")
+  write_rds("../output_data/Y_features.rds")
 Y_features %>%
-  st_write("../output_data/Y_features_dd_later.geojson", append = F)
+  st_write("../output_data/Y_features.geojson", append = F)
 
 Y_features %>%
   mutate(X = st_coordinates(.)[,2],
@@ -300,9 +347,10 @@ Y_features %>%
          DistTown_m = unclass(DistTown_m),
          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
   st_drop_geometry() %>% 
-  write_csv("../output_data/Y_features_dd_later.csv")
+  write_csv("../output_data/Y_features.csv")
 ```
-## Filter deduplicated features for mounds
+
+## Filter mounds
 Now that the attributes look reasonably well, let's filter out and export the most likely mounds inside the Yambol Province.
 
 ```{r filter-mounds}
@@ -312,37 +360,18 @@ Y_features %>%
    tally()
 ```
 
+
 ## Export Yambol mounds, later and early
-Moving to export, uncomment the relevant section of early or later variant.
-I recommend using the `_later` deduplicated variant as authoritative as the later observations are more "current".  But there is good reason to use the _early variant if you wish to look for change in observations between teams and seasons, or if you need to add AKB information - it is linked to the earlier IDs as it's usually recorded upon first visit.
+Moving to export, .rds, .geojson, and .csv are generated below. For reuse, remember to filter for either the `Upto2010` or `Post2010` variant. The latter is perhaps more authoritative as the later observations are more "current".  But there is good reason to use the former variant if you need to add AKB information or both variants together if you wish to look for change in observations between teams and seasons.
 
 ```{r export-mnds}
-# early version
-# Y_features %>%
-#     filter(grepl("[Mm]ound", Type)) %>%
-#     write_rds("../output_data/Y_mounds_dd_early.rds")
-# 
-# Y_features %>%
-#     filter(grepl("[Mm]ound", Type)) %>%
-#     st_write("../output_data/Y_mounds_dd_early.geojson", append=FALSE)
-# Y_features %>%
-#   filter(grepl("[Mm]ound", Type)) %>%
-#   mutate(X = st_coordinates(.)[,2],
-#          Y = st_coordinates(.)[,1]) %>% 
-#   mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
-#          DistTown_m = unclass(DistTown_m),
-#          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
-#   st_drop_geometry() %>% 
-#   write_csv("../output_data/Y_features_dd_early.csv")
-
-# later version
 Y_features %>%
     filter(grepl("[Mm]ound", Type)) %>%
-    write_rds("../output_data/Y_mounds_dd_later.rds")
+    write_rds("../output_data/Y_mounds.rds")
 
 Y_features %>%
     filter(grepl("[Mm]ound", Type)) %>%
-    st_write("../output_data/Y_mounds_dd_later.geojson", append=FALSE)
+    st_write("../output_data/Y_mounds.geojson", append=FALSE)
 
 Y_features %>%
   filter(grepl("[Mm]ound", Type)) %>%
@@ -352,7 +381,7 @@ Y_features %>%
          DistTown_m = unclass(DistTown_m),
          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
   st_drop_geometry() %>% 
-  write_csv("../output_data/Y_mounds_dd_later.csv")
+  write_csv("../output_data/Y_mounds.csv")
 ```
 
 
