@@ -1,0 +1,862 @@
+[
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "HeightMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column HeightMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column DiameterMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "HeightMin",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column HeightMin using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMin",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column DiameterMin using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "range",
+          "name": "DiameterMax",
+          "expression": "value",
+          "columnName": "DiameterMax",
+          "from": 0,
+          "to": 2300,
+          "selectNumeric": false,
+          "selectNonNumeric": true,
+          "selectBlank": true,
+          "selectError": true
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "HeightMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column HeightMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "range",
+          "name": "DiameterMax",
+          "expression": "value",
+          "columnName": "DiameterMax",
+          "from": 0,
+          "to": 2300,
+          "selectNumeric": false,
+          "selectNonNumeric": true,
+          "selectBlank": true,
+          "selectError": true
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column DiameterMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMax",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "2218"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "18"
+      }
+    ],
+    "description": "Mass edit cells in column DiameterMax"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "HeightMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column HeightMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column DiameterMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Type",
+          "expression": "value",
+          "columnName": "Type",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Burial Mound",
+                "l": "Burial Mound"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "PrincipalSourceOfImpact",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Other (human activity due to location next to villiage)"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Other"
+      }
+    ],
+    "description": "Mass edit cells in column PrincipalSourceOfImpact"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Type",
+          "expression": "value",
+          "columnName": "Type",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Burial Mound",
+                "l": "Burial Mound"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "PrincipalSourceOfImpact",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Natural"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Post-depositional"
+      }
+    ],
+    "description": "Mass edit cells in column PrincipalSourceOfImpact"
+  },
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Type",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "(",
+    "regex": false,
+    "maxColumns": 2,
+    "description": "Split column Type by separator"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Type 1",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Type 1 using expression value.trim()"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Type 1",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Burial Mound??"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Burial Mound?"
+      }
+    ],
+    "description": "Mass edit cells in column Type 1"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Type 2",
+    "newColumnName": "Type Note",
+    "description": "Rename column Type 2 to Type Note"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Type 1",
+    "newColumnName": "TypeClean",
+    "description": "Rename column Type 1 to TypeClean"
+  },
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "LanduseOnTopOfMound",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "(",
+    "regex": false,
+    "maxColumns": 2,
+    "description": "Split column LanduseOnTopOfMound by separator"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "LanduseOnTopOfMound 2",
+    "expression": "grel:value.replace(\")\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column LanduseOnTopOfMound 2 using expression grel:value.replace(\")\",\"\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "LanduseOnTopOfMound 1",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column LanduseOnTopOfMound 1 using expression value.trim()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "LanduseOnTopOfMound 2",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column LanduseOnTopOfMound 2 using expression value.trim()"
+  },
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "LanduseAroundMound",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "(",
+    "regex": false,
+    "maxColumns": 2,
+    "description": "Split column LanduseAroundMound by separator"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "LanduseAroundMound 1",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column LanduseAroundMound 1 using expression value.trim()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "LanduseAroundMound 2",
+    "expression": "grel:value.replace(\")\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column LanduseAroundMound 2 using expression grel:value.replace(\")\",\"\")"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "LanduseOnTopOfMound 1",
+    "newColumnName": "LanduseOnTopOfMound",
+    "description": "Rename column LanduseOnTopOfMound 1 to LanduseOnTopOfMound"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "LanduseOnTopOfMound 2",
+    "newColumnName": "LanduseOnTopOfMoundNote",
+    "description": "Rename column LanduseOnTopOfMound 2 to LanduseOnTopOfMoundNote"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "LanduseAroundMound 2",
+    "newColumnName": "LanduseAroundMoundNote",
+    "description": "Rename column LanduseAroundMound 2 to LanduseAroundMoundNote"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "LanduseAroundMound 1",
+    "newColumnName": "LanduseAroundMound",
+    "description": "Rename column LanduseAroundMound 1 to LanduseAroundMound"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column DiameterMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "HeightMax",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column HeightMax using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "HeightMin",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column HeightMin using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMin",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column DiameterMin using expression value.toNumber()"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "range",
+          "name": "HeightMin",
+          "expression": "value",
+          "columnName": "HeightMin",
+          "from": 0,
+          "to": 6.02,
+          "selectNumeric": false,
+          "selectNonNumeric": true,
+          "selectBlank": true,
+          "selectError": true
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "HeightMin",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [],
+        "fromBlank": true,
+        "fromError": false,
+        "to": "NA"
+      }
+    ],
+    "description": "Mass edit cells in column HeightMin"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "range",
+          "name": "DiameterMin",
+          "expression": "value",
+          "columnName": "DiameterMin",
+          "from": 0,
+          "to": 210,
+          "selectNumeric": false,
+          "selectNonNumeric": true,
+          "selectBlank": true,
+          "selectError": true
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "DiameterMin",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [],
+        "fromBlank": true,
+        "fromError": false,
+        "to": "NA"
+      }
+    ],
+    "description": "Mass edit cells in column DiameterMin"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "OtherSourcesOfImpact",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "animal activity",
+          "Animal Activity"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "animal activity"
+      }
+    ],
+    "description": "Mass edit cells in column OtherSourcesOfImpact"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "OtherSourcesOfImpact",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "agricultural"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "agriculture"
+      }
+    ],
+    "description": "Mass edit cells in column OtherSourcesOfImpact"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "ArchaeologicalPotential",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "5- none or nearly none"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "5 - none or nearly none"
+      }
+    ],
+    "description": "Mass edit cells in column ArchaeologicalPotential"
+  },
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWhat",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "(",
+    "regex": false,
+    "maxColumns": 2,
+    "description": "Split column MostRecentDamageWhat by separator"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "MostRecentDamageWhat 1",
+    "newColumnName": "MostRecentDamageWhat",
+    "description": "Rename column MostRecentDamageWhat 1 to MostRecentDamageWhat"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWhat",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column MostRecentDamageWhat using expression value.trim()"
+  },
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWithin",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "(",
+    "regex": false,
+    "maxColumns": 2,
+    "description": "Split column MostRecentDamageWithin by separator"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "MostRecentDamageWithin 1",
+    "newColumnName": "MostRecentDamageWithin",
+    "description": "Rename column MostRecentDamageWithin 1 to MostRecentDamageWithin"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "MostRecentDamageWithin",
+          "expression": "value",
+          "columnName": "MostRecentDamageWithin",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [],
+          "selectBlank": true,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWhat",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column MostRecentDamageWhat using expression value.trim()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWithin",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column MostRecentDamageWithin using expression value.trim()"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWithin",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [],
+        "fromBlank": true,
+        "fromError": false,
+        "to": "Not relevant"
+      }
+    ],
+    "description": "Mass edit cells in column MostRecentDamageWithin"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWhat",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [],
+        "fromBlank": true,
+        "fromError": false,
+        "to": "No observation"
+      }
+    ],
+    "description": "Mass edit cells in column MostRecentDamageWhat"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "MostRecentDamageWhat",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Topographic or post-depositional"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Post-depositional"
+      }
+    ],
+    "description": "Mass edit cells in column MostRecentDamageWhat"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Date",
+    "expression": "value.toDate()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Date using expression value.toDate()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "modifiedAtGMT",
+    "expression": "value.toDate()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column modifiedAtGMT using expression value.toDate()"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "TypeClean",
+          "expression": "value",
+          "columnName": "TypeClean",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "Other",
+                "l": "Other"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "BurialMoundAuthor",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Matthias Kaas"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Mathias Kaas"
+      }
+    ],
+    "description": "Mass edit cells in column BurialMoundAuthor"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "BurialMoundAuthor",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Matthias Kaas"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Mathias Kaas"
+      }
+    ],
+    "description": "Mass edit cells in column BurialMoundAuthor"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "createdBy",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Matthias Kaas"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Mathias Kaas"
+      }
+    ],
+    "description": "Mass edit cells in column createdBy"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "modifiedBy",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "Matthias Kaas"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Mathias Kaas"
+      }
+    ],
+    "description": "Mass edit cells in column modifiedBy"
+  }
+]
