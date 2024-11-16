@@ -211,6 +211,17 @@ head(AKB)
 # Which ones are excavated?
 AKB %>% 
   filter(grepl("[Ee]xcavated", Notes)) 
+
+# Which AKBs are duplicated?
+AKB %>%
+  filter(TRAP == 9962)
+which(AKB$TRAP == 9962)
+
+# Eliminate duplicates
+AKB <- AKB %>%
+  slice(-968)
+
+
 ```
 
 
@@ -233,17 +244,16 @@ AKBduplicated <- Y_features %>%
 
 Y_features %>% 
   dplyr::filter(AKB %in% AKBduplicated) %>% 
-  dplyr::select(TRAP, AKB)
-
+  dplyr::select(TRAP, AKB) 
 ```
 
-Beware: In 8-9 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 16/17 TRAP mounds share an AKB number. 
+Beware: In 8 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 17 TRAP mounds share an AKB number. 
 
 ## How many features/mounds have been excavated in Yambol by 2023
 ```{r Yambol-exav-mnds}
 Y_features %>% 
   filter(AKB > 0) %>% 
-  filter(grepl("Excav", AKBNotes)) #  27 excavated in both datasets
+  filter(grepl("Excav", AKBNotes)) #  28 excavated in both datasets
 
 Y_features %>% 
   filter(AKB > 0)  # 1030/1040 early/later features have AKB >> duplicates must be here
@@ -275,7 +285,7 @@ duplicates <- read.csv("../output_data/interim/duplicates_final.txt", sep = " ")
 
 In order to highlight the duplicates and allow users to filter the early or later variant (2009-2010 or post-2010), we create a `SpatialDuplicate` column, declare the paired TRAP ID in the `PairedID` column, and create a `Pre2010Variant` and `Post2010Variant` columns to facilitate filtering of the early and later version.  
 
-```{r}
+```{r spatial-duplicate}
 # Label the spatial versions/duplicates as such
 Y_features$SpatialDuplicate <- ifelse(
   Y_features$TRAP %in% duplicates$upto2010 | 
@@ -287,7 +297,7 @@ Y_features$SpatialDuplicate <- ifelse(
 ```
 Add `PairedID` column and fill in with other version TRAP id where applicable
 
-```{r}
+```{r paired-duplicate-ID}
 # Initialize PairedID column with NA
 Y_features$PairedID <- NA
 
@@ -311,7 +321,7 @@ Y_features %>%
 ```
 
 Create two columns `Upto2010` and `Post2010` to facilitate filtering by different versions.
-```{r}
+```{r filter-duplicates}
 `%nin%` <- Negate(`%in%`)
 Y_features$Upto2010 <- ifelse(Y_features$TRAP %nin% duplicates$post2010, "Yes", "No")
 Y_features$Post2010 <- ifelse(Y_features$TRAP %nin% duplicates$upto2010, "Yes", "No")
