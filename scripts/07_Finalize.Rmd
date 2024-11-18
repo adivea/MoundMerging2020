@@ -44,7 +44,7 @@ library(mapview)
 ```
 
 
-## Load data - master_sp_enriched
+## Load data: `master_sp_enriched`
 Here we load aggregated and enriched features from Yambol and wider surroundings. 
 ```{r load-aggr-data}
 # not deduplicated for final dataset
@@ -111,7 +111,7 @@ features %>%
   tally()
 ```
 
-## Constrain to Yambol Province 
+## Fix I: Constrain to Yambol Province 
 
 ```{r yambol-features}
 # load the boundary
@@ -124,7 +124,7 @@ Y_features  # 1243 features and 24 fields
 
 Within Yambol, we documented 1243 features (early observations). 
 
-## Execute attribute changes following manual review
+## Fix II: Implement changes following manual review
 This chunk corrects poor data entries in the structured digital forms on the basis of photographs, diaries, and AKB records.
 ```{r changes-type-source}
 # Type Certainty UNCERTAIN TO CERTAIN
@@ -166,7 +166,8 @@ colnames(fixes)
 # row_update() fails on the units distBG and geometry columns so we eliminate these for a moment to apply fixes, and then rejoin them.  
 
 features_fixed <- rows_update(
-  st_drop_geometry(Y_features)[,-14],  #remove distBG
+  #remove distBG
+  st_drop_geometry(Y_features)[,-14],  
   st_drop_geometry(fixes)[,-14],
   by = "TRAP")
 
@@ -196,7 +197,7 @@ Clean up after the changes
 rm(certain, extinct, fixes, m8763, m8764, other, scatter)
 ```
 
-## AKB identifiers
+## Fix III: Add AKB identifiers
 Here we add AKB numbers to feature data so their future analyses can be brought to bear on the environmental attributes documented during survey.
 
 ### 1055 AKB records
@@ -212,16 +213,14 @@ head(AKB)
 AKB %>% 
   filter(grepl("[Ee]xcavated", Notes)) 
 
-# Which AKBs are duplicated?
+# Two AKB numbers are assigned to one and the same TRAP id?
 AKB %>%
   filter(TRAP == 9962)
 which(AKB$TRAP == 9962)
 
 # Eliminate duplicates
-AKB <- AKB %>%
-  slice(-968)
-
-
+# AKB <- AKB %>%
+#   slice(-968)
 ```
 
 
@@ -244,12 +243,25 @@ AKBduplicated <- Y_features %>%
 
 Y_features %>% 
   dplyr::filter(AKB %in% AKBduplicated) %>% 
-  dplyr::select(TRAP, AKB) 
+  dplyr::select(TRAP, AKB) %>% distinct(AKB)
+
+Y_features <- Y_features %>% 
+  # Group by identical columns
+  group_by(across(-c(AKB, AKBNotes))) %>%  
+  summarize(
+    AKB = paste(unique(AKB), collapse = "; "),       # Combine AKBID
+    AKBNotes = paste(unique(AKBNotes), collapse = "; ")  # Combine AKBNotes
+    ) %>%
+  ungroup() 
+  # %>% 
+  # filter(TRAP %in% 9962:9984) %>%
+  # dplyr::select(starts_with("AKB"))
+
 ```
 
-Beware: In 8 instances [10007351 10007352  2700220  2700226 10007031 10009627 10009305 10001274 10009811], AKB numbers are duplicated, meaning that 17 TRAP mounds share an AKB number. 
+Beware: In 17 instances, AKB numbers are duplicated, meaning that some TRAP mounds share an AKB number. Most of these are spatial duplicates that received a new TRAP number upon revisit. We will deal with them below.
 
-## How many features/mounds have been excavated in Yambol by 2023
+### How many features/mounds have been excavated in Yambol by 2023
 ```{r Yambol-exav-mnds}
 Y_features %>% 
   filter(AKB > 0) %>% 
@@ -259,14 +271,19 @@ Y_features %>%
   filter(AKB > 0)  # 1030/1040 early/later features have AKB >> duplicates must be here
 ```
 
-## Fix column names for legibility
+## Fix IV: Reorder columns and fix their names for legibility
 
-```{r rename-colums}
+```{r rename-reorder-colums}
 names(Y_features)
 Y_features <- Y_features %>% 
-  rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, Prominence_at250m = prom250mbuff, DistBG_m = distBG, AKBArea = Area)
+  select(-Area) %>% 
+  rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, Prominence250m_percent = prom250mbuff, DistBG_m = distBG, AsterElev_m = ElevAster_m, AsterSlope_degrees = SlopeAster_degrees, AsterAspect = AspectAster, AsterTRI = TRI, AsterTPI = TPI, AsterRoughness = Roughness) %>% 
+  relocate(c(TopoID, TopoNote), .after = PrincipalSourceOfImpact) %>% 
+  #relocate(Area, .after = TRAP) %>% 
+  relocate(TypeCertainty, .after = Type)
 ```
-## Mark duplicates
+
+## Fix V: Identify spatial duplicates
 
 A number of features were visited multiple times and registered under different numbers. Spatial duplicates and triplicates are mounds that share the same location (often are within 15 m of one another) but have unique ID.
 
@@ -351,8 +368,8 @@ Y_features %>%
   st_write("../output_data/Y_features.geojson", append = F)
 
 Y_features %>%
-  mutate(X = st_coordinates(.)[,2],
-         Y = st_coordinates(.)[,1]) %>% 
+  mutate(Easting = st_coordinates(.)[,2],
+         Northing = st_coordinates(.)[,1]) %>% 
   mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
          DistTown_m = unclass(DistTown_m),
          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 
@@ -371,7 +388,7 @@ Y_features %>%
 ```
 
 
-## Export Yambol mounds, later and early
+## Export Yambol mounds
 Moving to export, .rds, .geojson, and .csv are generated below. For reuse, remember to filter for either the `Upto2010` or `Post2010` variant. The latter is perhaps more authoritative as the later observations are more "current".  But there is good reason to use the former variant if you need to add AKB information or both variants together if you wish to look for change in observations between teams and seasons.
 
 ```{r export-mnds}
@@ -385,8 +402,8 @@ Y_features %>%
 
 Y_features %>%
   filter(grepl("[Mm]ound", Type)) %>%
-  mutate(X = st_coordinates(.)[,2],
-         Y = st_coordinates(.)[,1]) %>% 
+  mutate(Easting = st_coordinates(.)[,2],
+         Northing = st_coordinates(.)[,1]) %>% 
   mutate(DistBG_m = as.vector(unclass(DistBG_m)), 
          DistTown_m = unclass(DistTown_m),
          DistTownBoundary_m = unclass(DistTownBoundary_m)) %>% 

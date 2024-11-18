@@ -1,29 +1,33 @@
-Fieldname,Explanation,Datatype_Vocabularies
-TopoID,"number assigned to each map symbol upon digitisation; NAs refer to mounds/features found in the field but not in 1:50,000 maps",6-digit integer
-Note,"note on the map feature, often the name of the mound or its locale",free text
+Fieldname,Description,Datatype_Vocabularies
 TRAP,4-digit number identifier of the visited feature,4-digit integer
-Source,denotes where the record first comes from,Legacy verification; RS (Remote  sensing ground truthing); Survey; Local informant; Serendipity; Other
-Type,denotes the type of feature that we encountered in the field in the location of the mapped symbol,"mound, extinct mound, tell, surface scatter, other"
-Landuse_Around,landuse in the surroundings of the mound,"Annual agriculture, Perennial agriculture, Pasture, Scrub, Urban, Other"
-Landuse_Top,landuse on the top of mound,"Annual agriculture, Perennial agriculture, Pasture, Scrub, Urban, Other"
-Date,date of the field visit in yyyy-mm-dd format,date
-DiameterMax_m,maximum diameter of mound in meters,numeric field
-HeightMax_m,maximum height of mound in meters,numeric field
-Condition,preservation status of mound on Likert scale from 1 (being pristine) to 5 (basically extinct),"1,2,3,4,5,NA (originally was: 0 - No observation; 1 - pristine; 2 - minor damage; 3 - damaged; 4 - seriously damaged; 5 - extinct or near extinct )"
-PrincipalSourceOfImpact,what is the principal driver of mound decline? A dropdown of values,"No observation; Anthropogenic [Agriculture; Looting; Excavation; Road cut; Construction; Urban; Development]; Animal activity; Bioturbation; Natural[Erosion, Post-depositional]; Other (specify in annotation)"
-AllNotes,"annotations entered by field assistants when describing mounds via the structured entries, which usually followed in parentheses behind the structured input (see PrincipalSourceOfImpact) and were split away and placed in this column. They are mostly comments on details of landuse, condition, dimensions, robber's trenches (RTs) and other interventions",free text
-DistTown_m,distance from the mound spatial point to the nearest settlement center,numeric field
-DistTownBoundary_m,distance from the mound spatial point to the nearest settlement boundary,numeric field
-ElevAster_m,elevation in meters above sea level for mound extracted from the mosaiced JICA ASTER DEM,numeric field
-SlopeAster_m,slope at mound location in degrees extracted from the mosaiced JICA ASTER DEM,numeric field
-AspectAster_m,aspect at mound location extracted from the mosaiced JICA ASTER DEM. Numeric values are within 0 -360 degrees representing the cardinal directions of aspect,numeric field
-TRI,Terrain Ruggedness Index measures the amount of elevation difference between eight adjacent cells of a DEM according to Wilson et al. (2007). The eight elevation differences are squared and averaged. The square root of this average results is a TRI measurement for the center cell.,numeric field
-TPI,Topographic Position Index measures the difference between the value of a cell and the mean value of its 8 surrounding cells. ,numeric field
-Roughness,Roughness is the difference between the maximum and the minimum value of a cell and its 8 surrounding cells.,numeric field
-Prom250m_prc,Prominence:  the percentage of surrounding cells (within a radius of 250m) whose altitude is lower than the present cell.,numeric field
-TypeCertainty,How certain is the Type definition,"Certain, Uncertain"
+Source,"Denotes the source of the first observation, with the options being: digitized from a Soviet map (ie. legacy data verification), encountered during the walk to the mapped location (Survey), seen in satellite images (RS),  advised by local informant, etc. ",Legacy verification; RS (Remote sensing ground truthing); Survey; Local informant; Serendipity; Other
+Type,"Definition of the feature that we encountered in the field in the location of the mapped symbol or en route to it, the options including burial mounds, settlement mounds, surface scatters, etc.","Burial Mound, Extinct Burial Mound, Tell, Surface Scatter, Other"
+TypeCertainty,How certain was the team about the Type definition above?,"Certain, Uncertain"
+LanduseAround,Majority landuse in the immediate neighborhood of the mound,"Annual agriculture, Perennial agriculture, Pasture, Scrub, Urban, Other"
+LanduseOnTop,Landuse on the top of mound,"Annual agriculture, Perennial agriculture, Pasture, Scrub, Urban, Other"
+Date,Date of the field visit in yyyy-mm-dd format,date
+DiameterMax_m,Maximum diameter of mound in meters,numeric field
+HeightMax_m,Maximum height of mound in meters,numeric field
+Condition,Preservation status of mound assessed on the Likert scale. Original values were: 0 - No observation; 1 - pristine; 2 - minor damage; 3 - damaged; 4 - seriously damaged; 5 - extinct or near extinct,"1,2,3,4,5,NA"
+PrincipalSourceOfImpact,What seems to be the principal driver of mound decline? Select one value from the list:,"No observation; Anthropogenic [Agriculture; Looting; Excavation; Road cut; Construction; Urban; Development]; Animal activity; Bioturbation; Natural[Erosion, Post-depositional]; Other (specify in annotation)"
+TopoID,"Number that map symbols received upon digitisation; 6-digit numbers were digitized in desktop GIS, while 16 digit uuids come from FAIMS Map-digitisation mobile app. NAs refer to mounds/features found in the field but not in 1:50,000 maps",6-digit integer
+TopoNote,Name of the mound or its locale extracted from the map upon digitisation,free text
+AllNotes,"Aggregated annotations entered by field assistants when describing mounds in the structured form. Annotations were exported in parentheses behind the structured input (see PrincipalSourceOfImpact) and were split away and placed in this column to facilitate structured column analysis. They are mostly comments on details of landuse, condition, dimensions, robber's trenches (RTs) and other interventions",free text
+DistTown_m,Distance from the center of mound to the nearest settlement center,numeric field
+DistTownBoundary_m,Distance from the mound center to the nearest settlement boundary,numeric field
+AsterElev_m,Elevation in meters above sea level for mound extracted from the mosaiced JICA ASTER DEM,numeric field
+AsterSlope_degrees,Slope at mound location in degrees extracted from the mosaiced JICA ASTER DEM,numeric field
+AsterAspect,Aspect at mound location extracted from the mosaiced JICA ASTER DEM. Numeric values are within 0 -360 degrees representing the cardinal directions of aspect,numeric field
+AsterTRI,Terrain Ruggedness Index extracted from JICA ASTER DEM at mound location. TRI measures the amount of elevation difference between eight adjacent cells of a DEM according to Wilson et al. (2007). The eight elevation differences are squared and averaged. The square root of this average results is a TRI measurement for the center cell.,numeric field
+AsterTPI,Topographic Position Index extracted from JICA ASTER DEM at mound location. TPI measures the difference between the value of a cell and the mean value of its 8 surrounding cells (ie. ~30m radius). ,numeric field
+AsterRoughness,Roughness is extracted from JICA ASTER DEM at mound location. It measures the difference between the maximum and the minimum value of a cell and its 8 surrounding cells.,numeric field
+Prominence250m_percent,Prominence250m_percent is calculated following Llobera's formula as the percentage of cells within a radius of 250m whose altitude is lower than the present cell.,numeric field
 DistBG_m,Distance to Bulgarian national border in meters,numeric field
 AKB,Number that identifies the present feature in the Archaeological Map of Bulgaria,numeric identifier
-AKBArea,Municipality where the present feature falls in the Archaeological Map of Bulgaria,text field
 AKBNotes,Chronology and other notes on cultural heritage from AKB,text field
-geometry,Spatial points,geometry
+SpatialDuplicate,This field indicates whether for a given location there is a single or multiple observations ,"Unique, Duplicate"
+PairedID,TRAP number for another observation at the same location ,4-digit number
+Upto2010,"A column that identifies all unique observations of burial mounds and can be used to filter out unique values. Where there are duplicates, the later version is selected which observations postdating 2010.","Yes, No"
+Post2010,"A column that identifies all unique observations of burial mounds and can be used to filter out unique values. Where there are duplicates, the early version is selected which dates to 2010 or earlier.","Yes, No"
+Easting,Coordinate along x axis projected into WGS84 UTM35N (epgs 32635),decimal degrees
+Northing,Coordinate along y axis projected into WGS84 UTM35N (epgs 32635),decimal degrees

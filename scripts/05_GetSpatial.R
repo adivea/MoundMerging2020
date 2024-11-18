@@ -145,6 +145,7 @@ master_sp %>%
   ggplot()+
   geom_sf(aes(size = HeightMax, alpha = 0.5))
 
+
 ########################## SAVE FINAL PRODUCT
 
 # Save rds

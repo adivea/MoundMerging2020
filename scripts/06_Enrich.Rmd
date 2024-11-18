@@ -48,7 +48,7 @@ library(raster)
 library(mapview)
 ```
 
-## Load 2009-2022 data
+## Load 2009-2022 archaeological data
 This data was processed mostly in 2020 with addition in 2022 and contains all verified map mound locations as well as all survey features detected en route, and so not only extant but also extinct mounds, tells, surface scatters (see the 2020 history of MoundMerging2023 repo in Github)
 
 ```{r features09_22}
@@ -88,7 +88,7 @@ plot(Y_elev32635)
 
 # Load large mosaiced raster, rename and crop it to a 5km buffer around Yambol for mounds outside Yambol region boundary 
 
-elev <- raster("../input_data/large/YT_elev32635.tif")
+elev <- raster("../input_data/large/YT_elev32635_xxl.tif")
 plot(elev)
 elev <- crop(elev, st_buffer(Y_region, 5000))
 elev <- mask(elev, st_buffer(Y_region, 5000))
@@ -107,7 +107,7 @@ plot(master_sp$geometry, add = T)
 
 
 ## Enrich the master_sp data
-All records need topographic prominence, ruggidness and distance to naional border and nearest settlement border calculated. Other indeces can be extracted from the raster data.
+All records need topographic prominence, ruggedness and distance to national border and nearest settlement border calculated. Other indeces can be extracted from the raster data.
 
 ### Distance to BG border
 
