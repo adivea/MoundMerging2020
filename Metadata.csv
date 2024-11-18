@@ -1,5 +1,6 @@
 Fieldname,Description,Datatype_Vocabularies
 TRAP,4-digit number identifier of the visited feature,4-digit integer
+Area,Administrative locality in one of the four municipalities in the Yambol Province within whose boundaries the present observation falls.,text field
 Source,"Denotes the source of the first observation, with the options being: digitized from a Soviet map (ie. legacy data verification), encountered during the walk to the mapped location (Survey), seen in satellite images (RS),  advised by local informant, etc. ",Legacy verification; RS (Remote sensing ground truthing); Survey; Local informant; Serendipity; Other
 Type,"Definition of the feature that we encountered in the field in the location of the mapped symbol or en route to it, the options including burial mounds, settlement mounds, surface scatters, etc.","Burial Mound, Extinct Burial Mound, Tell, Surface Scatter, Other"
 TypeCertainty,How certain was the team about the Type definition above?,"Certain, Uncertain"

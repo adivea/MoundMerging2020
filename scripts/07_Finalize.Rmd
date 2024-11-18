@@ -118,14 +118,24 @@ features %>%
 Y_region <- st_read("../input_data/Vectors/YamRegion.shp") 
 
 Y_features <- st_intersection(features, Y_region$geometry)
-Y_features  # 1243 features and 24 fields
+Y_features  # 1260 features and 24 fields
+```
+
+Within Yambol, we have 1260 observations at map locations. 
+
+
+#### Add zemlishte information
+
+```{r add-zemlishte-to-Yambol}
+zem <- st_read("../input_data/Vectors/Yambol_zemlishta.geojson")
+mapview(zem$geometry)
+Y_features <- st_join(Y_features, zem[,"Name_en"], join = st_intersects)
 ```
 
 
-Within Yambol, we documented 1243 features (early observations). 
-
 ## Fix II: Implement changes following manual review
 This chunk corrects poor data entries in the structured digital forms on the basis of photographs, diaries, and AKB records.
+
 ```{r changes-type-source}
 # Type Certainty UNCERTAIN TO CERTAIN
 certain <- Y_features %>% 
@@ -276,10 +286,10 @@ Y_features %>%
 ```{r rename-reorder-colums}
 names(Y_features)
 Y_features <- Y_features %>% 
-  select(-Area) %>% 
-  rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, Prominence250m_percent = prom250mbuff, DistBG_m = distBG, AsterElev_m = ElevAster_m, AsterSlope_degrees = SlopeAster_degrees, AsterAspect = AspectAster, AsterTRI = TRI, AsterTPI = TPI, AsterRoughness = Roughness) %>% 
+  dplyr::select(-Area) %>% 
+  rename(TopoNote = Note, LanduseAround = LU_Around, LanduseOnTop = LU_Top, DiameterMax_m = DiameterMax, HeightMax_m = HeightMax, DistTown_m = distTown, DistTownBoundary_m = distTownBoundary, Prominence250m_percent = prom250mbuff, DistBG_m = distBG, AsterElev_m = ElevAster_m, AsterSlope_degrees = SlopeAster_degrees, AsterAspect = AspectAster, AsterTRI = TRI, AsterTPI = TPI, AsterRoughness = Roughness, Area = Name_en) %>% 
   relocate(c(TopoID, TopoNote), .after = PrincipalSourceOfImpact) %>% 
-  #relocate(Area, .after = TRAP) %>% 
+  relocate(Area, .after = TRAP) %>% 
   relocate(TypeCertainty, .after = Type)
 ```
 
@@ -353,8 +363,6 @@ Y_features %>%
 
 
 ## Export Yambol features  
-
-To export these properly, select your desired version to run the script with either the early or the later dataset. Also, mke sure to select the best format for your further processing: rds(R) or geojson(Python). Default is the `_early` version and `rds` format.
 
 ```{r export-features}
 # Features in Yambol

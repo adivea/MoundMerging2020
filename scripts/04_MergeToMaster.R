@@ -294,7 +294,7 @@ master <-  master %>%
 # hist(as.numeric(master$Condition))
 # master$Condition[master$Condition=="NA"] <- NA
 
-head(master$Condition)
+unique(master$Condition)
 
 ########################################## SAVE RDS ################
 

@@ -220,7 +220,7 @@ Here we wish to have all observations collated
 ```{r export-master_sp-enriched-data-Yambol-and-surroundings}
 # All features enriched but not deduplicated
 write_rds(master_sp, "../output_data/interim/master_sp_enriched.rds") 
-sf::st_write(master_sp,"../output_data/interim/master_sp_enriched.geojson")
+sf::st_write(master_sp,"../output_data/interim/master_sp_enriched.geojson", append=FALSE )
 
 # master_sp %>% 
 #   dplyr::select(-TopoID) %>%  # shapefiles struggle with TopoID

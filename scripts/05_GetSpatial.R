@@ -56,7 +56,6 @@ if (exists(input)){
   #master <- readRDS("output_data/interim/mergedcleanfeatures2023.rds")
 }
 
-
 glimpse(master)
 
 ##################    LOAD SPATIAL DATA from 2009-2018. 2022 comes later
